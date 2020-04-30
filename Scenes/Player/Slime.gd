@@ -7,6 +7,8 @@ const GRAVITY = 3000
 const UP = Vector2(0, -1)
 
 onready var time_shoot = get_node("timer_shoot")
+onready var time_idle = get_node("idle_timer")
+var timer_idle_verif = true
 var shot_particles = false
 var max_speed = 800
 var speed = 80
@@ -33,6 +35,13 @@ func _process(delta):
 		add_child(pause)
 
 func _physics_process(delta):
+	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
+		if timer_idle_verif == true:
+			time_idle.set_wait_time(2)
+			time_idle.start()
+			print("time")
+			timer_idle_verif = false
+		
 	if is_on_wall():
 		vel.y += (GRAVITY/2 * delta)
 	else:
@@ -91,7 +100,7 @@ func motion_loop():
 		if vel.y < -100:
 			vel.y /= 2
 """
-func motion_loop():
+func motion_loop():                                        # mouvements du slime
 	var right = Input.is_action_pressed("right")
 	var left = Input.is_action_pressed("left")
 	var up = Input.is_action_pressed("up")
@@ -100,11 +109,13 @@ func motion_loop():
 	var just_space = Input.is_action_just_pressed("ui_accept")
 	var dirx = int(right) - int(left)
 	if dirx == 1 and not is_on_wall():
+		$AnimationPlayer.play("move")
 		$Sprite.flip_h = false
 		direction_tir = 1
 		$tir.position.x = 110
 		vel.x = min(vel.x + speed, max_speed)
 	if dirx == -1 and not is_on_wall():
+		$AnimationPlayer.play("move")
 		$Sprite.flip_h = true
 		direction_tir = -1
 		$tir.position.x = -110
@@ -165,4 +176,10 @@ func _on_Wall_radar_body_exited(body):
 func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("water"):
 		hurt()
-	pass # Replace with function body.
+	pass 
+
+
+func _on_idle_timer_timeout():
+	if vel.x and vel.y == 0:
+		$AnimationPlayer.play("idle")
+		timer_idle_verif = true

@@ -4,7 +4,8 @@
 [ext_resource path="res://Tile_set/Set_Swamp.tres" type="TileSet" id=2]
 [ext_resource path="res://Sprites/Déco/light.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/Déco/rayon_lum1.png" type="Texture" id=4]
-[ext_resource path="res://Scenes/levels_scenes/background_forest.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Autres_scènes/background_forest.tscn" type="PackedScene" id=5]
+
 
 
 

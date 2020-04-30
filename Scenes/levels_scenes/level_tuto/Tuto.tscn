@@ -1,8 +1,8 @@
 [gd_scene load_steps=39 format=2]
 
-[ext_resource path="res://Scenes/levels_scenes/Tuto.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/levels_scenes/level_tuto/Tuto.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/Slime.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/levels_scenes/background_forest.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Autres_scènes/background_forest.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/Déco/light.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Déco/rayon_lum1.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/GUI/Gros.png" type="Texture" id=6]
@@ -15,7 +15,7 @@
 [ext_resource path="res://Code/button_door_end.gd" type="Script" id=13]
 [ext_resource path="res://Tile_set/Tile_swamp/3 Objects/Pointers/5.png" type="Texture" id=14]
 [ext_resource path="res://Tile_set/Tile_swamp/3 Objects/Pointers/4.png" type="Texture" id=15]
-[ext_resource path="res://Scenes/levels_scenes/end_flag.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/Autres_scènes/end_flag.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Code/end_flag.gd" type="Script" id=17]
 [ext_resource path="res://Code/fin_tuto.gd" type="Script" id=18]
 [ext_resource path="res://Sprites/GUI/Popup_Info.png" type="Texture" id=19]
@@ -172,7 +172,7 @@ extents = Vector2( 448.133, 59.3059 )
 script = ExtResource( 1 )
 
 [node name="Slime" parent="." instance=ExtResource( 2 )]
-position = Vector2( 962.913, 424.872 )
+position = Vector2( 692.821, 530.093 )
 z_index = 2
 
 [node name="background_forest" parent="." instance=ExtResource( 3 )]
@@ -446,7 +446,7 @@ scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 20 )
 
 [node name="Spawn" type="Position2D" parent="."]
-position = Vector2( 65.0963, 262.68 )
+position = Vector2( 692.563, 529.251 )
 
 [node name="ground" type="TileMap" parent="." groups=[
 "wall",

@@ -1,25 +1,60 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Player/slime_sprite1_VRAIfinal.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=2]
 [ext_resource path="res://Code/Camera2D.gd" type="Script" id=3]
 [ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/GUI/life_gui3.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/GUI/life_gui2.png" type="Texture" id=6]
 [ext_resource path="res://Code/life_bar.gd" type="Script" id=7]
 
-[sub_resource type="OccluderPolygon2D" id=1]
+[sub_resource type="Animation" id=1]
+resource_name = "idle"
+length = 1.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 16, 17, 18, 19, 20, 21, 22, 23 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "move"
+length = 0.8
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
+}
+
+[sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( 10, 0, 8, 2, -8, 2, -10, 0 )
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 8.92983
 height = 9.0536
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 49.9999
 height = 39.0241
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 3.13522, 22.8928 )
 
 [node name="Slime" type="KinematicBody2D" groups=[
@@ -32,21 +67,29 @@ __meta__ = {
 "_edit_group_": true
 }
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 1 )
+anims/move = SubResource( 2 )
+
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 5, 5 )
+position = Vector2( 0, -11.45 )
+scale = Vector2( 2.6, 2.6 )
 texture = ExtResource( 2 )
-region_enabled = true
+vframes = 3
+hframes = 8
+frame = 13
 region_rect = Rect2( 4, 2, 28, 27 )
 
 [node name="LightOccluder1" type="LightOccluder2D" parent="Sprite"]
-position = Vector2( 0, 11 )
-occluder = SubResource( 1 )
+position = Vector2( 0, 25.5577 )
+scale = Vector2( 1.92308, 1.92308 )
+occluder = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 1.02643, 20.1606 )
 rotation = 1.5708
 scale = Vector2( 5, 5 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -150 )
@@ -75,9 +118,9 @@ script = ExtResource( 7 )
 void_hurt = 30
 
 [node name="pause" type="Button" parent="GUI"]
-margin_left = 810.0
+margin_left = 1190.0
 margin_top = 30.0
-margin_right = 910.0
+margin_right = 1290.0
 margin_bottom = 60.0
 rect_scale = Vector2( 1.5, 1.5 )
 text = "PAUSE"
@@ -93,20 +136,23 @@ scale = Vector2( 2, 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( -0.488007, 14.6171 )
 rotation = 1.5708
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 
 [node name="Wall_radar" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar"]
 position = Vector2( -67.0177, 19.9999 )
-shape = SubResource( 4 )
+shape = SubResource( 6 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar"]
 position = Vector2( 67.3635, 24.0454 )
-shape = SubResource( 4 )
+shape = SubResource( 6 )
+
+[node name="idle_timer" type="Timer" parent="."]
 [connection signal="hurt" from="." to="GUI/life_bar" method="_on_Slime_hurt"]
 [connection signal="pressed" from="GUI/pause" to="." method="_on_pause_pressed"]
 [connection signal="timeout" from="timer_shoot" to="." method="_on_timer_shoot_timeout"]
 [connection signal="area_shape_entered" from="Area2D" to="." method="_on_Area2D_area_shape_entered"]
 [connection signal="body_entered" from="Wall_radar" to="." method="_on_Wall_radar_body_entered"]
 [connection signal="body_exited" from="Wall_radar" to="." method="_on_Wall_radar_body_exited"]
+[connection signal="timeout" from="idle_timer" to="." method="_on_idle_timer_timeout"]
