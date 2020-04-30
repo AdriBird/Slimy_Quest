@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Code/DialogBox.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/GUI/Dialog Box blue_gold.png" type="Texture" id=2]
+[ext_resource path="res://Fonts/AlteHaasGroteskBold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Sprites/GUI/splat_end_dialog.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "IDLE"
+length = 1.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.231373 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="DialogBox" type="Control"]
+margin_left = 172.0
+margin_top = 435.0
+margin_right = 866.0
+margin_bottom = 581.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 37.0
+margin_top = 13.0
+margin_right = -35.0
+margin_bottom = -13.0
+custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 0, 0, 0, 0.827451 )
+text = "Hello World ! Test de long dialogue pour voir si cela fonctionne d'écrire plus de texte et que le margin marche bien."
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="end_indicator" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.581969 )
+position = Vector2( 634.883, 110.779 )
+scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="end_indicator"]
+autoplay = "IDLE"
+anims/IDLE = SubResource( 2 )
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

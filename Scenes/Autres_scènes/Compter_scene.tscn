@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Code/Compter_scene.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/GUI/Fond_Menu.png" type="Texture" id=2]
+[ext_resource path="res://Fonts/Polices de base/AlteHaasGroteskRegular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/AlteHaasGroteskBold.ttf" type="DynamicFontData" id=4]
+
+
+
+[sub_resource type="DynamicFont" id=1]
+size = 124
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 120
+font_data = ExtResource( 4 )
+
+[node name="Compter_Scene" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 375, 664 )
+texture = ExtResource( 2 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 3.0
+margin_top = 5.0
+margin_right = 751.0
+margin_bottom = 1333.0
+flat = true
+
+[node name="Clic" type="Label" parent="Button"]
+margin_left = 233.363
+margin_top = 388.938
+margin_right = 512.363
+margin_bottom = 534.938
+custom_fonts/font = SubResource( 1 )
+text = "Clic !"
+align = 1
+
+[node name="xx" type="Label" parent="Button"]
+margin_left = 303.0
+margin_top = 594.0
+margin_right = 424.0
+margin_bottom = 738.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

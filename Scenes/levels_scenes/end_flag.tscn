@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/Tilesets/Flag_icon_-_yellow.svg.png" type="Texture" id=1]
+
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 257.895, 20.8593 )
+
+[node name="end_flag" type="Area2D"]
+editor/display_folded = true
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 14.7367, -94.7354 )
+scale = Vector2( 0.6, 0.8 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -82.6948, 124.725 )
+shape = SubResource( 1 )

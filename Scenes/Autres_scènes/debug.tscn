@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/Player/Slime.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Tile_set/Set_Swamp.tres" type="TileSet" id=2]
+[ext_resource path="res://Sprites/Déco/light.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Déco/rayon_lum1.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/levels_scenes/background_forest.tscn" type="PackedScene" id=5]
+
+
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Slime" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 0 )
+
+[node name="TileMap" type="TileMap" parent="."]
+material = SubResource( 1 )
+scale = Vector2( 2, 2 )
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 327743, 6, 0, 327744, 7, 0, 327745, 7, 0, 327746, 7, 0, 327747, 7, 0, 327748, 8, 0, 393267, 6, 0, 393268, 7, 0, 393269, 7, 0, 393270, 7, 0, 393271, 8, 0, 524324, 6, 0, 524325, 7, 0, 524326, 7, 0, 524327, 7, 0, 524328, 7, 0, 524329, 8, 0, 720925, 6, 0, 720926, 7, 0, 720927, 7, 0, 720928, 8, 0, 1048567, 1, 0, 1048568, 1, 0, 1048569, 1, 0, 1048570, 1, 0, 1048571, 1, 0, 1048572, 1, 0, 1048573, 1, 0, 1048574, 1, 0, 1048575, 1, 0, 983040, 1, 0, 983041, 1, 0, 983042, 1, 0, 983043, 1, 0, 983044, 1, 0, 983045, 1, 0, 983046, 1, 0, 983047, 1, 0, 983048, 1, 0, 983049, 1, 0, 983050, 1, 0, 983051, 1, 0, 983052, 1, 0, 983053, 1, 0, 983054, 1, 0, 983055, 1, 0, 983056, 1, 0, 983057, 1, 0, 983058, 1, 0, 983059, 1, 0, 983060, 1, 0, 983061, 1, 0, 983062, 1, 0, 983063, 1, 0, 983064, 1, 0, 983065, 1, 0, 983066, 1, 0, 983067, 1, 0, 983068, 1, 0, 983069, 1, 0, 983070, 1, 0, 983071, 1, 0, 983072, 1, 0, 983073, 1, 0, 983074, 1, 0, 983075, 1, 0, 983076, 1, 0, 983077, 1, 0, 983078, 1, 0, 983079, 1, 0, 983080, 1, 0, 983081, 1, 0, 983082, 1, 0, 983083, 1, 0, 983084, 1, 0, 983085, 1, 0, 983086, 1, 0, 983087, 1, 0, 983088, 1, 0, 983089, 1, 0, 983090, 1, 0, 983091, 1, 0, 983092, 1, 0, 983093, 1, 0, 983094, 1, 0, 983095, 1, 0, 983096, 1, 0, 983097, 1, 0, 983098, 1, 0, 983099, 1, 0, 983100, 1, 0, 983101, 1, 0, 983102, 1, 0, 983103, 1, 0, 983104, 1, 0, 983105, 1, 0, 983106, 1, 0, 983107, 1, 0, 983108, 1, 0, 983109, 1, 0, 983110, 1, 0, 983111, 1, 0, 983112, 1, 0, 983113, 1, 0, 983114, 1, 0, 983115, 1, 0, 983116, 1, 0, 983117, 1, 0, 983118, 1, 0, 983119, 1, 0, 983120, 1, 0, 983121, 1, 0, 983122, 1, 0, 983123, 1, 0, 983124, 1, 0, 983125, 1, 0, 983126, 1, 0, 983127, 1, 0, 983128, 1, 0, 983129, 1, 0, 983130, 1, 0, 983131, 1, 0, 983132, 1, 0, 983133, 1, 0, 983134, 1, 0, 983135, 1, 0, 983136, 1, 0, 983137, 1, 0, 983138, 1, 0, 983139, 1, 0, 983140, 1, 0, 983141, 1, 0, 983142, 1, 0, 983143, 1, 0, 983144, 1, 0, 983145, 1, 0, 983146, 1, 0, 983147, 1, 0, 983148, 1, 0, 983149, 1, 0, 983150, 1, 0, 983151, 1, 0 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 2192.35, 2607.67 )
+scale = Vector2( 15.7399, 7.50386 )
+texture = ExtResource( 3 )
+mode = 1
+
+[node name="Light2D2" type="Light2D" parent="."]
+position = Vector2( 2864.02, -271.075 )
+rotation = 0.767945
+scale = Vector2( 8.3144, 52.6711 )
+texture = ExtResource( 4 )
+texture_scale = 0.05
+energy = 0.8
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+
+[node name="Light2D3" type="Light2D" parent="."]
+position = Vector2( 956.676, -127.911 )
+rotation = 3.83972
+scale = Vector2( 6.80146, 52.6711 )
+texture = ExtResource( 4 )
+texture_scale = 0.05
+energy = 0.8
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+
+[node name="Light2D4" type="Light2D" parent="."]
+position = Vector2( 1771.45, -138.062 )
+rotation = 3.83972
+scale = Vector2( 6.80146, 52.6711 )
+texture = ExtResource( 4 )
+offset = Vector2( 0, -1 )
+texture_scale = 0.05
+energy = 0.8
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+
+[node name="Light2D5" type="Light2D" parent="."]
+position = Vector2( 4247.23, -680.954 )
+rotation = 3.83972
+scale = Vector2( 6.80146, 52.6711 )
+texture = ExtResource( 4 )
+texture_scale = 0.05
+energy = 1.2
+mode = 2
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+
+[node name="Sun" type="Light2D" parent="."]
+position = Vector2( 7726.1, -1901.83 )
+scale = Vector2( 23.2088, 6.07847 )
+texture = ExtResource( 3 )
+energy = 1.5
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+
+[node name="background_forest" parent="." instance=ExtResource( 5 )]
+offset = Vector2( 300, -204.73 )
+transform = Transform2D( 1, 0, 0, 1, 300, -204.73 )

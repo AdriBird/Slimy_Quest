@@ -1,0 +1,112 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Player/slime_sprite1_VRAIfinal.png" type="Texture" id=2]
+[ext_resource path="res://Code/Camera2D.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/GUI/life_gui3.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/GUI/life_gui2.png" type="Texture" id=6]
+[ext_resource path="res://Code/life_bar.gd" type="Script" id=7]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+polygon = PoolVector2Array( 10, 0, 8, 2, -8, 2, -10, 0 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 8.92983
+height = 9.0536
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 49.9999
+height = 39.0241
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 3.13522, 22.8928 )
+
+[node name="Slime" type="KinematicBody2D" groups=[
+"Player",
+]]
+position = Vector2( 678.229, 533.041 )
+z_index = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 5, 5 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 4, 2, 28, 27 )
+
+[node name="LightOccluder1" type="LightOccluder2D" parent="Sprite"]
+position = Vector2( 0, 11 )
+occluder = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1.02643, 20.1606 )
+rotation = 1.5708
+scale = Vector2( 5, 5 )
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -150 )
+current = true
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
+editor_draw_drag_margin = true
+script = ExtResource( 3 )
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="life_bar" type="TextureProgress" parent="GUI"]
+anchor_right = 1.0
+margin_left = 30.0
+margin_top = 30.0
+margin_right = -842.0
+margin_bottom = 48.0
+rect_scale = Vector2( 2.3, 2.3 )
+value = 50.0
+texture_under = ExtResource( 4 )
+texture_over = ExtResource( 5 )
+texture_progress = ExtResource( 6 )
+script = ExtResource( 7 )
+void_hurt = 30
+
+[node name="pause" type="Button" parent="GUI"]
+margin_left = 810.0
+margin_top = 30.0
+margin_right = 910.0
+margin_bottom = 60.0
+rect_scale = Vector2( 1.5, 1.5 )
+text = "PAUSE"
+
+[node name="tir" type="Position2D" parent="."]
+position = Vector2( 120, -20 )
+scale = Vector2( 2, 2 )
+
+[node name="timer_shoot" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -0.488007, 14.6171 )
+rotation = 1.5708
+shape = SubResource( 3 )
+
+[node name="Wall_radar" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar"]
+position = Vector2( -67.0177, 19.9999 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar"]
+position = Vector2( 67.3635, 24.0454 )
+shape = SubResource( 4 )
+[connection signal="hurt" from="." to="GUI/life_bar" method="_on_Slime_hurt"]
+[connection signal="pressed" from="GUI/pause" to="." method="_on_pause_pressed"]
+[connection signal="timeout" from="timer_shoot" to="." method="_on_timer_shoot_timeout"]
+[connection signal="area_shape_entered" from="Area2D" to="." method="_on_Area2D_area_shape_entered"]
+[connection signal="body_entered" from="Wall_radar" to="." method="_on_Wall_radar_body_entered"]
+[connection signal="body_exited" from="Wall_radar" to="." method="_on_Wall_radar_body_exited"]

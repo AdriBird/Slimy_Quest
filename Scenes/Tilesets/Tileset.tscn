@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/Tilesets/tutoYoutube2.png" type="Texture" id=1]
+
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 32 )
+
+[node name="Tileset" type="Node2D"]
+
+[node name="Brique" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 128, 64, 64, 64 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Brique"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Brique/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="Brique_veg" type="Sprite" parent="."]
+position = Vector2( 96, 0 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 192, 64, 64, 64 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Brique_veg"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Brique_veg/StaticBody2D"]
+shape = SubResource( 2 )
