@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Code/background_forest.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/fond.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/back_arbres.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/arbre3_plan.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/arbre2_plan.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/Background_vrai.png" type="Texture" id=6]
+
+[node name="background_forest" type="ParallaxBackground"]
+script = ExtResource( 1 )
+
+[node name="fond" type="ParallaxLayer" parent="."]
+editor/display_folded = true
+motion_scale = Vector2( 0.1, 1 )
+motion_mirroring = Vector2( 3248, 0 )
+
+[node name="Sprite" type="Sprite" parent="fond"]
+position = Vector2( 1067, 0 )
+scale = Vector2( 3.5, 3.5 )
+texture = ExtResource( 2 )
+
+[node name="4plan" type="ParallaxLayer" parent="."]
+editor/display_folded = true
+position = Vector2( 467.524, 330.138 )
+motion_scale = Vector2( 0.3, 1 )
+motion_mirroring = Vector2( 3248, 0 )
+
+[node name="Sprite" type="Sprite" parent="4plan"]
+position = Vector2( 600, 420 )
+scale = Vector2( 3.5, 3.5 )
+texture = ExtResource( 3 )
+
+[node name="3plan" type="ParallaxLayer" parent="."]
+editor/display_folded = true
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 3248, 0 )
+
+[node name="Sprite" type="Sprite" parent="3plan"]
+position = Vector2( 1080, 666 )
+scale = Vector2( 3.5, 3.5 )
+texture = ExtResource( 4 )
+
+[node name="2plan" type="ParallaxLayer" parent="."]
+editor/display_folded = true
+motion_scale = Vector2( 0.7, 1 )
+motion_mirroring = Vector2( 3248, 0 )
+
+[node name="Sprite" type="Sprite" parent="2plan"]
+position = Vector2( 1068, 683 )
+scale = Vector2( 3.5, 3.5 )
+texture = ExtResource( 5 )
+
+[node name="1plan" type="ParallaxLayer" parent="."]
+editor/display_folded = true
+motion_mirroring = Vector2( 3248, 0 )
+
+[node name="Sprite" type="Sprite" parent="1plan"]
+position = Vector2( 1067, 0 )
+scale = Vector2( 3.5, 3.5 )
+texture = ExtResource( 6 )

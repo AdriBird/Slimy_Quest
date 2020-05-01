@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=2]
@@ -47,31 +47,25 @@ tracks/0/keys = {
 polygon = PoolVector2Array( 10, 0, 8, 2, -8, 2, -10, 0 )
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 8.92983
-height = 9.0536
-
-[sub_resource type="CapsuleShape2D" id=5]
 radius = 49.9999
 height = 39.0241
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 3.13522, 22.8928 )
 
 [node name="Slime" type="KinematicBody2D" groups=[
 "Player",
 ]]
-position = Vector2( 678.229, 533.041 )
+position = Vector2( 683.633, 533.581 )
 z_index = 1
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 1 )
 anims/move = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.862745 )
 position = Vector2( 0, -11.45 )
 scale = Vector2( 2.6, 2.6 )
 texture = ExtResource( 2 )
@@ -85,11 +79,8 @@ position = Vector2( 0, 25.5577 )
 scale = Vector2( 1.92308, 1.92308 )
 occluder = SubResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 1.02643, 20.1606 )
-rotation = 1.5708
-scale = Vector2( 5, 5 )
-shape = SubResource( 4 )
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -3.82935, -43.7807, 21.8378, -42.2407, 48.0182, -25.8138, 63.9318, -10.9268, 72.6586, 16.7936, 72.1453, 41.9474, 51.6116, 62.4811, 40.3181, 67.6145, 40.3181, 68.1279, 38.2647, 69.6678, -41.8167, 69.6678, -66.4571, 53.7543, -72.1039, 38.354, -72.1039, -2.20001, -41.3033, -34.0273 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -150 )
@@ -116,6 +107,8 @@ texture_over = ExtResource( 5 )
 texture_progress = ExtResource( 6 )
 script = ExtResource( 7 )
 void_hurt = 30
+healthy_color = Color( 0, 0.694118, 1, 1 )
+caution_color = Color( 0.141176, 1, 0.0431373, 1 )
 
 [node name="pause" type="Button" parent="GUI"]
 margin_left = 1190.0
@@ -132,21 +125,22 @@ scale = Vector2( 2, 2 )
 [node name="timer_shoot" type="Timer" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( -0.488007, 14.6171 )
 rotation = 1.5708
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Wall_radar" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar"]
-position = Vector2( -67.0177, 19.9999 )
-shape = SubResource( 6 )
+position = Vector2( -74.9702, 21.0216 )
+shape = SubResource( 5 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar"]
-position = Vector2( 67.3635, 24.0454 )
-shape = SubResource( 6 )
+position = Vector2( 72.4827, 18.9261 )
+shape = SubResource( 5 )
 
 [node name="idle_timer" type="Timer" parent="."]
 [connection signal="hurt" from="." to="GUI/life_bar" method="_on_Slime_hurt"]

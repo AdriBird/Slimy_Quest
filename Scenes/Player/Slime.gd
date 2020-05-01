@@ -1,7 +1,12 @@
 extends KinematicBody2D
 
-signal hurt
 
+
+
+#-----------------------Signaux----------------------------------------------------------
+
+signal hurt
+#-----------------------Variables----------------------------------------------------------
 var vel = Vector2()
 const GRAVITY = 3000
 const UP = Vector2(0, -1)
@@ -21,7 +26,7 @@ var direction_tir = 1
 var wall_bounce_val = 800
 var can_wall_jump = false
 
-
+#-----------------------Physic Process----------------------------------------------------------
 
 
 func _ready():
@@ -39,11 +44,10 @@ func _physics_process(delta):
 		if timer_idle_verif == true:
 			time_idle.set_wait_time(2)
 			time_idle.start()
-			print("time")
 			timer_idle_verif = false
 		
-	if is_on_wall():
-		vel.y += (GRAVITY/2 * delta)
+	if can_wall_jump and vel.y >= 0:
+		vel.y += (GRAVITY/14 * delta)
 	else:
 		vel.y += (GRAVITY * delta)
 	if not Global.dialog:
@@ -67,40 +71,8 @@ func shoot():
 		time = false
 		time_shoot.set_wait_time(1)
 		time_shoot.start()
-""" detect built in
-func motion_loop():
-	var right = Input.is_action_pressed("right")
-	var left = Input.is_action_pressed("left")
-	var up = Input.is_action_pressed("up")
-	var down = Input.is_action_pressed("down")
-	var space = Input.is_action_pressed("ui_accept")
-	var just_space = Input.is_action_just_pressed("ui_accept")
-	var dirx = int(right) - int(left)
-	if dirx == 1 and not is_on_wall():
-		$Sprite.flip_h = false
-		direction_tir = 1
-		$tir.position.x = 110
-		vel.x = min(vel.x + speed, max_speed)
-	if dirx == -1 and not is_on_wall():
-		$Sprite.flip_h = true
-		direction_tir = -1
-		$tir.position.x = -110
-		vel.x = max(vel.x - speed, -max_speed)
-	if dirx == 0:
-		vel.x = lerp(vel.x, 0 ,0.15)
-	if just_space and is_on_wall() and not is_on_floor():
-		vel.y = -jump_speed
-		if $Sprite.flip_h == true:
-			vel.x = wall_bounce_val
-		if $Sprite.flip_h == false:
-			vel.x = -wall_bounce_val
-	if just_space and is_on_floor():
-		vel.y = -jump_speed
-	if Input.is_action_just_released("ui_accept"):
-		if vel.y < -100:
-			vel.y /= 2
-"""
-func motion_loop():                                        # mouvements du slime
+
+func motion_loop():                                
 	var right = Input.is_action_pressed("right")
 	var left = Input.is_action_pressed("left")
 	var up = Input.is_action_pressed("up")
