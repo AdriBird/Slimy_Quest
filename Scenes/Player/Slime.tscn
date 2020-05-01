@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Sprites/GUI/life_gui3.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/GUI/life_gui2.png" type="Texture" id=6]
 [ext_resource path="res://Code/life_bar.gd" type="Script" id=7]
+[ext_resource path="res://Fonts/AlteHaasGroteskBold.ttf" type="DynamicFontData" id=8]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -46,11 +47,15 @@ tracks/0/keys = {
 [sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( 10, 0, 8, 2, -8, 2, -10, 0 )
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="DynamicFont" id=4]
+size = 81
+font_data = ExtResource( 8 )
+
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 49.9999
 height = 39.0241
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 3.13522, 22.8928 )
 
 [node name="Slime" type="KinematicBody2D" groups=[
@@ -118,6 +123,16 @@ margin_bottom = 60.0
 rect_scale = Vector2( 1.5, 1.5 )
 text = "PAUSE"
 
+[node name="blob_score" type="Sprite" parent="GUI"]
+
+[node name="score" type="Label" parent="GUI"]
+margin_left = 30.0
+margin_top = 101.235
+margin_right = 75.0
+margin_bottom = 198.235
+custom_fonts/font = SubResource( 4 )
+text = "0"
+
 [node name="tir" type="Position2D" parent="."]
 position = Vector2( 120, -20 )
 scale = Vector2( 2, 2 )
@@ -130,17 +145,17 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( -0.488007, 14.6171 )
 rotation = 1.5708
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Wall_radar" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar"]
 position = Vector2( -74.9702, 21.0216 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar"]
 position = Vector2( 72.4827, 18.9261 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="idle_timer" type="Timer" parent="."]
 [connection signal="hurt" from="." to="GUI/life_bar" method="_on_Slime_hurt"]

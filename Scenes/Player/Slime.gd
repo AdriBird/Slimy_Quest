@@ -33,6 +33,7 @@ func _ready():
 	pass #
 
 func _process(delta):
+	$GUI/score.text = str(Global.score)
 	if self.position.y >= 2000:
 		hurt()
 	if Input.is_action_pressed("pause"):
