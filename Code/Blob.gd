@@ -12,4 +12,5 @@ func init(type, pos):
 func _on_Blob_body_entered(body):
 	if body.is_in_group("Player"):
 		Global.score += 1
+		body.nb_blob += 1
 		queue_free()

@@ -88,12 +88,12 @@ occluder = SubResource( 3 )
 polygon = PoolVector2Array( -3.82935, -43.7807, 21.8378, -42.2407, 48.0182, -25.8138, 63.9318, -10.9268, 72.6586, 16.7936, 72.1453, 41.9474, 51.6116, 62.4811, 40.3181, 67.6145, 40.3181, 68.1279, 38.2647, 69.6678, -41.8167, 69.6678, -66.4571, 53.7543, -72.1039, 38.354, -72.1039, -2.20001, -41.3033, -34.0273 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 0, -150 )
+position = Vector2( 0, -50 )
 current = true
-drag_margin_left = 0.1
-drag_margin_top = 0.1
-drag_margin_right = 0.1
-drag_margin_bottom = 0.1
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
 editor_draw_drag_margin = true
 script = ExtResource( 3 )
 

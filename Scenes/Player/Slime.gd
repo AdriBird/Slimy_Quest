@@ -25,7 +25,7 @@ var particules = preload("res://Scenes/Instancing_effects/Particules.tscn")
 var direction_tir = 1
 var wall_bounce_val = 800
 var can_wall_jump = false
-
+var nb_blob = 0
 #-----------------------Physic Process----------------------------------------------------------
 
 
@@ -33,6 +33,7 @@ func _ready():
 	pass #
 
 func _process(delta):
+	update_size()
 	$GUI/score.text = str(Global.score)
 	if self.position.y >= 2000:
 		hurt()
@@ -106,6 +107,13 @@ func motion_loop():
 	if Input.is_action_just_released("ui_accept"):
 		if vel.y < -100:
 			vel.y /= 2
+
+
+func update_size():
+	var x = 0.2
+	scale = Vector2(1+x*nb_blob,1+x*nb_blob)
+	print(scale)
+
 
 func hurt():
 	self.vel.y = 0
