@@ -1,9 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Sprites/Items/water_drop.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Items/blue_cube.png" type="Texture" id=1]
 
 [node name="tile_object" type="Node2D"]
 
-[node name="tile_blob" type="Sprite" parent="."]
-scale = Vector2( 0.1, 0.1 )
+[node name="blue_blob" type="Sprite" parent="."]
 texture = ExtResource( 1 )
