@@ -158,6 +158,9 @@ position = Vector2( 72.4827, 18.9261 )
 shape = SubResource( 6 )
 
 [node name="idle_timer" type="Timer" parent="."]
+
+[node name="bottom_pos" type="Position2D" parent="."]
+position = Vector2( -0.636475, 71.1185 )
 [connection signal="hurt" from="." to="GUI/life_bar" method="_on_Slime_hurt"]
 [connection signal="pressed" from="GUI/pause" to="." method="_on_pause_pressed"]
 [connection signal="timeout" from="timer_shoot" to="." method="_on_timer_shoot_timeout"]

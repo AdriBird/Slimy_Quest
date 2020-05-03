@@ -26,10 +26,12 @@ var direction_tir = 1
 var wall_bounce_val = 800
 var can_wall_jump = false
 var nb_blob = 0
+var bottom_pos
 #-----------------------Physic Process----------------------------------------------------------
 
 
 func _ready():
+	bottom_pos = get_node("bottom_pos").position
 	pass #
 
 func _process(delta):
@@ -42,6 +44,7 @@ func _process(delta):
 		add_child(pause)
 
 func _physics_process(delta):
+	print(position.y)
 	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
 		if timer_idle_verif == true:
 			time_idle.set_wait_time(2)
@@ -57,7 +60,7 @@ func _physics_process(delta):
 		shoot()
 	if shot_particles == true and is_on_floor():
 		var p = particules.instance()
-		p.emit("roost", self.position)
+		p.emit("roost", self.position , bottom_pos)
 		get_parent().add_child(p)
 		shot_particles = false
 	if is_on_floor() == false:
@@ -110,9 +113,11 @@ func motion_loop():
 
 
 func update_size():
-	var x = 0.2
-	scale = Vector2(1+x*nb_blob,1+x*nb_blob)
-	print(scale)
+	var pos = position
+	var x = 0.05
+	if scale != Vector2(1+x*nb_blob,1+x*nb_blob):
+		scale = Vector2(1+x*nb_blob,1+x*nb_blob)
+		position.y += -20
 
 
 func hurt():

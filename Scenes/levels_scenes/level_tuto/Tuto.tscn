@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Scenes/levels_scenes/level_tuto/Tuto.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/Slime.tscn" type="PackedScene" id=2]
@@ -23,7 +23,8 @@
 [ext_resource path="res://Tile_set/Set_Swamp.tres" type="TileSet" id=21]
 [ext_resource path="res://Tile_set/Tile_set_test.tres" type="TileSet" id=22]
 [ext_resource path="res://Tile_set/tile_object.tres" type="TileSet" id=23]
-[ext_resource path="res://Tile_set/tile_blob.tres" type="TileSet" id=24]
+[ext_resource path="res://Sprites/Tilesets/tutoYoutube2.png" type="Texture" id=24]
+[ext_resource path="res://Tile_set/tile_blob.tres" type="TileSet" id=25]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
@@ -168,6 +169,9 @@ bg_color = Color( 0.454902, 0.0784314, 0.580392, 1 )
 
 [sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 448.133, 59.3059 )
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 31.8796, 14.9796 )
 
 [node name="Tuto_scene" type="Node2D"]
 script = ExtResource( 1 )
@@ -478,6 +482,7 @@ format = 1
 tile_data = PoolIntArray( -4, 2, 0, -3, 1, 0, -2, 1, 0, -1, 2, 0, -65516, 2, 0, -65515, 1, 0, -65514, 2, 0, 65532, 2, 0, 65533, 1, 0, 65534, 1, 0, 65535, 2, 0, 20, 2, 0, 21, 1, 0, 22, 2, 0, 131068, 2, 0, 131069, 1, 0, 131070, 1, 0, 131071, 2, 0, 65556, 2, 0, 65557, 1, 0, 65558, 2, 0, 196604, 2, 0, 196605, 1, 0, 196606, 1, 0, 196607, 2, 0, 131092, 2, 0, 131093, 1, 0, 131094, 2, 0, 131179, 2, 0, 131180, 2, 0, 131181, 2, 0, 131182, 2, 0, 131183, 2, 0, 131184, 2, 0, 131185, 2, 0, 131186, 2, 0, 131187, 2, 0, 262140, 2, 0, 262141, 1, 0, 262142, 1, 0, 262143, 2, 0, 196628, 2, 0, 196629, 1, 0, 196630, 2, 0, 196715, 0, 0, 196716, 2, 0, 196717, 2, 0, 196718, 0, 0, 196719, 1, 0, 196720, 0, 0, 196721, 2, 0, 196722, 2, 0, 196723, 2, 0, 327676, 2, 0, 327677, 1, 0, 327678, 1, 0, 327679, 2, 0, 262164, 2, 0, 262165, 1, 0, 262166, 2, 0, 262258, 2, 0, 262259, 2, 0, 393212, 2, 0, 393213, 1, 0, 393214, 1, 0, 393215, 2, 0, 327700, 2, 0, 327701, 1, 0, 327702, 2, 0, 327794, 0, 0, 327795, 2, 0, 458748, 2, 0, 458749, 1, 0, 458750, 1, 0, 458751, 2, 0, 393236, 2, 0, 393237, 1, 0, 393238, 2, 0, 393330, 0, 0, 393331, 2, 0, 524284, 2, 0, 524285, 1, 0, 524286, 1, 0, 524287, 2, 0, 458772, 2, 0, 458773, 1, 0, 458774, 2, 0, 458866, 0, 0, 458867, 2, 0, 589820, 2, 0, 589821, 1, 0, 589822, 1, 0, 589823, 2, 0, 524308, 2, 0, 524309, 1, 0, 524310, 2, 0, 655356, 2, 0, 655357, 1, 0, 655358, 1, 0, 655359, 2, 0, 589844, 2, 0, 589845, 1, 0, 589846, 2, 0, 720892, 2, 0, 720893, 1, 0, 720894, 1, 0, 720895, 2, 0, 655380, 2, 0, 655381, 1, 0, 655382, 2, 0, 786428, 2, 0, 786429, 1, 0, 786430, 1, 0, 786431, 2, 0, 851964, 2, 0, 851965, 1, 0, 851966, 1, 0, 851967, 2, 0, 917500, 2, 0, 917501, 1, 0, 917502, 1, 0, 917503, 2, 0, 983036, 2, 0, 983037, 1, 0, 983038, 1, 0, 983039, 2, 0 )
 
 [node name="Water" type="TileMap" parent="."]
+editor/display_folded = true
 z_index = 2
 tile_set = ExtResource( 23 )
 cell_size = Vector2( 320, 160 )
@@ -493,11 +498,26 @@ position = Vector2( 2487.3, 1050.19 )
 position = Vector2( 198.896, 18.4966 )
 shape = SubResource( 15 )
 
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 3544.9, 501.394 )
+scale = Vector2( 10, 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+texture = ExtResource( 24 )
+region_enabled = true
+region_rect = Rect2( 192, 128, 64, 32 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 16 )
+
 [node name="tile_blob" type="TileMap" parent="."]
-tile_set = ExtResource( 24 )
+tile_set = ExtResource( 25 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114149, 0, 0, 1376339, 0, 0, 1376423, 0, 0, 1900592, 0, 0, 1900593, 0, 0, 1900594, 0, 0, 1900595, 0, 0, 1900596, 0, 0, 1900597, 0, 0, 1900598, 0, 0, 1900599, 0, 0, 1900651, 0, 0 )
+tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 917605, 0, 0, 917606, 0, 0, 917607, 0, 0, 917608, 0, 0, 917609, 0, 0, 917610, 0, 0, 1376339, 0, 0, 1376423, 0, 0, 1900599, 0, 0, 1900651, 0, 0 )
 [connection signal="body_entered" from="red_button/button_door" to="red_button/button_door" method="_on_button_door_body_entered"]
 [connection signal="sesame" from="red_button/button_door" to="door" method="_on_button_door_sesame"]
 [connection signal="body_entered" from="red_button_end/button_door" to="red_button_end/button_door" method="_on_button_door_body_entered"]
