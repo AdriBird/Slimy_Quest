@@ -502,7 +502,7 @@ format = 1
 tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114148, 0, 0, 1376423, 0, 0, 1900651, 0, 0 )
 
 [node name="enemy" parent="." instance=ExtResource( 25 )]
-position = Vector2( 2670, 652 )
+position = Vector2( 2680, 652 )
 [connection signal="body_entered" from="red_button/button_door" to="red_button/button_door" method="_on_button_door_body_entered"]
 [connection signal="sesame" from="red_button/button_door" to="door" method="_on_button_door_sesame"]
 [connection signal="body_entered" from="red_button_end/button_door" to="red_button_end/button_door" method="_on_button_door_body_entered"]
