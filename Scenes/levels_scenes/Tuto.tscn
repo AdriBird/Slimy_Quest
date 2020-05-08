@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Scenes/levels_scenes/Tuto.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/Slime.tscn" type="PackedScene" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://Tile_set/Set_Swamp.tres" type="TileSet" id=21]
 [ext_resource path="res://Tile_set/Tile_set_test.tres" type="TileSet" id=22]
 [ext_resource path="res://Tile_set/tile_object.tres" type="TileSet" id=23]
+[ext_resource path="res://Scenes/Autres_scènes/enemy.tscn" type="PackedScene" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
@@ -318,6 +319,7 @@ anims/open_door = SubResource( 5 )
 [node name="red_button" type="StaticBody2D" parent="." groups=[
 "button",
 ]]
+editor/display_folded = true
 position = Vector2( -1922.43, -42.3381 )
 z_index = 1
 __meta__ = {
@@ -352,6 +354,7 @@ shape = SubResource( 9 )
 [node name="red_button_end" type="StaticBody2D" parent="." groups=[
 "button",
 ]]
+editor/display_folded = true
 position = Vector2( 2926.64, -677.627 )
 __meta__ = {
 "_edit_group_": true
@@ -490,6 +493,9 @@ position = Vector2( 2487.3, 1050.19 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Water/Water"]
 position = Vector2( 198.896, 18.4966 )
 shape = SubResource( 15 )
+
+[node name="enemy" parent="." instance=ExtResource( 24 )]
+position = Vector2( 1804.2, 898.454 )
 [connection signal="body_entered" from="red_button/button_door" to="red_button/button_door" method="_on_button_door_body_entered"]
 [connection signal="sesame" from="red_button/button_door" to="door" method="_on_button_door_sesame"]
 [connection signal="body_entered" from="red_button_end/button_door" to="red_button_end/button_door" method="_on_button_door_body_entered"]

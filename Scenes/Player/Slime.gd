@@ -44,7 +44,6 @@ func _process(delta):
 		add_child(pause)
 
 func _physics_process(delta):
-	print(position.y)
 	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
 		if timer_idle_verif == true:
 			time_idle.set_wait_time(2)

@@ -1,48 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Code/enemy.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Ennemis/ENEMY_temp_final.png" type="Texture" id=2]
-
+[ext_resource path="res://Sprites/Ennemis/grousk.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 42.4579, 7.19913 )
+extents = Vector2( 44.142, 40.1268 )
 
 [sub_resource type="Animation" id=2]
-resource_name = "iddle"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 1 ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "move"
-length = 0.5
-loop = true
-step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 2 ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "shoot"
+resource_name = "hit"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -53,14 +18,13 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 5 ]
+"values": [ 4 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "walk"
-length = 0.5
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.8
 loop = true
-step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -68,16 +32,31 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 0, 3 ]
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "walk"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 3 ]
 }
 
 [node name="enemy" type="KinematicBody2D" groups=[
 "enemy",
 ]]
-scale = Vector2( 3, 7 )
 collision_layer = 7
 script = ExtResource( 1 )
 __meta__ = {
@@ -85,27 +64,28 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
-vframes = 6
-frame = 3
+hframes = 5
+frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( -23.4464, -0.93306 )
 shape = SubResource( 1 )
 
 [node name="enemy_anim" type="AnimationPlayer" parent="."]
-anims/iddle = SubResource( 2 )
-anims/move = SubResource( 3 )
-anims/shoot = SubResource( 4 )
-anims/walk = SubResource( 5 )
-
-[node name="Timer_move" type="Timer" parent="."]
+anims/hit = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/walk = SubResource( 4 )
 
 [node name="TextureProgress" type="TextureProgress" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Timer_hit_lag" type="Timer" parent="."]
-[connection signal="timeout" from="Timer_move" to="." method="_on_Timer_timeout"]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 45, 0 )
+enabled = true
+cast_to = Vector2( 0, 60 )
 [connection signal="timeout" from="Timer_hit_lag" to="." method="_on_Timer_hit_lag_timeout"]
