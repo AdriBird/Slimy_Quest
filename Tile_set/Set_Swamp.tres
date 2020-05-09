@@ -118,7 +118,7 @@ extents = Vector2( 16.0642, 7.64722 )
 "one_way": true,
 "one_way_margin": 1.0,
 "shape": SubResource( 2 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 15.951, 7.42657 )
+"shape_transform": Transform2D( 1, 0, 0, 1, 16, 7.5 )
 } ]
 6/z_index = 0
 7/name = "PlatC"

@@ -3,7 +3,7 @@ extends KinematicBody2D
 onready var timer_hit_lag = get_node("Timer_hit_lag")
 var vel = Vector2()
 var speed = 150
-var dirx = -1
+var dirx = 1
 onready var life = 100
 var hit_lag = 1
 
@@ -17,21 +17,19 @@ func _ready():
 func _physics_process(delta):
 	if is_on_wall() or $RayCast2D.is_colliding() == false:
 		dirx *= -1
-		
+		$RayCast2D.position.x *= -1
+	
 	vel.x = 0
 	movement()
 	move_and_slide(vel)
-	
 func movement():
 	if dirx == 1 and hit_lag == 1:
-		$RayCast2D.scale.x *= -1
-		$RayCast2D.position.x *= -1
+		#$RayCast2D.scale.x *= -1
 		vel.x += speed * hit_lag
 		$Sprite.flip_h = false
 		$enemy_anim.play("walk")
 	elif dirx == -1 and hit_lag == 1:
-		$RayCast2D.scale.x *= -1
-		$RayCast2D.position.x *= -1
+		#$RayCast2D.scale.x *= -1
 		vel.x -= speed * hit_lag
 		$Sprite.flip_h = true
 		$enemy_anim.play("walk")

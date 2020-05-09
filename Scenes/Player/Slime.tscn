@@ -134,7 +134,7 @@ custom_fonts/font = SubResource( 4 )
 text = "0"
 
 [node name="tir" type="Position2D" parent="."]
-position = Vector2( 120, -20 )
+position = Vector2( 55.9278, -8.27948 )
 scale = Vector2( 2, 2 )
 
 [node name="timer_shoot" type="Timer" parent="."]

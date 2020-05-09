@@ -117,7 +117,6 @@ position = Vector2( -1, -1 )
 shape = SubResource( 1 )
 
 [node name="PlatG" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( -2.20313, 208.382 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
@@ -127,16 +126,15 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="StaticBody2D" type="StaticBody2D" parent="PlatG"]
+[node name="StaticBody2D2" type="StaticBody2D" parent="PlatG"]
 position = Vector2( 1, 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatG/StaticBody2D"]
-position = Vector2( -1.04895, -1.57343 )
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PlatG/StaticBody2D2"]
+position = Vector2( -1, -1.5 )
 shape = SubResource( 2 )
 one_way_collision = true
 
 [node name="PlatC" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 125.053, 210.461 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
