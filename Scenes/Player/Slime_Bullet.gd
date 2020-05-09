@@ -15,7 +15,7 @@ func start(pos, dir):
 		$Sprite.flip_h = true
 		$Particles2D2.rotation_degrees = 90
 		$Particles2D2.position.x = 84
-	$bullet_anim.play("shoot")
+#	$bullet_anim.play("shoot")
 	
 func _process(delta):
 	var collision = move_and_collide(vel * delta)
@@ -24,8 +24,8 @@ func _process(delta):
 			$CollisionShape2D.disabled = true
 			collision.collider.hit(20)
 			vel = Vector2(0, 0)
-			$bullet_anim.play("splash")
-			yield ($bullet_anim, "animation_finished")
+#			$bullet_anim.play("splash")
+#			yield ($bullet_anim, "animation_finished")
 			$CollisionShape2D.disabled = false
 			queue_free()
 		queue_free()
