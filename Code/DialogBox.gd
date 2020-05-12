@@ -1,6 +1,6 @@
 extends Control
 signal end_dialog
-
+signal my_signal
 var type_dialog = ""
 var d 
 var dialog_index = 0
@@ -24,7 +24,9 @@ func load_dialog(dialog):
 		)
 		$Tween.start()
 	else:
-		emit_signal("end_dialog")
+		var papa = get_parent()
+		connect("my_signal", papa, "_on_my_signal")
+		emit_signal("my_signal")
 		Global.dialog = false
 		queue_free()
 	dialog_index += 1

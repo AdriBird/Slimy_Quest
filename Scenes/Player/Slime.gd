@@ -81,8 +81,8 @@ func motion_loop():
 	var left = Input.is_action_pressed("left")
 	var up = Input.is_action_pressed("up")
 	var down = Input.is_action_pressed("down")
-	var space = Input.is_action_pressed("ui_accept")
-	var just_space = Input.is_action_just_pressed("ui_accept")
+	var space = Input.is_action_pressed("jump")
+	var just_space = Input.is_action_just_pressed("jump")
 	var dirx = int(right) - int(left)
 	if dirx == 1 and not is_on_wall():
 		$AnimationPlayer.play("move")

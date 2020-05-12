@@ -50,6 +50,7 @@ func _on_Info_button_pressed():
 	pass
 
 
+
 func _on_Close_Button_pressed():
 	get_node("Info_Popup_Menu").hide()
 	get_node("Settings_Popup_Menu").hide()
@@ -67,13 +68,13 @@ func _on_Settings_button_pressed():
 	info_dialog.load_dialog(dialog)
 	add_child(info_dialog)
 	no_buttons()
-	#emit_signal("Settings_signal")
-	pass # Replace with function body.
-	
+
+
 func no_buttons():
 	get_node("Info_button").hide()
 	get_node("Settings_button").hide()
 	get_node("Play_button").hide()
 	get_node("Play_button").set_disabled(true)
 
-
+func _on_my_signal():
+	get_tree().change_scene("res://Scenes/Panels_scenes/Settings_Scene.tscn")
