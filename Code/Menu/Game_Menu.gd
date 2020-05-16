@@ -1,9 +1,12 @@
 extends Node
-# pour plus tard
+
+
+# Signaux / Scènes à instancier
 var dialog_scene = preload("res://Scenes/Instancing_effects/dialog.tscn")
 var button_list = []
 signal Info_signal
 signal Settings_signal
+
 # HOVER COLORS
 func _process(delta):
 	if Global.dialog:
@@ -39,6 +42,7 @@ func _on_Play_button_pressed():
 
 func _on_Info_button_pressed():
 	var info_dialog = dialog_scene.instance()
+	# appel de la dialog box
 	var dialog = [
 		'Salut à toi et merci d\'avoir essayé le jeu Slimy Quest!',
 		'Il n\'y a pour l\'instant aucune aide de disponible,',
@@ -50,7 +54,7 @@ func _on_Info_button_pressed():
 	pass
 
 
-
+# relance le menu
 func _on_Close_Button_pressed():
 	get_node("Info_Popup_Menu").hide()
 	get_node("Settings_Popup_Menu").hide()
@@ -77,4 +81,5 @@ func no_buttons():
 	get_node("Play_button").set_disabled(true)
 
 func _on_my_signal():
+	# Fonction qui se lance en fin de dialog
 	get_tree().change_scene("res://Scenes/Panels_scenes/Settings_Scene.tscn")

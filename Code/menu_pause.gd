@@ -24,5 +24,5 @@ func _on_Button_quit_pressed():
 
 func _on_Button_menu_pressed():
 	get_tree().paused = false
-	get_tree().change_scene("res://Scenes/Game_Menu.tscn")
+	get_tree().change_scene("res://Scenes/Panels_scenes/Game_Menu.tscn")
 	queue_free()

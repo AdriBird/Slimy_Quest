@@ -96,10 +96,9 @@ script = ExtResource( 3 )
 [node name="GUI" type="CanvasLayer" parent="."]
 
 [node name="life_bar" type="TextureProgress" parent="GUI"]
-anchor_right = 1.0
 margin_left = 30.0
 margin_top = 30.0
-margin_right = -842.0
+margin_right = 524.0
 margin_bottom = 48.0
 rect_scale = Vector2( 2.3, 2.3 )
 value = 50.0
@@ -112,9 +111,11 @@ healthy_color = Color( 0, 0.694118, 1, 1 )
 caution_color = Color( 0.141176, 1, 0.0431373, 1 )
 
 [node name="pause" type="Button" parent="GUI"]
-margin_left = 1190.0
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -176.0
 margin_top = 30.0
-margin_right = 1290.0
+margin_right = -76.0
 margin_bottom = 60.0
 rect_scale = Vector2( 1.5, 1.5 )
 text = "PAUSE"
@@ -159,6 +160,7 @@ shape = SubResource( 5 )
 position = Vector2( -0.636475, 71.1185 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource( 6 )
 [connection signal="hurt" from="." to="GUI/life_bar" method="_on_Slime_hurt"]
 [connection signal="pressed" from="GUI/pause" to="." method="_on_pause_pressed"]

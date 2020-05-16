@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Slimy_quest_VPC"
-run/main_scene="res://Scenes/Autres_scènes/Game_Menu.tscn"
+run/main_scene="res://Scenes/Panels_scenes/Game_Menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
