@@ -31,12 +31,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
-margin_right = 56.0
-margin_bottom = 68.0
+margin_right = 62.0
+margin_bottom = 92.0
 alignment = 1
 
 [node name="jump" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-margin_right = 56.0
+margin_right = 62.0
 margin_bottom = 20.0
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/jump"]
@@ -54,7 +54,7 @@ script = ExtResource( 2 )
 
 [node name="right" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 margin_top = 24.0
-margin_right = 56.0
+margin_right = 62.0
 margin_bottom = 44.0
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/right"]
@@ -72,7 +72,7 @@ script = ExtResource( 2 )
 
 [node name="left" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 margin_top = 48.0
-margin_right = 56.0
+margin_right = 62.0
 margin_bottom = 68.0
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/left"]
@@ -84,6 +84,24 @@ text = "LEFT"
 [node name="Button" type="Button" parent="Panel/ScrollContainer/VBoxContainer/left"]
 margin_left = 32.0
 margin_right = 44.0
+margin_bottom = 20.0
+toggle_mode = true
+script = ExtResource( 2 )
+
+[node name="shoot" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 62.0
+margin_bottom = 92.0
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/shoot"]
+margin_top = 3.0
+margin_right = 46.0
+margin_bottom = 17.0
+text = "SHOOT"
+
+[node name="Button" type="Button" parent="Panel/ScrollContainer/VBoxContainer/shoot"]
+margin_left = 50.0
+margin_right = 62.0
 margin_bottom = 20.0
 toggle_mode = true
 script = ExtResource( 2 )
@@ -105,4 +123,6 @@ text = "Retour"
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/right/Button" to="Panel/ScrollContainer/VBoxContainer/right/Button" method="_on_Button_pressed"]
 [connection signal="b_change_key" from="Panel/ScrollContainer/VBoxContainer/left/Button" to="." method="_on_Button_b_change_key"]
 [connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/left/Button" to="Panel/ScrollContainer/VBoxContainer/left/Button" method="_on_Button_pressed"]
+[connection signal="b_change_key" from="Panel/ScrollContainer/VBoxContainer/shoot/Button" to="." method="_on_Button_b_change_key"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/shoot/Button" to="Panel/ScrollContainer/VBoxContainer/shoot/Button" method="_on_Button_pressed"]
 [connection signal="pressed" from="Panel/Button_retour" to="." method="_on_Button_retour_pressed"]

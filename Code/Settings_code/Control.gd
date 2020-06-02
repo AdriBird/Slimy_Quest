@@ -2,11 +2,10 @@ extends Control
 
 var can_change_key = false
 var action_string
-enum ACTIONS {jump, right, left}
+# liste des actions pouvant etre modifiées
+enum ACTIONS {jump, right, left,shoot}
 
-func _process(delta):
-	if Input.is_action_pressed("clic_droit"):
-		get_tree().change_scene("res://Scenes/levels_scenes/level_tuto/Tuto.tscn")
+
 
 func _ready():
 	_set_keys()

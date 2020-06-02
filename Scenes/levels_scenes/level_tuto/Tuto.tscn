@@ -187,6 +187,7 @@ offset = Vector2( 300, -110.68 )
 transform = Transform2D( 1, 0, 0, 1, 300, -110.68 )
 
 [node name="lights" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="Light2D2" type="Light2D" parent="lights"]
 position = Vector2( 3616.66, -250.052 )

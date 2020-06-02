@@ -6,65 +6,80 @@ extends KinematicBody2D
 #-----------------------Signaux----------------------------------------------------------
 
 signal hurt
+
 #-----------------------Variables----------------------------------------------------------
+
+
 var vel = Vector2()
 const GRAVITY = 3000
 const UP = Vector2(0, -1)
 
-onready var time_shoot = get_node("timer_shoot")
-onready var time_idle = get_node("idle_timer")
-var timer_idle_verif = true
-var shot_particles = false
-var max_speed = 500
+
+#-----------------------Motions variables-------------------------------------------------------
+
+
 var speed = 80
+var max_speed = 500
+
 var jump_speed = 1500
-var time = true
-var can_shoot = false
-var bullet = preload("res://Scenes/Player/Slime_Bullet.tscn")
-var particules = preload("res://Scenes/Instancing_effects/Particules.tscn")
-var direction_tir = 1
 var wall_bounce_val = 800
 var can_wall_jump = false
-var nb_blob = 0
-var bottom_pos
+
+#---------------------Shoot variables----------------------------------------------------------
+onready var time_shoot = get_node("timer_shoot")
+var can_shoot = false
+var bullet = preload("res://Scenes/Player/Slime_Bullet.tscn")
+var direction_tir = 1
+
+
+
+var time = true
+
+
+
+
+#-----------------------States------------------------------------------------------------------
+func update_state():
+	# pause
+	if not Global.dialog:
+		motion_loop()
+		shoot()
+	else:
+		vel.x = 0
+
+
 #-----------------------Physic Process----------------------------------------------------------
-
-
 func _ready():
 	bottom_pos = get_node("bottom_pos").position
-	pass #
+	pass 
+
 
 func _process(delta):
 	update_size()
-	$GUI/score.text = str(Global.score)
+	update_score()
+	# tué par le vide, à rendre plus propre
 	if self.position.y >= 2000:
 		hurt()
+	# Menu pause
 	if Input.is_action_pressed("pause"):
 		var pause = preload("res://Scenes/Instancing_effects/menu_pause.tscn").instance()
 		add_child(pause)
 
+
+func update_score():
+	$GUI/score.text = str(Global.score)
+
+
 func _physics_process(delta):
-	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
-		if timer_idle_verif == true:
-			time_idle.set_wait_time(2)
-			time_idle.start()
-			timer_idle_verif = false
-		
+	animation_loop()
+	particles_loop()
+	update_state()
 	if can_wall_jump and vel.y >= 0:
 		vel.y += (GRAVITY/14 * delta)
 	else:
 		vel.y += (GRAVITY * delta)
-	if not Global.dialog:
-		motion_loop()
-		shoot()
-	if shot_particles == true and is_on_floor():
-		var p = particules.instance()
-		p.emit("roost", self.position , bottom_pos)
-		get_parent().add_child(p)
-		shot_particles = false
-	if is_on_floor() == false:
-		shot_particles = true
 	vel = move_and_slide(vel, UP)
+
 
 func shoot():
 	var shoot = Input.is_action_pressed("shoot")
@@ -110,6 +125,8 @@ func motion_loop():
 		if vel.y < -100:
 			vel.y /= 2
 
+#-----------------------Blob------------------------------------------------------------------
+var nb_blob = 0
 
 func update_size():
 	var pos = position
@@ -117,6 +134,9 @@ func update_size():
 	if scale != Vector2(1+x*nb_blob,1+x*nb_blob):
 		scale = Vector2(1+x*nb_blob,1+x*nb_blob)
 		position.y += -20
+
+
+
 
 
 func hurt():
@@ -137,23 +157,16 @@ func _on_timer_shoot_timeout():
 
 
 
-
+#--------------------Detections---------------------------------------------------------
+# Walls
 func _on_Wall_radar_body_entered(body):
 	if body.is_in_group("wall"):
 		can_wall_jump = true
-	pass
-
-
 func _on_Wall_radar_body_exited(body):
 	if body.is_in_group("wall"):
 		can_wall_jump = false
-	pass
 
-#		get_parent().get_parent().get_node("Info_Popup_Menu").hide()
-#		get_parent().get_parent().get_node("Settings_Popup_Menu").hide()
-#		get_parent().get_parent().get_node("Info_button").show()
-#		get_parent().get_parent().get_node("Settings_button").show()
-#		get_parent().get_parent().get_node("Play_button").set_disabled(false)
+
 
 
 
@@ -163,6 +176,41 @@ func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 		hurt()
 	pass 
 
+
+#---------------------Particules and animations--------------------------------------------
+# particles
+var shot_particles = false
+var particules = preload("res://Scenes/Instancing_effects/Particules.tscn")
+var bottom_pos
+
+func particles_loop():
+	# ground particles
+	if shot_particles == true and is_on_floor():
+		var p = particules.instance()
+		p.emit("roost", self.position , bottom_pos)
+		get_parent().add_child(p)
+		shot_particles = false
+	if is_on_floor() == false:
+		shot_particles = true
+
+
+
+
+
+
+
+# animation
+onready var time_idle = get_node("idle_timer")
+var timer_idle_verif = true
+
+
+func animation_loop():
+	# idle
+	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
+		if timer_idle_verif == true:
+			time_idle.set_wait_time(2)
+			time_idle.start()
+			timer_idle_verif = false
 
 func _on_idle_timer_timeout():
 	if vel.x and vel.y == 0:
