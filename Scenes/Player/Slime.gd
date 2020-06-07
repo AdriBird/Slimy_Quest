@@ -39,6 +39,8 @@ var time = true
 
 
 #-----------------------States------------------------------------------------------------------
+enum STATE { idle, bounce, jump, bounce, shoot, pause, damage, wall}
+
 func update_state():
 	# pause
 	if not Global.dialog:
@@ -55,6 +57,7 @@ func _ready():
 
 
 func _process(delta):
+	update_state()
 	update_size()
 	update_score()
 	# tué par le vide, à rendre plus propre

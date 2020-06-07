@@ -12,8 +12,8 @@
 [ext_resource path="res://Code/button_door.gd" type="Script" id=10]
 [ext_resource path="res://Sprites/Interactive_Objetcs/red button_final.png" type="Texture" id=11]
 [ext_resource path="res://Code/button_door_end.gd" type="Script" id=12]
-[ext_resource path="res://Tile_set/Tile_swamp/3 Objects/Pointers/5.png" type="Texture" id=13]
-[ext_resource path="res://Tile_set/Tile_swamp/3 Objects/Pointers/4.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Tile_swamp/3 Objects/Pointers/5.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/Tile_swamp/3 Objects/Pointers/4.png" type="Texture" id=14]
 [ext_resource path="res://Scenes/Autres_scènes/end_flag.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Code/end_flag.gd" type="Script" id=16]
 [ext_resource path="res://Code/fin_tuto.gd" type="Script" id=17]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Tile_set/tile_object.tres" type="TileSet" id=22]
 [ext_resource path="res://Tile_set/tile_blob.tres" type="TileSet" id=23]
 [ext_resource path="res://Scenes/Autres_scènes/enemy.tscn" type="PackedScene" id=24]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
