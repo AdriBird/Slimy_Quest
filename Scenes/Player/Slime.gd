@@ -39,25 +39,63 @@ var time = true
 
 
 #-----------------------States------------------------------------------------------------------
-enum STATE { idle, bounce, jump, bounce, shoot, pause, damage, wall}
+enum {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, PAUSE, DAMAGE, WALL}
+var state
+#onready var time_idle = get_node("idle_timer")
+#var timer_idle_verif = true
 
-func update_state():
+func state_loop():
 	# pause
 	if not Global.dialog:
 		motion_loop()
 		shoot()
 	else:
 		vel.x = 0
+		
+	if state == IDLE and vel.x != 0:
+		change_state(SLIDE)
+	if state == SLIDE and vel.x == 0:
+		change_state(IDLE)
+	if state in [IDLE, SLIDE, BOUNCE] and !is_on_floor():
+		change_state(JUMP)
+	if state == JUMP and is_on_floor():
+		change_state(IDLE)
+	
+
+
+
+func change_state(new_state):
+	state = new_state
+	match state:
+		IDLE:
+			$AnimationPlayer.play("idle")
+#			if timer_idle_verif == true:
+#				time_idle.set_wait_time(2)
+#				time_idle.start()
+#				timer_idle_verif = false
+		JUMP:
+			$AnimationPlayer.stop()
+			    #Start Jump animation $AnimationPlayer.start("jump")
+		SLIDE:
+			$AnimationPlayer.play("move")
+		BOUNCE:
+			pass    #Start Bounce animation $AnimationPlayer.start("bounce")
+		SHOOT:
+			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
+	print(state)
+
+
 
 
 #-----------------------Physic Process----------------------------------------------------------
 func _ready():
 	bottom_pos = get_node("bottom_pos").position
+	state = IDLE
 	pass 
 
 
 func _process(delta):
-	update_state()
+	state_loop()
 	update_size()
 	update_score()
 	# tué par le vide, à rendre plus propre
@@ -74,9 +112,9 @@ func update_score():
 
 
 func _physics_process(delta):
-	animation_loop()
+#	animation_loop()
 	particles_loop()
-	update_state()
+	state_loop()
 	if can_wall_jump and vel.y >= 0:
 		vel.y += (GRAVITY/14 * delta)
 	else:
@@ -103,13 +141,13 @@ func motion_loop():
 	var just_space = Input.is_action_just_pressed("jump")
 	var dirx = int(right) - int(left)
 	if dirx == 1 and not is_on_wall():
-		$AnimationPlayer.play("move")
+#		$AnimationPlayer.play("move")
 		$Sprite.flip_h = false
 		direction_tir = 1
 		$tir.position.x = 110
 		vel.x = min(vel.x + speed, max_speed)
 	if dirx == -1 and not is_on_wall():
-		$AnimationPlayer.play("move")
+#		$AnimationPlayer.play("move")
 		$Sprite.flip_h = true
 		direction_tir = -1
 		$tir.position.x = -110
@@ -203,19 +241,17 @@ func particles_loop():
 
 
 # animation
-onready var time_idle = get_node("idle_timer")
-var timer_idle_verif = true
 
+#func animation_loop():
+#	# idle
+#	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
+#		if timer_idle_verif == true:
+#			time_idle.set_wait_time(2)
+#			time_idle.start()
+#			timer_idle_verif = false
+#		pass
 
-func animation_loop():
-	# idle
-	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
-		if timer_idle_verif == true:
-			time_idle.set_wait_time(2)
-			time_idle.start()
-			timer_idle_verif = false
-
-func _on_idle_timer_timeout():
-	if vel.x and vel.y == 0:
-		$AnimationPlayer.play("idle")
-		timer_idle_verif = true
+#func _on_idle_timer_timeout():
+#	if vel.x and vel.y == 0:
+#		$AnimationPlayer.play("idle")
+#		timer_idle_verif = true
