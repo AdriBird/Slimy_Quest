@@ -119,6 +119,7 @@ func _physics_process(delta):
 #	animation_loop()
 	particles_loop()
 	state_loop()
+	wall_update()
 	if on_wall and vel.y >= 0:
 		vel.y += (GRAVITY/14 * delta)
 	else:
