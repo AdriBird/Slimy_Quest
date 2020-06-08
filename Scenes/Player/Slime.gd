@@ -52,8 +52,8 @@ func state_loop():
 	else:
 		vel.x = 0
 	if state == IDLE and vel.x != 0:
-		change_state(SLIDE)
-	if state == SLIDE and vel.x == 0 and no_inputs and is_on_floor():
+		change_state(BOUNCE)
+	if state in [SLIDE, BOUNCE] and vel.x == 0 and no_inputs and is_on_floor():
 		change_state(IDLE)
 	if state in [IDLE, SLIDE, BOUNCE] and !is_on_floor():
 		change_state(JUMP)
@@ -77,10 +77,10 @@ func change_state(new_state):
 		SLIDE:
 			$AnimationPlayer.play("move")
 		BOUNCE:
-			pass    #Start Bounce animation $AnimationPlayer.start("bounce")
+			print("bouncy baby")
+			$AnimationPlayer.play("move")    #Start Bounce animation $AnimationPlayer.start("bounce")
 		SHOOT:
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
-	print(state)
 
 
 
@@ -146,19 +146,29 @@ func motion_loop():
 	else:
 		no_inputs = false
 	var dirx = int(right) - int(left)
-	if dirx == 1 and not is_on_wall():
+	if dirx == 1 and not is_on_wall():     #se déplace à droite
 #		$AnimationPlayer.play("move")
 		$Sprite.flip_h = false
 		direction_tir = 1
 		$tir.position.x = 110
+		if state == BOUNCE and not space and vel.x != 0:                #commence à sautiller si state = BOUNCE
+			vel.y = -500
+			speed = 100
 		vel.x = min(vel.x + speed, max_speed)
-	if dirx == -1 and not is_on_wall():
+		if state != BOUNCE:
+			speed = 80
+	if dirx == -1 and not is_on_wall():     #se déplace à gauche 
 #		$AnimationPlayer.play("move")
 		$Sprite.flip_h = true
 		direction_tir = -1
 		$tir.position.x = -110
+		if state == BOUNCE and not space and vel.x != 0:                #commence à sautiller si state = BOUNCE
+			vel.y = -500
+			speed = 100
 		vel.x = max(vel.x - speed, -max_speed)
-	if dirx == 0:
+		if state != BOUNCE:
+			speed = 80
+	if dirx == 0:                           #afk
 		vel.x = lerp(vel.x, 0 ,0.15)
 	if just_space and can_wall_jump and dirx != 0:
 		vel.y = -jump_speed
