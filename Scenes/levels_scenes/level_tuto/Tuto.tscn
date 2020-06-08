@@ -25,7 +25,6 @@
 [ext_resource path="res://Tile_set/tile_blob.tres" type="TileSet" id=23]
 [ext_resource path="res://Scenes/Autres_scènes/enemy.tscn" type="PackedScene" id=24]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
 
@@ -188,7 +187,6 @@ offset = Vector2( 300, -110.68 )
 transform = Transform2D( 1, 0, 0, 1, 300, -110.68 )
 
 [node name="lights" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="Light2D2" type="Light2D" parent="lights"]
 position = Vector2( 3616.66, -250.052 )
@@ -201,11 +199,12 @@ shadow_enabled = true
 shadow_color = Color( 0, 0, 0, 1 )
 
 [node name="Light2D3" type="Light2D" parent="lights"]
-position = Vector2( 1157.42, -384.445 )
+position = Vector2( 1151.83, -388.635 )
 rotation = -2.44347
 scale = Vector2( 6.80146, 52.6711 )
 texture = ExtResource( 4 )
 texture_scale = 0.05
+color = Color( 0.54902, 0.54902, 0.54902, 1 )
 energy = 0.8
 shadow_enabled = true
 shadow_color = Color( 0, 0, 0, 1 )
@@ -377,7 +376,7 @@ position = Vector2( 2050.68, 708.725 )
 shape = SubResource( 9 )
 
 [node name="arrow_pressed" type="Sprite" parent="."]
-position = Vector2( 303.746, 638.228 )
+position = Vector2( 270.342, 634.888 )
 scale = Vector2( 7, 7 )
 texture = ExtResource( 13 )
 
@@ -497,7 +496,7 @@ tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114148, 0, 
 position = Vector2( 2680, 652 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.392157, 0.392157, 0.392157, 1 )
+color = Color( 0.854902, 0.854902, 0.854902, 1 )
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
 occluder = SubResource( 16 )

@@ -1,6 +1,6 @@
 extends Node2D
 var dialog_scene = preload("res://Scenes/Instancing_effects/dialog.tscn")
-onready var item = preload("res://Scenes/Objets/Blob.tscn")
+
 
 func _ready():
 	$tile_blob.hide()
@@ -21,7 +21,7 @@ func _on_end_flag_box_end():
 	get_node("Slime/GUI").add_child(info_dialog)
 	pass # Replace with function body.
 
-
+onready var item = preload("res://Scenes/Objets/Blob.tscn")
 func spawn_blob():
 	for cell in $tile_blob.get_used_cells():
 		var id = $tile_blob.get_cellv(cell)
@@ -31,5 +31,4 @@ func spawn_blob():
 			var c = item.instance()
 			c.init(type, pos + $tile_blob.cell_size / 2)
 			add_child(c)
-			
-			
+

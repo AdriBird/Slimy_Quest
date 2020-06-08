@@ -13,7 +13,7 @@ signal hurt
 var vel = Vector2()
 const GRAVITY = 3000
 const UP = Vector2(0, -1)
-
+var no_inputs
 
 #-----------------------Motions variables-------------------------------------------------------
 
@@ -39,10 +39,10 @@ var time = true
 
 
 #-----------------------States------------------------------------------------------------------
-enum {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, PAUSE, DAMAGE, WALL}
+enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, PAUSE, DAMAGE, WALL}
 var state
-#onready var time_idle = get_node("idle_timer")
-#var timer_idle_verif = true
+onready var time_idle = get_node("idle_timer")
+var timer_idle_verif = true
 
 func state_loop():
 	# pause
@@ -51,16 +51,14 @@ func state_loop():
 		shoot()
 	else:
 		vel.x = 0
-		
 	if state == IDLE and vel.x != 0:
 		change_state(SLIDE)
-	if state == SLIDE and vel.x == 0:
+	if state == SLIDE and vel.x == 0 and no_inputs and is_on_floor():
 		change_state(IDLE)
 	if state in [IDLE, SLIDE, BOUNCE] and !is_on_floor():
 		change_state(JUMP)
 	if state == JUMP and is_on_floor():
 		change_state(IDLE)
-	
 
 
 
@@ -68,13 +66,13 @@ func change_state(new_state):
 	state = new_state
 	match state:
 		IDLE:
-			$AnimationPlayer.play("idle")
-#			if timer_idle_verif == true:
-#				time_idle.set_wait_time(2)
-#				time_idle.start()
-#				timer_idle_verif = false
+			if timer_idle_verif == true:
+				time_idle.set_wait_time(2)
+				time_idle.start()
+				timer_idle_verif = false
 		JUMP:
 			$AnimationPlayer.stop()
+			$AnimationPlayer.play("move")
 			    #Start Jump animation $AnimationPlayer.start("jump")
 		SLIDE:
 			$AnimationPlayer.play("move")
@@ -83,7 +81,6 @@ func change_state(new_state):
 		SHOOT:
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
 	print(state)
-
 
 
 
@@ -105,6 +102,11 @@ func _process(delta):
 	if Input.is_action_pressed("pause"):
 		var pause = preload("res://Scenes/Instancing_effects/menu_pause.tscn").instance()
 		add_child(pause)
+	# anti_imprécision:
+	if vel.x > -0.05 and vel.x < 0.05:
+		vel.x = 0
+
+
 
 
 func update_score():
@@ -132,13 +134,17 @@ func shoot():
 		time_shoot.set_wait_time(1)
 		time_shoot.start()
 
-func motion_loop():                                
+func motion_loop():
 	var right = Input.is_action_pressed("right")
 	var left = Input.is_action_pressed("left")
 	var up = Input.is_action_pressed("up")
 	var down = Input.is_action_pressed("down")
 	var space = Input.is_action_pressed("jump")
 	var just_space = Input.is_action_just_pressed("jump")
+	if int(right)+ int(left) + int(up) + int(down)+ int(space) + int(just_space) == 0:                                
+		no_inputs = true
+	else:
+		no_inputs = false
 	var dirx = int(right) - int(left)
 	if dirx == 1 and not is_on_wall():
 #		$AnimationPlayer.play("move")
@@ -199,6 +205,12 @@ func _on_timer_shoot_timeout():
 
 
 #--------------------Detections---------------------------------------------------------
+
+
+
+
+
+
 # Walls
 func _on_Wall_radar_body_entered(body):
 	if body.is_in_group("wall"):
@@ -242,16 +254,16 @@ func particles_loop():
 
 # animation
 
-#func animation_loop():
-#	# idle
-#	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
-#		if timer_idle_verif == true:
-#			time_idle.set_wait_time(2)
-#			time_idle.start()
-#			timer_idle_verif = false
-#		pass
+func animation_loop():
+	# idle
+	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
+		if timer_idle_verif == true:
+			time_idle.set_wait_time(2)
+			time_idle.start()
+			timer_idle_verif = false
+		pass
 
-#func _on_idle_timer_timeout():
-#	if vel.x and vel.y == 0:
-#		$AnimationPlayer.play("idle")
-#		timer_idle_verif = true
+func _on_idle_timer_timeout():
+	if state == IDLE and vel.x == 0 and no_inputs and is_on_floor():
+		$AnimationPlayer.play("idle")
+		timer_idle_verif = true
