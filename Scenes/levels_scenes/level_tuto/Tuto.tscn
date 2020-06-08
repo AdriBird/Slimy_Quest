@@ -263,7 +263,7 @@ texture = ExtResource( 6 )
 
 [node name="door" type="StaticBody2D" parent="."]
 editor/display_folded = true
-position = Vector2( 1300, 833.78 )
+position = Vector2( 1290.95, 837.657 )
 scale = Vector2( 4.2, 4.2 )
 script = ExtResource( 7 )
 __meta__ = {
