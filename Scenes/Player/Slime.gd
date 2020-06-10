@@ -18,18 +18,27 @@ var no_inputs
 #-----------------------Motions variables-------------------------------------------------------
 
 
+<<<<<<< HEAD
 var speed = 50
 var max_slide_speed = 449
 var max_speed = 450
+=======
+var speed = 10
+var max_slide_speed = 499
+var max_speed = 500
+>>>>>>> Rendering
 var bounce_power = 600
 
 var jump_speed = 1500
 var wall_bounce_val = 600
 var on_wall = false
+<<<<<<< HEAD
 
 onready var timer_bounce = get_node("timers/timer_bounce")
 #var bounce_timer_verif = false
 #var time_timer_bounce = true
+=======
+>>>>>>> Rendering
 
 #---------------------Shoot variables----------------------------------------------------------
 onready var time_shoot = get_node("timers/timer_shoot")
@@ -57,8 +66,11 @@ func state_loop():
 	else:
 		vel.x = 0
 	if state == IDLE and vel.x != 0 and on_wall == false:
+<<<<<<< HEAD
 		change_state(SLIDE)
 	if state == SLIDE and Input.is_action_pressed("bounce"):
+=======
+>>>>>>> Rendering
 		change_state(BOUNCE)
 	if state in [SLIDE, BOUNCE] and vel.x == 0 and no_inputs and is_on_floor():
 		change_state(IDLE)
@@ -85,13 +97,15 @@ func change_state(new_state):
 			max_speed = 450
 			$AnimationPlayer.play("move")
 		BOUNCE:
+<<<<<<< HEAD
 			max_speed = 700
 			print("bounce")
+=======
+>>>>>>> Rendering
 			$AnimationPlayer.play("move")    #Start Bounce animation $AnimationPlayer.start("bounce")
 		SHOOT: 
 			$AnimationPlayer.play("move") # en attendant l'anim de tir
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
-	print(state)
 
 
 
@@ -158,11 +172,18 @@ func motion_loop():
 	else:
 		no_inputs = false
 	var dirx = int(right) - int(left)
+<<<<<<< HEAD
 	if dirx == 1 and not "D" in wall_detected:     
 		$AnimationPlayer.play("move")
 		direction_tir = 1
 		$tir.position.x = 110
 		if state == BOUNCE and vel.x > max_slide_speed:
+=======
+	if dirx != 0 and not on_wall:     #se déplace à droite
+		direction_tir = dirx
+		$tir.position.x = 110*dirx
+		if state == BOUNCE and vel.x > max_slide_speed or state == BOUNCE  and vel.x < -max_slide_speed:                #commence à sautiller si state = BOUNCE
+>>>>>>> Rendering
 			if space and is_on_floor():
 				vel.y = -jump_speed
 			if Input.is_action_just_released("jump"):
@@ -170,6 +191,7 @@ func motion_loop():
 					vel.y /= 2
 			elif not space:
 				vel.y = -bounce_power
+<<<<<<< HEAD
 		vel.x = min(vel.x + speed, max_speed)
 		$Sprite.flip_h = false
 	if dirx == -1 and not "G" in wall_detected:
@@ -189,6 +211,16 @@ func motion_loop():
 	if dirx == 0:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.15)
 		
+=======
+		if dirx == 1:
+			vel.x = min(vel.x + speed, max_speed)
+			$Sprite.flip_h = false
+		if dirx == -1:
+			vel.x = max(vel.x - speed, -max_speed)
+			$Sprite.flip_h = true
+	if dirx == 0:                           #afk ou les 2 touches
+		vel.x = lerp(vel.x, 0 ,0.15)
+>>>>>>> Rendering
 	
 	if just_space and on_wall and dirx != 0:
 		vel.y = -jump_speed
