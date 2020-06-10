@@ -19,8 +19,8 @@ var no_inputs
 
 
 var speed = 50
-var max_slide_speed = 499
-var max_speed = 500
+var max_slide_speed = 449
+var max_speed = 450
 var bounce_power = 600
 
 var jump_speed = 1500
@@ -28,8 +28,8 @@ var wall_bounce_val = 600
 var on_wall = false
 
 onready var timer_bounce = get_node("timers/timer_bounce")
-var bounce_timer_verif = false
-var time_timer_bounce = true
+#var bounce_timer_verif = false
+#var time_timer_bounce = true
 
 #---------------------Shoot variables----------------------------------------------------------
 onready var time_shoot = get_node("timers/timer_shoot")
@@ -57,6 +57,8 @@ func state_loop():
 	else:
 		vel.x = 0
 	if state == IDLE and vel.x != 0 and on_wall == false:
+		change_state(SLIDE)
+	if state == SLIDE and Input.is_action_pressed("bounce"):
 		change_state(BOUNCE)
 	if state in [SLIDE, BOUNCE] and vel.x == 0 and no_inputs and is_on_floor():
 		change_state(IDLE)
@@ -80,12 +82,16 @@ func change_state(new_state):
 			$AnimationPlayer.play("move")
 			    #Start Jump animation $AnimationPlayer.start("jump")
 		SLIDE:
+			max_speed = 450
 			$AnimationPlayer.play("move")
 		BOUNCE:
+			max_speed = 700
+			print("bounce")
 			$AnimationPlayer.play("move")    #Start Bounce animation $AnimationPlayer.start("bounce")
 		SHOOT: 
 			$AnimationPlayer.play("move") # en attendant l'anim de tir
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
+	print(state)
 
 
 
@@ -119,7 +125,6 @@ func update_score():
 
 
 func _physics_process(delta):
-	print(bounce_timer_verif)
 #	animation_loop()
 	particles_loop()
 	state_loop()
@@ -157,18 +162,13 @@ func motion_loop():
 		$AnimationPlayer.play("move")
 		direction_tir = dirx
 		$tir.position.x = 110*dirx
-		if state == BOUNCE and vel.x > max_slide_speed or state == BOUNCE  and vel.x < -max_slide_speed:
-			if time_timer_bounce == true:
-				timer_bounce.set_wait_time(1)
-				timer_bounce.start()
-				time_timer_bounce = false
-				print("timer bounce start")
+		if state == BOUNCE and vel.x > max_slide_speed or state == BOUNCE and vel.x < -max_slide_speed:
 			if space and is_on_floor():
 				vel.y = -jump_speed
 			if Input.is_action_just_released("jump"):
 				if vel.y < -100:
 					vel.y /= 2
-			elif not space and bounce_timer_verif:
+			elif not space:
 				vel.y = -bounce_power
 		if dirx == 1:
 			vel.x = min(vel.x + speed, max_speed)
@@ -177,8 +177,6 @@ func motion_loop():
 			vel.x = max(vel.x - speed, -max_speed)
 			$Sprite.flip_h = true
 	if dirx == 0:                           #afk ou les 2 touches
-		timer_bounce.stop()
-		bounce_timer_verif = false
 		vel.x = lerp(vel.x, 0 ,0.15)
 		
 	
@@ -299,9 +297,3 @@ func _on_idle_timer_timeout():
 	if state == IDLE and vel.x == 0 and no_inputs and is_on_floor():
 		$AnimationPlayer.play("idle")
 		timer_idle_verif = true
-
-
-func _on_timer_bounce_timeout():
-	bounce_timer_verif = true
-	time_timer_bounce = true
-	print("timer bounce finish")
