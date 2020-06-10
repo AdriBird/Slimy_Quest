@@ -158,11 +158,11 @@ func motion_loop():
 	else:
 		no_inputs = false
 	var dirx = int(right) - int(left)
-	if dirx != 0 and not on_wall:     #se déplace à droite
+	if dirx == 1 and not "D" in wall_detected:     
 		$AnimationPlayer.play("move")
-		direction_tir = dirx
-		$tir.position.x = 110*dirx
-		if state == BOUNCE and vel.x > max_slide_speed or state == BOUNCE and vel.x < -max_slide_speed:
+		direction_tir = 1
+		$tir.position.x = 110
+		if state == BOUNCE and vel.x > max_slide_speed:
 			if space and is_on_floor():
 				vel.y = -jump_speed
 			if Input.is_action_just_released("jump"):
@@ -170,12 +170,22 @@ func motion_loop():
 					vel.y /= 2
 			elif not space:
 				vel.y = -bounce_power
-		if dirx == 1:
-			vel.x = min(vel.x + speed, max_speed)
-			$Sprite.flip_h = false
-		if dirx == -1:
-			vel.x = max(vel.x - speed, -max_speed)
-			$Sprite.flip_h = true
+		vel.x = min(vel.x + speed, max_speed)
+		$Sprite.flip_h = false
+	if dirx == -1 and not "G" in wall_detected:
+		$AnimationPlayer.play("move")
+		direction_tir = -1
+		$tir.position.x = -110
+		if state == BOUNCE and vel.x < -max_slide_speed:
+			if space and is_on_floor():
+				vel.y = -jump_speed
+			if Input.is_action_just_released("jump"):
+				if vel.y < -100:
+					vel.y /= 2
+			elif not space:
+				vel.y = -bounce_power
+		vel.x = max(vel.x - speed, -max_speed)
+		$Sprite.flip_h = true
 	if dirx == 0:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.15)
 		
