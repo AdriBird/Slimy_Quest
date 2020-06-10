@@ -18,12 +18,14 @@ var no_inputs
 #-----------------------Motions variables-------------------------------------------------------
 
 
-var speed = 80
+var speed = 10
+var max_slide_speed = 499
 var max_speed = 500
+var bounce_power = 600
 
 var jump_speed = 1500
-var wall_bounce_val = 800
-var can_wall_jump = false
+var wall_bounce_val = 600
+var on_wall = false
 
 #---------------------Shoot variables----------------------------------------------------------
 onready var time_shoot = get_node("timer_shoot")
@@ -39,7 +41,7 @@ var time = true
 
 
 #-----------------------States------------------------------------------------------------------
-enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, PAUSE, DAMAGE, WALL}
+enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, PAUSE, DAMAGE, WALL, AIR}
 var state
 onready var time_idle = get_node("idle_timer")
 var timer_idle_verif = true
@@ -51,9 +53,9 @@ func state_loop():
 		shoot()
 	else:
 		vel.x = 0
-	if state == IDLE and vel.x != 0:
-		change_state(SLIDE)
-	if state == SLIDE and vel.x == 0 and no_inputs and is_on_floor():
+	if state == IDLE and vel.x != 0 and on_wall == false:
+		change_state(BOUNCE)
+	if state in [SLIDE, BOUNCE] and vel.x == 0 and no_inputs and is_on_floor():
 		change_state(IDLE)
 	if state in [IDLE, SLIDE, BOUNCE] and !is_on_floor():
 		change_state(JUMP)
@@ -77,10 +79,10 @@ func change_state(new_state):
 		SLIDE:
 			$AnimationPlayer.play("move")
 		BOUNCE:
-			pass    #Start Bounce animation $AnimationPlayer.start("bounce")
-		SHOOT:
+			$AnimationPlayer.play("move")    #Start Bounce animation $AnimationPlayer.start("bounce")
+		SHOOT: 
+			$AnimationPlayer.play("move") # en attendant l'anim de tir
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
-	print(state)
 
 
 
@@ -117,7 +119,8 @@ func _physics_process(delta):
 #	animation_loop()
 	particles_loop()
 	state_loop()
-	if can_wall_jump and vel.y >= 0:
+	wall_update()
+	if on_wall and vel.y >= 0:
 		vel.y += (GRAVITY/14 * delta)
 	else:
 		vel.y += (GRAVITY * delta)
@@ -146,29 +149,37 @@ func motion_loop():
 	else:
 		no_inputs = false
 	var dirx = int(right) - int(left)
-	if dirx == 1 and not is_on_wall():
-#		$AnimationPlayer.play("move")
-		$Sprite.flip_h = false
-		direction_tir = 1
-		$tir.position.x = 110
-		vel.x = min(vel.x + speed, max_speed)
-	if dirx == -1 and not is_on_wall():
-#		$AnimationPlayer.play("move")
-		$Sprite.flip_h = true
-		direction_tir = -1
-		$tir.position.x = -110
-		vel.x = max(vel.x - speed, -max_speed)
-	if dirx == 0:
+	if dirx != 0 and not on_wall:     #se déplace à droite
+		direction_tir = dirx
+		$tir.position.x = 110*dirx
+		if state == BOUNCE and vel.x > max_slide_speed or state == BOUNCE  and vel.x < -max_slide_speed:                #commence à sautiller si state = BOUNCE
+			if space and is_on_floor():
+				vel.y = -jump_speed
+			if Input.is_action_just_released("jump"):
+				if vel.y < -100:
+					vel.y /= 2
+			elif not space:
+				vel.y = -bounce_power
+		if dirx == 1:
+			vel.x = min(vel.x + speed, max_speed)
+			$Sprite.flip_h = false
+		if dirx == -1:
+			vel.x = max(vel.x - speed, -max_speed)
+			$Sprite.flip_h = true
+	if dirx == 0:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.15)
-	if just_space and can_wall_jump and dirx != 0:
+	
+	if just_space and on_wall and dirx != 0:
 		vel.y = -jump_speed
+		
 		if $Sprite.flip_h == true:
 			vel.x = wall_bounce_val
 		if $Sprite.flip_h == false:
 			vel.x = -wall_bounce_val
+			
 	if just_space and is_on_floor() :
 		vel.y = -jump_speed
-	if Input.is_action_just_released("ui_accept"):
+	if Input.is_action_just_released("jump"):
 		if vel.y < -100:
 			vel.y /= 2
 
@@ -212,12 +223,25 @@ func _on_timer_shoot_timeout():
 
 
 # Walls
-func _on_Wall_radar_body_entered(body):
+var wall_detected = []
+func _on_Wall_radar_D_body_entered(body):
 	if body.is_in_group("wall"):
-		can_wall_jump = true
-func _on_Wall_radar_body_exited(body):
+		wall_detected.append("D")
+func _on_Wall_radar_D_body_exited(body):
 	if body.is_in_group("wall"):
-		can_wall_jump = false
+		wall_detected.remove("D")
+func _on_Wall_radar_G_body_entered(body):
+	if body.is_in_group("wall"):
+		wall_detected.append("G")
+func _on_Wall_radar_G_body_exited(body):
+	if body.is_in_group("wall"):
+		wall_detected.remove("G")
+func wall_update():
+	if len(wall_detected) > 0:
+		on_wall = true
+	else:
+		on_wall = false
+
 
 
 
@@ -256,12 +280,7 @@ func particles_loop():
 
 func animation_loop():
 	# idle
-	if vel.x and vel.y == 0 and not Input.is_action_just_pressed("left") and not Input.is_action_just_pressed("right"):
-		if timer_idle_verif == true:
-			time_idle.set_wait_time(2)
-			time_idle.start()
-			timer_idle_verif = false
-		pass
+	pass
 
 func _on_idle_timer_timeout():
 	if state == IDLE and vel.x == 0 and no_inputs and is_on_floor():

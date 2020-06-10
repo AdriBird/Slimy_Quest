@@ -144,14 +144,17 @@ position = Vector2( -0.488007, 14.6171 )
 rotation = 1.5708
 shape = SubResource( 4 )
 
-[node name="Wall_radar" type="Area2D" parent="."]
+[node name="Wall_radar_D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar"]
-position = Vector2( -74.9702, 21.0216 )
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar_D"]
+position = Vector2( 72.4827, 18.9261 )
 shape = SubResource( 5 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar"]
+[node name="Wall_radar_G" type="Area2D" parent="."]
 position = Vector2( 72.4827, 18.9261 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar_G"]
+position = Vector2( -147.453, 2.09552 )
 shape = SubResource( 5 )
 
 [node name="idle_timer" type="Timer" parent="."]
@@ -166,6 +169,8 @@ occluder = SubResource( 6 )
 [connection signal="pressed" from="GUI/pause" to="." method="_on_pause_pressed"]
 [connection signal="timeout" from="timer_shoot" to="." method="_on_timer_shoot_timeout"]
 [connection signal="area_shape_entered" from="Area2D" to="." method="_on_Area2D_area_shape_entered"]
-[connection signal="body_entered" from="Wall_radar" to="." method="_on_Wall_radar_body_entered"]
-[connection signal="body_exited" from="Wall_radar" to="." method="_on_Wall_radar_body_exited"]
+[connection signal="body_entered" from="Wall_radar_D" to="." method="_on_Wall_radar_D_body_entered"]
+[connection signal="body_exited" from="Wall_radar_D" to="." method="_on_Wall_radar_D_body_exited"]
+[connection signal="body_entered" from="Wall_radar_G" to="." method="_on_Wall_radar_G_body_entered"]
+[connection signal="body_exited" from="Wall_radar_G" to="." method="_on_Wall_radar_G_body_exited"]
 [connection signal="timeout" from="idle_timer" to="." method="_on_idle_timer_timeout"]
