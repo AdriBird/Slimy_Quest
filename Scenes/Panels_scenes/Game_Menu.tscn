@@ -177,6 +177,7 @@ custom_constants/shadow_as_outline = 0
 text = "OPTIONS"
 
 [node name="Info_button" type="TextureButton" parent="."]
+editor/display_folded = true
 margin_left = 576.778
 margin_top = 614.752
 margin_right = 772.778
@@ -248,8 +249,25 @@ text = "Close"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Info_Popup_Menu"]
 anims/Apparition = SubResource( 6 )
 
+[node name="Test_button" type="Button" parent="."]
+margin_left = 474.834
+margin_top = 245.65
+margin_right = 1402.83
+margin_bottom = 416.65
+rect_scale = Vector2( 0.4, 0.4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Test_button"]
+margin_left = -0.575745
+margin_top = -7.26486
+margin_right = 894.424
+margin_bottom = 167.735
+custom_fonts/font = ExtResource( 2 )
+text = "Test/Shaders"
+
 [node name="Settings_Popup_Menu" type="PopupMenu" parent="."]
-editor/display_folded = true
 margin_left = 483.151
 margin_top = 373.101
 margin_right = 503.151
@@ -354,4 +372,5 @@ anims/Apparition = SubResource( 8 )
 [connection signal="pressed" from="Settings_button" to="." method="_on_Settings_button_pressed"]
 [connection signal="pressed" from="Info_button" to="." method="_on_Info_button_pressed"]
 [connection signal="pressed" from="Info_Popup_Menu/Close_Button" to="." method="_on_Close_Button_pressed"]
+[connection signal="pressed" from="Test_button" to="." method="_on_Test_button_pressed"]
 [connection signal="pressed" from="Settings_Popup_Menu/Close_Button" to="." method="_on_Close_Button_pressed"]

@@ -83,3 +83,8 @@ func no_buttons():
 func _on_my_signal():
 	# Fonction qui se lance en fin de dialog
 	get_tree().change_scene("res://Scenes/Panels_scenes/Settings_Scene.tscn")
+
+
+func _on_Test_button_pressed():
+	get_tree().change_scene("res://Scenes/levels_scenes/level_tuto/Shader_Test.tscn")
+	pass # Replace with function body.

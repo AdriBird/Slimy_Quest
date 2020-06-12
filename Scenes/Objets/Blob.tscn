@@ -67,11 +67,11 @@ lifetime = 3.0
 process_material = SubResource( 5 )
 
 [node name="Light2D2" type="Light2D" parent="."]
-position = Vector2( 0.609812, -0.234589 )
+position = Vector2( 0.394653, -0.111603 )
 scale = Vector2( 0.906416, 0.288109 )
 texture = ExtResource( 3 )
 texture_scale = 3.0
-color = Color( 0.584314, 0.960784, 1, 1 )
+color = Color( 0.0627451, 0.454902, 0.627451, 1 )
 energy = 0.7
 range_height = 5.0
 [connection signal="body_entered" from="." to="." method="_on_Blob_body_entered"]
