@@ -44,7 +44,7 @@ var time = true #shoot
 
 
 #-----------------------States------------------------------------------------------------------
-enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, PAUSE, DAMAGE, WALL, AIR}
+enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, BOUNCE_AIR, PAUSE, DAMAGE, WALL, AIR}
 var state
 onready var time_idle = get_node("timers/idle_timer")
 var timer_idle_verif = true
@@ -62,8 +62,14 @@ func state_loop():
 		change_state(BOUNCE)
 	if state in [SLIDE, BOUNCE] and vel.x == 0 and no_inputs and is_on_floor():
 		change_state(IDLE)
-	if state in [IDLE, SLIDE, BOUNCE] and !is_on_floor():
+	if state in [IDLE, SLIDE] and !is_on_floor():
 		change_state(JUMP)
+	if state == BOUNCE and !is_on_floor():
+		change_state(BOUNCE_AIR)
+	if state == BOUNCE_AIR and is_on_floor() and Input.is_action_pressed("bounce"):
+		change_state(BOUNCE)
+	if state == BOUNCE_AIR and is_on_floor() and !Input.is_action_pressed("bounce"):
+		change_state(SLIDE)
 	if state == JUMP and is_on_floor():
 		change_state(IDLE)
 
@@ -86,23 +92,24 @@ func change_state(new_state):
 			$AnimationPlayer.play("move")
 		BOUNCE:
 			max_speed = 700
-			print("bounce")
 			$AnimationPlayer.play("move")    #Start Bounce animation $AnimationPlayer.start("bounce")
+		BOUNCE_AIR:
+			pass     #Start bounce_air animation 
 		SHOOT: 
 			$AnimationPlayer.play("move") # en attendant l'anim de tir
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
-	print(state)
-
-
 
 #-----------------------Physic Process----------------------------------------------------------
 func _ready():
 	bottom_pos = get_node("bottom_pos").position
 	state = IDLE
+	$tir.position.x = 110
 	pass 
 
 
 func _process(delta):
+	if Input.is_action_just_pressed("ui_up"):
+		print("reset sortie")
 	state_loop()
 	update_size()
 	update_score()
@@ -188,7 +195,10 @@ func motion_loop():
 		$Sprite.flip_h = true
 	if dirx == 0:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.15)
-		
+	
+	if state == BOUNCE_AIR and Input.is_action_just_pressed("jump") and vel.y >= -450:
+		print("bruh t con")
+		vel.y = 500
 	
 	if just_space and on_wall and dirx != 0:
 		vel.y = -jump_speed
