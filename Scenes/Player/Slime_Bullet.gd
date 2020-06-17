@@ -1,8 +1,13 @@
 extends KinematicBody2D
 var speed = 1000
 var vel = Vector2()
+const gravity = 1000
 
+func _ready():
+	vel.y = -400
 func start(pos, dir):
+	$Timer.set_wait_time(2)
+	$Timer.start()
 	$Particles2D.emitting = true
 	$Particles2D2.emitting = true
 	position = pos
@@ -18,6 +23,8 @@ func start(pos, dir):
 #	$bullet_anim.play("shoot")
 	
 func _process(delta):
+	vel.y += (gravity * delta)
+	print(vel.y)
 	var collision = move_and_collide(vel * delta)
 	if collision :
 		if collision.collider.has_method("hit"):
@@ -30,3 +37,7 @@ func _process(delta):
 			queue_free()
 		queue_free()
 
+
+
+func _on_Timer_timeout():
+	queue_free()

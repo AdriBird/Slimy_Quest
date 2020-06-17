@@ -75,3 +75,7 @@ lifetime = 2.5
 speed_scale = 5.0
 randomness = 1.0
 process_material = SubResource( 7 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
