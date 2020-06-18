@@ -84,23 +84,23 @@ func change_state(new_state):
 				time_idle.start()
 				timer_idle_verif = false
 		JUMP:
-			$AnimationPlayer.stop()
-			$AnimationPlayer.play("move")
+				$AnimatedSprite/AnimationPlayer.play("jump_start")
 			    #Start Jump animation $AnimationPlayer.start("jump")
 		SLIDE:
 			max_speed = 450
-			$AnimationPlayer.play("move")
+			$AnimatedSprite/AnimationPlayer.play("slide")
 		BOUNCE:
 			max_speed = 700
-			$AnimationPlayer.play("move")    #Start Bounce animation $AnimationPlayer.start("bounce")
+			$AnimatedSprite/AnimationPlayer.play("slide")   #Start Bounce animation $AnimationPlayer.start("bounce")
 		BOUNCE_AIR:
 			pass     #Start bounce_air animation 
 		SHOOT: 
-			$AnimationPlayer.play("move") # en attendant l'anim de tir
+			$AnimatedSprite/AnimationPlayer.play("slide") # en attendant l'anim de tir
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
 
 #-----------------------Physic Process----------------------------------------------------------
 func _ready():
+	$AnimatedSprite/AnimationPlayer.play("slide")
 	bottom_pos = get_node("bottom_pos").position
 	state = IDLE
 	$tir.position.x = 110
@@ -166,7 +166,6 @@ func motion_loop():
 		no_inputs = false
 	var dirx = int(right) - int(left)
 	if dirx == 1 and not "D" in wall_detected:     
-		$AnimationPlayer.play("move")
 		direction_tir = 1
 		$tir.position.x = 110
 		if state == BOUNCE and vel.x > max_slide_speed:
@@ -178,9 +177,8 @@ func motion_loop():
 			elif not space:
 				vel.y = -bounce_power
 		vel.x = min(vel.x + speed, max_speed)
-		$Sprite.flip_h = false
+		$AnimatedSprite.flip_h = false
 	if dirx == -1 and not "G" in wall_detected:
-		$AnimationPlayer.play("move")
 		direction_tir = -1
 		$tir.position.x = -110
 		if state == BOUNCE and vel.x < -max_slide_speed:
@@ -192,7 +190,7 @@ func motion_loop():
 			elif not space:
 				vel.y = -bounce_power
 		vel.x = max(vel.x - speed, -max_speed)
-		$Sprite.flip_h = true
+		$AnimatedSprite.flip_h = true
 	if dirx == 0:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.15)
 	
@@ -211,6 +209,7 @@ func motion_loop():
 	if just_space and is_on_floor() :
 		vel.y = -jump_speed
 	if Input.is_action_just_released("jump"):
+		$AnimatedSprite/AnimationPlayer.play("jump_end")
 		if vel.y < -100:
 			vel.y /= 2
 
@@ -315,5 +314,5 @@ func animation_loop():
 
 func _on_idle_timer_timeout():
 	if state == IDLE and vel.x == 0 and no_inputs and is_on_floor():
-		$AnimationPlayer.play("idle")
+		$AnimatedSprite/AnimationPlayer.play("idle")
 		timer_idle_verif = true

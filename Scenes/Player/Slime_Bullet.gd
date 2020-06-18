@@ -4,7 +4,7 @@ var vel = Vector2()
 const gravity = 1000
 
 func _ready():
-	vel.y = -400
+	vel.y = -500
 func start(pos, dir):
 	$Timer.set_wait_time(2)
 	$Timer.start()
@@ -23,7 +23,7 @@ func start(pos, dir):
 #	$bullet_anim.play("shoot")
 	
 func _process(delta):
-	vel.y += (gravity * delta)
+	vel.y += (gravity * delta * 1.5)
 	print(vel.y)
 	var collision = move_and_collide(vel * delta)
 	if collision :
