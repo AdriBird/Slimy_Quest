@@ -71,7 +71,13 @@ func state_loop():
 	if state == BOUNCE_AIR and is_on_floor() and !Input.is_action_pressed("bounce"):
 		change_state(SLIDE)
 	if state == JUMP and is_on_floor():
-		change_state(IDLE)
+		$AnimatedSprite/anim_move.play("jump_end_ground")
+		$AnimatedSprite.rotation_degrees = 0
+		if no_inputs:
+			yield($AnimatedSprite/anim_move, "animation_finished")
+			change_state(SLIDE)
+		else:	
+			change_state(SLIDE)
 
 
 
@@ -79,28 +85,37 @@ func change_state(new_state):
 	state = new_state
 	match state:
 		IDLE:
+			$AnimatedSprite.rotation_degrees = 0
 			if timer_idle_verif == true:
 				time_idle.set_wait_time(2)
 				time_idle.start()
 				timer_idle_verif = false
 		JUMP:
-				$AnimatedSprite/AnimationPlayer.play("jump_start")
+			if !is_on_floor() and vel.y >= 0:
+				$AnimatedSprite/anim_move.play("jump_start_air")
+				
+#			if is_on_floor():
+#				$AnimatedSprite/anim_move.play("jump_end_ground")
 			    #Start Jump animation $AnimationPlayer.start("jump")
 		SLIDE:
 			max_speed = 450
-			$AnimatedSprite/AnimationPlayer.play("slide")
+			$AnimatedSprite/anim_move.play("slide")
+			$AnimatedSprite.rotation_degrees = 0
 		BOUNCE:
 			max_speed = 700
-			$AnimatedSprite/AnimationPlayer.play("slide")   #Start Bounce animation $AnimationPlayer.start("bounce")
+			$AnimatedSprite/anim_move.play("slide")  #Start Bounce animation $AnimationPlayer.start("bounce")
+			$AnimatedSprite.rotation_degrees = 0
 		BOUNCE_AIR:
 			pass     #Start bounce_air animation 
 		SHOOT: 
-			$AnimatedSprite/AnimationPlayer.play("slide") # en attendant l'anim de tir
+			$AnimatedSprite/anim_move.play("slide") # en attendant l'anim de tir
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
 
 #-----------------------Physic Process----------------------------------------------------------
 func _ready():
-	$AnimatedSprite/AnimationPlayer.play("slide")
+	$AnimatedSprite.rotation_degrees = 0
+	$CollisionShape2D.rotation_degrees = 0
+	$AnimatedSprite.play("slide")
 	bottom_pos = get_node("bottom_pos").position
 	state = IDLE
 	$tir.position.x = 110
@@ -108,8 +123,7 @@ func _ready():
 
 
 func _process(delta):
-	if Input.is_action_just_pressed("ui_up"):
-		print("reset sortie")
+	print($AnimatedSprite/anim_move.current_animation)
 	state_loop()
 	update_size()
 	update_score()
@@ -165,7 +179,7 @@ func motion_loop():
 	else:
 		no_inputs = false
 	var dirx = int(right) - int(left)
-	if dirx == 1 and not "D" in wall_detected:     
+	if dirx == 1 and not "D" in wall_detected:
 		direction_tir = 1
 		$tir.position.x = 110
 		if state == BOUNCE and vel.x > max_slide_speed:
@@ -195,7 +209,6 @@ func motion_loop():
 		vel.x = lerp(vel.x, 0 ,0.15)
 	
 	if state == BOUNCE_AIR and Input.is_action_just_pressed("jump") and vel.y >= -450:
-		print("bruh t con")
 		vel.y = 500
 	
 	if just_space and on_wall and dirx != 0:
@@ -205,13 +218,26 @@ func motion_loop():
 			vel.x = wall_bounce_val
 		if $Sprite.flip_h == false:
 			vel.x = -wall_bounce_val
-			
-	if just_space and is_on_floor() :
+		
+	if state == JUMP and dirx == 1:
+		$AnimatedSprite.rotation_degrees = 45
+	if state == JUMP and dirx == -1:
+		$AnimatedSprite.rotation_degrees = -45
+	if just_space and is_on_floor():
+#		$AnimatedSprite/anim_move.play("jump_start_ground")
+#		yield($AnimatedSprite/anim_move, "animation_finished")
 		vel.y = -jump_speed
 	if Input.is_action_just_released("jump"):
-		$AnimatedSprite/AnimationPlayer.play("jump_end")
 		if vel.y < -100:
 			vel.y /= 2
+			$AnimatedSprite/anim_move.play("jump_middle")
+			$AnimatedSprite.rotation_degrees = 0
+			yield($AnimatedSprite/anim_move, "animation_finished")
+			$AnimatedSprite/anim_move.play("jump_end_air")
+			if dirx == 1:
+				$AnimatedSprite.rotation_degrees = 135
+			if dirx == -1:
+				$AnimatedSprite.rotation_degrees = -135
 
 #-----------------------Blob------------------------------------------------------------------
 var nb_blob = 0

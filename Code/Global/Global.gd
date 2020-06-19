@@ -1,5 +1,6 @@
 extends Node
 
+# warning-ignore:unused_class_variable
 var dialog
 var score = 0
 
