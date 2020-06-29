@@ -2,11 +2,11 @@
 
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/Slime_slide_0.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Player/slime_saut_ecrase.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Player/Slime_saut_mid_air.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/Player/Slime_appuie.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Player/Slime_saut_mid_air.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/Slime_saut_descente.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/slime_saut_ecrase.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/Player/Slime_saut_montée.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Player/Slime_saut_descente.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/Slime_appuie.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=8]
 [ext_resource path="res://Code/Camera2D.gd" type="Script" id=9]
 [ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=10]
@@ -29,17 +29,17 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "jump_end_ground",
+"name": "jump_middle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "jump_middle",
+"name": "jump_end_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "jump_start_ground",
+"name": "jump_end_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
@@ -49,7 +49,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_end_air",
+"name": "jump_start_ground",
 "speed": 5.0
 } ]
 
@@ -933,7 +933,7 @@ script = ExtResource( 1 )
 position = Vector2( 4.69336, 32.6702 )
 scale = Vector2( 0.12, 0.12 )
 frames = SubResource( 1 )
-animation = "jump_end_air"
+animation = "slide"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
 anims/idle = SubResource( 2 )
@@ -968,7 +968,7 @@ shape = SubResource( 14 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
 visible = false
-polygon = PoolVector2Array( -3.23163, -38.6612, 22.5931, -35.499, 49.9989, -22.8501, 64.2289, -8.09314, 71.0093, 3.72504, 73.979, 17.468, 74.982, 29.9747, 71.0302, 42.894, 61.9189, 50.1188, 52.03, 54.3918, 37.2936, 57.4044, 19.4332, 57.9323, -27.9359, 57.9323, -48.8289, 55.6211, -57.4398, 53.4044, -65.0276, 48.9711, -70.4841, 43.6852, -73.5908, 37.4954, -76.226, 21.1573, -74.1052, 8.27173, -69.9286, -0.478943, -63.2662, -10.4229, -54.354, -20.215, -33.5361, -32.0732 )
+polygon = PoolVector2Array( -12.0702, -29.374, 0.158936, -30.4351, 10.4212, -30.4556, 30.0566, -27.4578, 49.6921, -19.8135, 64.001, -8.93219, 72.7054, 4.51001, 75.923, 16.7072, 74.58, 26.7181, 70.4291, 37.0954, 62.4936, 46.3739, 54.8022, 52.8444, 44.0698, 58.4659, 28.0548, 63.9089, 9.31836, 65.6884, -4.13464, 64.7297, -14.9736, 62.2437, -31.1821, 57.7689, -51.6666, 49.9132, -62.3993, 44.4664, -73.0741, 36.2478, -76.0971, 32.3745, -77.5142, 27.0843, -77.2307, 21.0383, -74.9149, 14.855, -63.0687, 0.585754, -49.2213, -12.1744, -31.3477, -23.5507 )
 disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -1034,16 +1034,14 @@ shape = SubResource( 16 )
 position = Vector2( -2.85388, -4.51868 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar_D"]
-position = Vector2( 62.63, 25.05 )
-scale = Vector2( 1, 1.57 )
+position = Vector2( 80, 26 )
 shape = SubResource( 17 )
 
 [node name="Wall_radar_G" type="Area2D" parent="."]
 position = Vector2( 72.4827, 18.9261 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar_G"]
-position = Vector2( -120.8, 2.81 )
-scale = Vector2( 1, 1.64 )
+position = Vector2( -146.82, 4.23 )
 shape = SubResource( 17 )
 
 [node name="bottom_pos" type="Position2D" parent="."]

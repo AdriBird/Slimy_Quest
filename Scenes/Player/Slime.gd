@@ -31,6 +31,37 @@ onready var timer_bounce = get_node("timers/timer_bounce")
 #var bounce_timer_verif = false
 #var time_timer_bounce = true
 
+
+
+
+
+
+#-----------------------States------------------------------------------------------------------
+enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, BOUNCE_AIR, PAUSE, DAMAGE, WALL}
+var state
+var cycle = "none"
+#-----------------------INPUTS------------------------------------------------------------------
+
+var right = Input.is_action_pressed("right")
+var left = Input.is_action_pressed("left")
+var up = Input.is_action_pressed("up")
+var down = Input.is_action_pressed("down")
+var space = Input.is_action_pressed("jump")
+var just_space = Input.is_action_just_pressed("jump")
+
+func input_update():
+	right = Input.is_action_pressed("right")
+	left = Input.is_action_pressed("left")
+	up = Input.is_action_pressed("up")
+	down = Input.is_action_pressed("down")
+	space = Input.is_action_pressed("jump")
+	just_space = Input.is_action_just_pressed("jump")
+	if int(right)+ int(left) + int(up) + int(down)+ int(space) + int(just_space) == 0:                                
+		no_inputs = true
+	else:
+		no_inputs = false
+
+
 #---------------------Shoot variables----------------------------------------------------------
 onready var time_shoot = get_node("timers/timer_shoot")
 var can_shoot = false
@@ -43,43 +74,58 @@ var time = true #shoot
 
 
 
-#-----------------------States------------------------------------------------------------------
-enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, BOUNCE_AIR, PAUSE, DAMAGE, WALL, AIR}
-var state
+
 onready var time_idle = get_node("timers/idle_timer")
 var timer_idle_verif = true
 
+
+
 func state_loop():
+	
+	
 	# pause
+	# empecher le mouvement en fade in/ dialog
 	if not Global.dialog:
 		motion_loop()
 		shoot()
 	else:
 		vel.x = 0
+	#Check si on se déplace
 	if state == IDLE and vel.x != 0 and on_wall == false:
 		change_state(SLIDE)
-	if state == SLIDE and Input.is_action_pressed("bounce"):
+	#Condition de Bounce
+	if state == SLIDE and Input.is_action_pressed("bounce") :
 		change_state(BOUNCE)
+	#Condition d'inactivité
 	if state in [SLIDE, BOUNCE] and vel.x == 0 and no_inputs and is_on_floor():
 		change_state(IDLE)
+	#Condition de Saut
 	if state in [IDLE, SLIDE] and !is_on_floor():
 		change_state(JUMP)
+	# Phase intermédiare Durant Bounce
 	if state == BOUNCE and !is_on_floor():
 		change_state(BOUNCE_AIR)
-	if state == BOUNCE_AIR and is_on_floor() and Input.is_action_pressed("bounce"):
+	#  Retour sur bounce Bounce
+	if state == BOUNCE_AIR and is_on_floor() and Input.is_action_pressed("bounce") :
 		change_state(BOUNCE)
-	if state == BOUNCE_AIR and is_on_floor() and !Input.is_action_pressed("bounce"):
+	# Atterissage
+	if state == BOUNCE_AIR and is_on_floor() and !Input.is_action_pressed("bounce") :
 		change_state(SLIDE)
-	if state == JUMP and is_on_floor():
+		
+	if cycle == "none" and int(right) + int(left) == 1 and is_on_floor() and state != BOUNCE:
+		change_state(SLIDE)
+		"""if not is_on_floor():
+			#jump_state = PRE_JUMPING
+			vel.y = 500
+		pass
+		if state == JUMP and is_on_floor() and cycle == "none":
 		$AnimatedSprite/anim_move.play("jump_end_ground")
-		$AnimatedSprite.rotation_degrees = 0
+		#$AnimatedSprite.rotation_degrees = 0
 		if no_inputs:
 			yield($AnimatedSprite/anim_move, "animation_finished")
 			change_state(SLIDE)
-		else:	
-			change_state(SLIDE)
-
-
+		else:
+			change_state(SLIDE)"""
 
 func change_state(new_state):
 	state = new_state
@@ -91,9 +137,10 @@ func change_state(new_state):
 				time_idle.start()
 				timer_idle_verif = false
 		JUMP:
-			if !is_on_floor() and vel.y >= 0:
-				$AnimatedSprite/anim_move.play("jump_start_air")
-				
+			# montée
+			if !is_on_floor() and vel.y <= 0:
+				#$AnimatedSprite/anim_move.play("jump_start_air")
+				pass
 #			if is_on_floor():
 #				$AnimatedSprite/anim_move.play("jump_end_ground")
 			    #Start Jump animation $AnimationPlayer.start("jump")
@@ -111,22 +158,71 @@ func change_state(new_state):
 			$AnimatedSprite/anim_move.play("slide") # en attendant l'anim de tir
 			pass    #Start Shoot animation $AnimationPlayer.start("shoot")
 
+
+enum {NONE, PRE_JUMPING, JUMPING, MID_JUMP, FALL, ROOST}
+var jump_state
+
+func jump_state():
+	#print(cycle)
+	if just_space and is_on_floor() and jump_state == NONE:
+		jump_state = PRE_JUMPING
+	match jump_state:
+		NONE:
+			if cycle == "jump":
+				cycle = "none"
+		PRE_JUMPING:
+			cycle = "jump"
+			$AnimatedSprite/anim_move.play("jump_start_ground")
+			if Input.is_action_just_released("jump"):
+				jump_state = NONE
+				$AnimatedSprite/anim_move.play("slide")
+			yield($AnimatedSprite/anim_move, "animation_finished")
+			if Input.is_action_pressed("jump"):
+				jump_state =  JUMPING
+				vel.y = -jump_speed
+		JUMPING:
+			$AnimatedSprite/anim_move.play("slide")
+			if Input.is_action_just_released("jump"):
+				if vel.y < -100:
+						vel.y /= 2
+			if vel.y > -10 :
+				jump_state = MID_JUMP
+			#$AnimatedSprite/anim_move.play("jump_middle")
+			#$AnimatedSprite.rotation_degrees = 0
+			#yield($AnimatedSprite/anim_move, "animation_finished")
+			#$AnimatedSprite/anim_move.play("jump_end_air")
+		MID_JUMP:
+			if vel.y < 10 :
+				jump_state = FALL
+		FALL:
+			if is_on_floor():
+				jump_state = ROOST
+		ROOST:
+			jump_state = NONE
+			cycle = "none"
+
+
+
+
+
 #-----------------------Physic Process----------------------------------------------------------
 func _ready():
 	$AnimatedSprite.rotation_degrees = 0
 	$CollisionShape2D.rotation_degrees = 0
-	$AnimatedSprite.play("slide")
+	#$AnimatedSprite.play("slide")
 	bottom_pos = get_node("bottom_pos").position
 	state = IDLE
+	jump_state = NONE
 	$tir.position.x = 110
 	pass 
 
 
 func _process(delta):
-	print($AnimatedSprite/anim_move.current_animation)
+	#print($AnimatedSprite/anim_move.current_animation)
 	state_loop()
 	update_size()
 	update_score()
+	input_update()
 	# tué par le vide, à rendre plus propre
 	if self.position.y >= 2000:
 		hurt()
@@ -150,6 +246,7 @@ func _physics_process(delta):
 	particles_loop()
 	state_loop()
 	wall_update()
+	jump_state()
 	if on_wall and vel.y >= 0:
 		vel.y += (GRAVITY/14 * delta)
 	else:
@@ -167,23 +264,18 @@ func shoot():
 		time_shoot.set_wait_time(1)
 		time_shoot.start()
 
+
 func motion_loop():
-	var right = Input.is_action_pressed("right")
-	var left = Input.is_action_pressed("left")
-	var up = Input.is_action_pressed("up")
-	var down = Input.is_action_pressed("down")
-	var space = Input.is_action_pressed("jump")
-	var just_space = Input.is_action_just_pressed("jump")
-	if int(right)+ int(left) + int(up) + int(down)+ int(space) + int(just_space) == 0:                                
-		no_inputs = true
-	else:
-		no_inputs = false
+	
+	
+	# DROITE
 	var dirx = int(right) - int(left)
 	if dirx == 1 and not "D" in wall_detected:
 		direction_tir = 1
 		$tir.position.x = 110
 		if state == BOUNCE and vel.x > max_slide_speed:
 			if space and is_on_floor():
+				change_state(JUMP)
 				vel.y = -jump_speed
 			if Input.is_action_just_released("jump"):
 				if vel.y < -100:
@@ -192,11 +284,14 @@ func motion_loop():
 				vel.y = -bounce_power
 		vel.x = min(vel.x + speed, max_speed)
 		$AnimatedSprite.flip_h = false
+	
+	# GAUCHE
 	if dirx == -1 and not "G" in wall_detected:
 		direction_tir = -1
 		$tir.position.x = -110
 		if state == BOUNCE and vel.x < -max_slide_speed:
 			if space and is_on_floor():
+				change_state(JUMP)
 				vel.y = -jump_speed
 			if Input.is_action_just_released("jump"):
 				if vel.y < -100:
@@ -205,39 +300,20 @@ func motion_loop():
 				vel.y = -bounce_power
 		vel.x = max(vel.x - speed, -max_speed)
 		$AnimatedSprite.flip_h = true
+	
+	# X == 0
 	if dirx == 0:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.15)
 	
-	if state == BOUNCE_AIR and Input.is_action_just_pressed("jump") and vel.y >= -450:
-		vel.y = 500
-	
+	# WALL JUMP
 	if just_space and on_wall and dirx != 0:
 		vel.y = -jump_speed
-		
-		if $Sprite.flip_h == true:
+		if $AnimatedSprite.flip_h == true:
 			vel.x = wall_bounce_val
-		if $Sprite.flip_h == false:
+		if $AnimatedSprite.flip_h == false:
 			vel.x = -wall_bounce_val
-		
-	if state == JUMP and dirx == 1:
-		$AnimatedSprite.rotation_degrees = 45
-	if state == JUMP and dirx == -1:
-		$AnimatedSprite.rotation_degrees = -45
-	if just_space and is_on_floor():
-#		$AnimatedSprite/anim_move.play("jump_start_ground")
-#		yield($AnimatedSprite/anim_move, "animation_finished")
-		vel.y = -jump_speed
-	if Input.is_action_just_released("jump"):
-		if vel.y < -100:
-			vel.y /= 2
-			$AnimatedSprite/anim_move.play("jump_middle")
-			$AnimatedSprite.rotation_degrees = 0
-			yield($AnimatedSprite/anim_move, "animation_finished")
-			$AnimatedSprite/anim_move.play("jump_end_air")
-			if dirx == 1:
-				$AnimatedSprite.rotation_degrees = 135
-			if dirx == -1:
-				$AnimatedSprite.rotation_degrees = -135
+
+
 
 #-----------------------Blob------------------------------------------------------------------
 var nb_blob = 0
@@ -252,13 +328,13 @@ func update_size():
 
 
 
-
+#hurt
 func hurt():
 	self.vel.y = 0
-	self.position = get_parent().get_node("Spawn").position
+	#self.position = get_parent().get_node("Spawn").position
 	emit_signal("hurt")
 
-
+# pause
 func _on_pause_pressed():
 	var pause = preload("res://Scenes/Instancing_effects/menu_pause.tscn").instance()
 	add_child(pause)
@@ -303,7 +379,7 @@ func wall_update():
 
 
 
-
+# WATER
 func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("water"):
 		hurt()
@@ -318,7 +394,7 @@ var bottom_pos
 
 func particles_loop():
 	# ground particles
-	if shot_particles == true and is_on_floor():
+	if is_on_floor() and state == ROOST and shot_particles:
 		var p = particules.instance()
 		p.emit("roost", self.position , bottom_pos)
 		get_parent().add_child(p)
@@ -340,5 +416,5 @@ func animation_loop():
 
 func _on_idle_timer_timeout():
 	if state == IDLE and vel.x == 0 and no_inputs and is_on_floor():
-		$AnimatedSprite/AnimationPlayer.play("idle")
+		#$AnimatedSprite/AnimationPlayer.play("idle")
 		timer_idle_verif = true
