@@ -103,13 +103,13 @@ func state_loop():
 	if state in [IDLE, SLIDE] and !is_on_floor():
 		change_state(JUMP)
 	# Phase intermédiare Durant Bounce
-	if state == BOUNCE and !is_on_floor():
+	if state == BOUNCE and !is_on_floor() and cycle == "none":
 		change_state(BOUNCE_AIR)
 	#  Retour sur bounce Bounce
-	if state == BOUNCE_AIR and is_on_floor() and Input.is_action_pressed("bounce") :
+	if state == BOUNCE_AIR and is_on_floor() and Input.is_action_pressed("bounce") and cycle == "none" :
 		change_state(BOUNCE)
 	# Atterissage
-	if state == BOUNCE_AIR and is_on_floor() and !Input.is_action_pressed("bounce") :
+	if state == BOUNCE_AIR and is_on_floor() and !Input.is_action_pressed("bounce") and cycle == "none":
 		change_state(SLIDE)
 		
 	if cycle == "none" and int(right) + int(left) == 1 and is_on_floor() and state != BOUNCE:
@@ -273,13 +273,10 @@ func motion_loop():
 	if dirx == 1 and not "D" in wall_detected:
 		direction_tir = 1
 		$tir.position.x = 110
-		if state == BOUNCE and vel.x > max_slide_speed:
+		if state == BOUNCE and vel.x > max_slide_speed and is_on_floor():
 			if space and is_on_floor():
 				change_state(JUMP)
-				vel.y = -jump_speed
-			if Input.is_action_just_released("jump"):
-				if vel.y < -100:
-					vel.y /= 2
+				jump_state = PRE_JUMPING
 			elif not space:
 				vel.y = -bounce_power
 		vel.x = min(vel.x + speed, max_speed)
@@ -289,13 +286,10 @@ func motion_loop():
 	if dirx == -1 and not "G" in wall_detected:
 		direction_tir = -1
 		$tir.position.x = -110
-		if state == BOUNCE and vel.x < -max_slide_speed:
+		if state == BOUNCE and vel.x < -max_slide_speed and is_on_floor():
 			if space and is_on_floor():
 				change_state(JUMP)
-				vel.y = -jump_speed
-			if Input.is_action_just_released("jump"):
-				if vel.y < -100:
-					vel.y /= 2
+				jump_state = PRE_JUMPING
 			elif not space:
 				vel.y = -bounce_power
 		vel.x = max(vel.x - speed, -max_speed)
