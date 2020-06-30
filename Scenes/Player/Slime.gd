@@ -82,7 +82,6 @@ var timer_idle_verif = true
 
 
 func state_loop():
-	print(state)
 	
 	#Check si on se déplace
 	if state == IDLE and vel.x != 0 and on_wall == false:
