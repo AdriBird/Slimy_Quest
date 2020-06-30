@@ -11,16 +11,18 @@ signal hurt
 
 
 var vel = Vector2()
-const GRAVITY = 3000
+const GRAVITY = 2800
 const UP = Vector2(0, -1)
 var no_inputs
 
 #-----------------------Motions variables-------------------------------------------------------
 
-
-var speed = 50
-var max_slide_speed = 449
-var max_speed = 450
+const SPEED = 400
+var max_accel = 30
+var accel = 0
+var speed = 0
+var max_slide_speed = 599
+var max_speed = 600
 var bounce_power = 600
 
 var jump_speed = 1500
@@ -33,8 +35,7 @@ onready var timer_bounce = get_node("timers/timer_bounce")
 
 
 
-
-
+var my_rotation = 0
 
 #-----------------------States------------------------------------------------------------------
 enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, BOUNCE_AIR, PAUSE, DAMAGE, WALL}
@@ -81,15 +82,8 @@ var timer_idle_verif = true
 
 
 func state_loop():
+	print(state)
 	
-	
-	# pause
-	# empecher le mouvement en fade in/ dialog
-	if not Global.dialog:
-		motion_loop()
-		shoot()
-	else:
-		vel.x = 0
 	#Check si on se déplace
 	if state == IDLE and vel.x != 0 and on_wall == false:
 		change_state(SLIDE)
@@ -131,7 +125,7 @@ func change_state(new_state):
 	state = new_state
 	match state:
 		IDLE:
-			$AnimatedSprite.rotation_degrees = 0
+			my_rotation = 0
 			if timer_idle_verif == true:
 				time_idle.set_wait_time(2)
 				time_idle.start()
@@ -147,11 +141,11 @@ func change_state(new_state):
 		SLIDE:
 			max_speed = 450
 			$AnimatedSprite/anim_move.play("slide")
-			$AnimatedSprite.rotation_degrees = 0
+			my_rotation = 0
 		BOUNCE:
 			max_speed = 700
 			$AnimatedSprite/anim_move.play("slide")  #Start Bounce animation $AnimationPlayer.start("bounce")
-			$AnimatedSprite.rotation_degrees = 0
+			my_rotation = 0
 		BOUNCE_AIR:
 			pass     #Start bounce_air animation 
 		SHOOT: 
@@ -172,6 +166,9 @@ func jump_state():
 				cycle = "none"
 		PRE_JUMPING:
 			cycle = "jump"
+			change_state(JUMP)
+			my_rotation = 0
+			cycle = "jump"
 			$AnimatedSprite/anim_move.play("jump_start_ground")
 			if Input.is_action_just_released("jump"):
 				jump_state = NONE
@@ -181,25 +178,38 @@ func jump_state():
 				jump_state =  JUMPING
 				vel.y = -jump_speed
 		JUMPING:
-			$AnimatedSprite/anim_move.play("slide")
+			$AnimatedSprite/anim_move.play("jump_start_air")
 			if Input.is_action_just_released("jump"):
 				if vel.y < -100:
 						vel.y /= 2
-			if vel.y > -10 :
+			if vel.y > -1000 :
 				jump_state = MID_JUMP
 			#$AnimatedSprite/anim_move.play("jump_middle")
 			#$AnimatedSprite.rotation_degrees = 0
 			#yield($AnimatedSprite/anim_move, "animation_finished")
 			#$AnimatedSprite/anim_move.play("jump_end_air")
 		MID_JUMP:
-			if vel.y < 10 :
+			$AnimatedSprite/anim_move.play("jump_middle")
+			if vel.y > 1000 :
 				jump_state = FALL
+			if is_on_floor():
+				jump_state = ROOST
 		FALL:
+			$AnimatedSprite/anim_move.play("jump_end_air")
 			if is_on_floor():
 				jump_state = ROOST
 		ROOST:
+			my_rotation = 0
 			jump_state = NONE
 			cycle = "none"
+			$AnimatedSprite/anim_move.play("jump_end_ground")
+			
+			#$AnimatedSprite.rotation_degrees = 0
+			if no_inputs:
+				yield($AnimatedSprite/anim_move, "animation_finished")
+				change_state(SLIDE)
+			else:
+				change_state(SLIDE)
 
 
 
@@ -207,8 +217,7 @@ func jump_state():
 
 #-----------------------Physic Process----------------------------------------------------------
 func _ready():
-	$AnimatedSprite.rotation_degrees = 0
-	$CollisionShape2D.rotation_degrees = 0
+	my_rotation = 0
 	#$AnimatedSprite.play("slide")
 	bottom_pos = get_node("bottom_pos").position
 	state = IDLE
@@ -218,6 +227,23 @@ func _ready():
 
 
 func _process(delta):
+	if vel.y != 0 and vel.x != 0 and jump_state != NONE  and not is_on_floor():
+		var angle = atan(abs(float(vel.y))/abs(float(vel.x)))    
+		if vel.x < 0:
+			if vel.y < 0:
+				my_rotation = atan(abs(float(vel.y))/abs(float(vel.x)))
+			else : 
+				my_rotation = -atan(float(vel.y)/abs(float(vel.x)))
+		elif vel.x > 0:
+			if vel.y < 0:
+				my_rotation = -atan(abs(float(vel.y))/abs(float(vel.x)))
+			else : 
+				my_rotation = atan(float(vel.y)/abs(float(vel.x)))
+	else:
+		my_rotation = 0
+		#print(my_rotation)
+	$CollisionShape2D.rotation = my_rotation
+	$AnimatedSprite.rotation= my_rotation
 	#print($AnimatedSprite/anim_move.current_animation)
 	state_loop()
 	update_size()
@@ -242,15 +268,21 @@ func update_score():
 
 
 func _physics_process(delta):
-#	animation_loop()
+	#animation_loop()
+	# pause
+	# empecher le mouvement en fade in/ dialog
+	if not Global.dialog:
+		motion_loop(delta)
+		shoot()
+	else:
+		vel.x = 0
 	particles_loop()
 	state_loop()
 	wall_update()
 	jump_state()
 	if on_wall and vel.y >= 0:
-		vel.y += (GRAVITY/14 * delta)
-	else:
-		vel.y += (GRAVITY * delta)
+		vel.y /=  2
+	vel.y += (GRAVITY * delta)
 	vel = move_and_slide(vel, UP)
 
 
@@ -265,7 +297,7 @@ func shoot():
 		time_shoot.start()
 
 
-func motion_loop():
+func motion_loop(delta):
 	
 	
 	# DROITE
@@ -279,9 +311,14 @@ func motion_loop():
 				jump_state = PRE_JUMPING
 			elif not space:
 				vel.y = -bounce_power
-		vel.x = min(vel.x + speed, max_speed)
-		$AnimatedSprite.flip_h = false
-	
+		if is_on_floor():
+			accel = min(accel + 30, max_accel)
+		else:
+			accel = min(accel +10, max_accel)
+		
+		if is_on_floor() :
+			$AnimatedSprite.flip_h = false
+
 	# GAUCHE
 	if dirx == -1 and not "G" in wall_detected:
 		direction_tir = -1
@@ -292,8 +329,28 @@ func motion_loop():
 				jump_state = PRE_JUMPING
 			elif not space:
 				vel.y = -bounce_power
-		vel.x = max(vel.x - speed, -max_speed)
-		$AnimatedSprite.flip_h = true
+		if is_on_floor():
+			accel = max(accel - 30, -max_accel)
+		else:
+			accel = max(accel - 10, -max_accel)
+		
+		if is_on_floor() :
+			$AnimatedSprite.flip_h = true
+	if speed != 0:
+		if dirx == 0 or dirx != speed / abs(speed) :
+			if is_on_floor():
+				accel = lerp(accel, 0, 0.2)
+				speed = lerp(speed, 0, 0.2)
+			else:
+				accel = lerp(accel, 0, 0.05)
+				speed = lerp(speed, 0, 0.05)
+	speed += accel
+	if speed > 0:
+		vel.x = min(speed, max_speed)
+	if speed < 0:
+		vel.x = max(speed, -max_speed)
+	
+	
 	
 	# X == 0
 	if dirx == 0:                           #afk ou les 2 touches
@@ -301,7 +358,7 @@ func motion_loop():
 	
 	# WALL JUMP
 	if just_space and on_wall and dirx != 0:
-		vel.y = -jump_speed
+		vel.y = -jump_speed * 0.7
 		if $AnimatedSprite.flip_h == true:
 			vel.x = wall_bounce_val
 		if $AnimatedSprite.flip_h == false:
