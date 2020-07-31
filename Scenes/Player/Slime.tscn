@@ -2,11 +2,11 @@
 
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/Slime_slide_0.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Player/Slime_saut_montée.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Player/Slime_saut_descente.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/Player/Slime_appuie.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/Player/slime_saut_ecrase.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Player/Slime_saut_mid_air.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/slime_saut_ecrase.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/Slime_saut_mid_air.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/Slime_saut_montée.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Player/Slime_saut_descente.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Player/Slime_appuie.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=8]
 [ext_resource path="res://Code/Camera2D.gd" type="Script" id=9]
 [ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=10]
@@ -29,27 +29,27 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "jump_start_air",
+"name": "jump_end_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "jump_end_air",
+"name": "jump_middle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "jump_start_ground",
+"name": "jump_start_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "jump_end_ground",
+"name": "jump_end_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_middle",
+"name": "jump_start_ground",
 "speed": 5.0
 } ]
 
