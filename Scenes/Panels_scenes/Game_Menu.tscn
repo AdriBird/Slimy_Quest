@@ -250,9 +250,9 @@ text = "Close"
 anims/Apparition = SubResource( 6 )
 
 [node name="Test_button" type="Button" parent="."]
-margin_left = 474.834
+margin_left = 476.992
 margin_top = 245.65
-margin_right = 1402.83
+margin_right = 1404.99
 margin_bottom = 416.65
 rect_scale = Vector2( 0.4, 0.4 )
 __meta__ = {

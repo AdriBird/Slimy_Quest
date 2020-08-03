@@ -65,6 +65,7 @@ func input_update():
 	down = Input.is_action_pressed("down")
 	space = Input.is_action_pressed("jump")
 	just_space = Input.is_action_just_pressed("jump")
+	#NULL INPUTS
 	if int(right)+ int(left) + int(up) + int(down)+ int(space) + int(just_space) == 0:                                
 		no_inputs = true
 	else:
@@ -75,6 +76,7 @@ func input_update():
 onready var time_shoot = get_node("timers/timer_shoot")
 var can_shoot = false
 var bullet = preload("res://Scenes/Player/Slime_Bullet.tscn")
+
 var direction_tir = 1
 
 
@@ -115,7 +117,7 @@ func state_loop():
 	# Atterissage
 	if state == BOUNCE_AIR and is_on_floor() and !Input.is_action_pressed("bounce") and cycle == "none":
 		change_state(SLIDE)
-		
+	#check le déplacement sur le sol
 	if cycle == "none" and int(right) + int(left) == 1 and is_on_floor() and state != BOUNCE:
 		change_state(SLIDE)
 		"""if not is_on_floor():
@@ -130,12 +132,14 @@ func state_loop():
 			change_state(SLIDE)
 		else:
 			change_state(SLIDE)"""
+	#check le wall jump
 	if on_wall and not is_on_floor():
 		if cycle == "jump":
 			jump_state = NONE
 			jump_type = "none"
 		cycle = "wall_jump"
 		change_state(WALL)
+	# roost de FALL
 	if state == FALL and is_on_floor():
 		change_state(SLIDE)
 
@@ -144,6 +148,7 @@ func state_loop():
 func change_state(new_state):
 	state = new_state
 	match state:
+		# ne se répéte pas
 		IDLE:
 			my_rotation = 0
 			if timer_idle_verif == true:
@@ -173,18 +178,22 @@ func change_state(new_state):
 		WALL:
 			$AnimatedSprite.play("slide")
 
-
+# fonction delta
 func cycles():
 	if cycle == "jump":
 		match jump_state:
+			# appuye, le temps change selon la durré de l'animation
 			PRE_JUMPING:
 				change_state(JUMP)
 				my_rotation = 0
 				$AnimatedSprite/anim_move.play("jump_start_ground")
+				# si l'on cancel le saut
 				if Input.is_action_just_released("jump"):
 					jump_state = NONE    
 					$AnimatedSprite/anim_move.play("slide")
+				# Quand l'anim se termine:
 				yield($AnimatedSprite/anim_move, "animation_finished")
+				# si le saut_ui est toujours appuyé
 				if Input.is_action_pressed("jump") and is_on_floor():
 					jump_state =  JUMPING
 					vel.y = -jump_speed
@@ -193,13 +202,14 @@ func cycles():
 					jump_type = "none"
 					if cycle == "jump":
 						cycle = "none"
-					print('break')
+					# Sortie
 					if is_on_floor():
 						change_state(SLIDE)
 					elif on_wall:
 						change_state(WALL)
 					else:
 						change_state(FALL)
+			# Saut en montée
 			JUMPING:
 				if abs(vel.x) > 100 :
 					jump_type = "horizontal"
@@ -229,6 +239,7 @@ func cycles():
 				if is_on_floor():
 					jump_state = ROOST
 			ROOST:
+				# A RENDRE FACULTATIF
 				my_rotation = 0
 				$AnimatedSprite/anim_move.play("jump_end_ground")
 				
@@ -254,7 +265,7 @@ func cycles():
 		
 
 
-# JUMP CYCLE
+# JUMP CYCLE VAR
 enum {NONE, PRE_JUMPING, JUMPING, MID_JUMP, DOWN, ROOST}
 var jump_state
 var first_anim = 0
@@ -264,8 +275,7 @@ var jump_type = "none"
 
 # WALL JUMP CYCLE
 
-func wall_jump_cycle():
-	pass
+
 
 
 
