@@ -37,17 +37,7 @@ func movement():
 		$enemy_anim.play("hit")
 
 
-func hit(damage):
-#	dirx = 0
-	$CollisionShape2D.disabled = true
-	timer_hit_lag.set_wait_time(0.5)
-	timer_hit_lag.start()
-	hit_lag = 0
-	life -= damage
-	$CollisionShape2D.disabled = false
-	emit_signal("hurt", life)
-	if life <= 0:
-		queue_free()
+
 
 
 
@@ -55,7 +45,3 @@ func _on_Timer_hit_lag_timeout():
 	hit_lag = 1
 #	dirx = int($Sprite.flip_h)
 	timer_hit_lag.stop()
-	
-	
-	
-	

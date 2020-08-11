@@ -61,7 +61,8 @@ tracks/0/keys = {
 [node name="enemy" type="KinematicBody2D" groups=[
 "enemy",
 ]]
-collision_layer = 7
+collision_layer = 8
+collision_mask = 7
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true

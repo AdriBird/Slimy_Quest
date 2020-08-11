@@ -1,7 +1,7 @@
 [gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Scenes/levels_scenes/level_tuto/Tuto.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Player/Slime.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Autres_scènes/background_forest.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/Déco/rayon_lum1.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/GUI/Gros.png" type="Texture" id=5]
@@ -27,6 +27,7 @@
 [ext_resource path="res://Sprites/Free Pixel Art Forest/Preview/Background.png" type="Texture" id=25]
 [ext_resource path="res://icon.png" type="Texture" id=26]
 [ext_resource path="res://Scenes/Shaders/Shader_eau.tres" type="Material" id=27]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )

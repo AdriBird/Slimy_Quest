@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Mob",
+"language": "GDScript",
+"path": "res://Code/Classes/Mob_Class.gd"
+} ]
 _global_script_class_icons={
-
+"Mob": "res://Sprites/Icons/Mob_object_icon.png"
 }
 
 [application]
@@ -101,9 +106,11 @@ bounce={
 
 [layer_names]
 
-2d_physics/layer_1="Player"
+2d_physics/layer_1="Env"
+2d_physics/layer_2="Player"
 2d_physics/layer_3="Bullet"
-2d_physics/layer_4="Item"
+2d_physics/layer_4="Ennemi"
+2d_physics/layer_5="Item"
 
 [rendering]
 

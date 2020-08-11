@@ -1,10 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Scenes/Player/Slime.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Tile_set/Set_Swamp.tres" type="TileSet" id=2]
 [ext_resource path="res://Sprites/Déco/light.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/Déco/rayon_lum1.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Autres_scènes/background_forest.tscn" type="PackedScene" id=5]
+
 
 
 

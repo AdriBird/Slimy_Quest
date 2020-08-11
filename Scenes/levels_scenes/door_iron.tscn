@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Sprites/Tilesets/door animated wood and iron.png" type="Texture" id=1]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
 
@@ -24,6 +23,7 @@ tracks/0/keys = {
 }
 
 [node name="door" type="StaticBody2D"]
+collision_mask = 30
 __meta__ = {
 "_edit_group_": true
 }

@@ -33,7 +33,7 @@ var bounce_power = 600
 # montée en jump
 var jump_speed = 1600
 # poussé sur le mur
-var wall_bounce_val = 600
+var wall_bounce_val = 800
 
 var on_wall = false
 
@@ -57,8 +57,9 @@ var up = Input.is_action_pressed("up")
 var down = Input.is_action_pressed("down")
 var space = Input.is_action_pressed("jump")
 var just_space = Input.is_action_just_pressed("jump")
-
+var dirx 
 func input_update():
+	dirx = int(right) - int(left)
 	right = Input.is_action_pressed("right")
 	left = Input.is_action_pressed("left")
 	up = Input.is_action_pressed("up")
@@ -177,6 +178,7 @@ func change_state(new_state):
 			max_speed = 700
 		WALL:
 			$AnimatedSprite.play("slide")
+			max_speed = 700
 
 # fonction delta
 func cycles():
@@ -254,7 +256,12 @@ func cycles():
 				jump_state = NONE
 				cycle = "none"
 	if cycle == "wall_jump":
-		 #EXIT DOORS:
+		 
+		if left and "D" in wall_detected and speed > 0:
+			speed = -200
+		elif right and "G" in wall_detected and speed < 0:
+			speed = 200
+		#EXIT DOORS:
 		if not on_wall:
 			if is_on_floor():
 				change_state(SLIDE)
@@ -301,11 +308,16 @@ func _process(delta):
 func update_score():
 	$GUI/score.text = str(Global.score)
 
-
+var is_moving
 func _physics_process(delta):
+	cam()
 	#animation_loop()
 	# pause
 	# empecher le mouvement en fade in/ dialog
+	if vel == Vector2(0,0):
+		is_moving = false
+	else :
+		is_moving = true
 	if not Global.dialog:
 		motion_loop(delta)
 		shoot()
@@ -370,7 +382,6 @@ func shoot():
 
 func motion_loop(delta):
 	# DROITE
-	var dirx = int(right) - int(left)
 	if dirx == 1 and not "D" in wall_detected:
 		direction_tir = 1
 		$tir.position.x = 110
@@ -445,7 +456,7 @@ func motion_loop(delta):
 	
 	# WALL JUMP
 	if just_space and on_wall and dirx != 0:
-		vel.y = -jump_speed * 0.7
+		vel.y = -jump_speed * 0.8
 		if $AnimatedSprite.flip_h == false:
 			speed = -wall_bounce_val
 		if $AnimatedSprite.flip_h == true:
@@ -522,6 +533,57 @@ func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("water"):
 		hurt()
 	pass 
+
+#--------------------Camera---------------------------------------------------
+var cameraDownRelease
+var cameraDown = 0
+var timerOffset
+var cameraShake
+func cam():
+	if is_moving == false:
+		if Input.is_action_just_pressed("ui_down"):
+			timerOffset = 100
+		if Input.is_action_pressed("ui_down"):
+			if timerOffset != 0:
+				timerOffset -= 1
+			elif cameraDown < 500:
+				cameraDown = cameraDown *70 + 2
+			
+		if Input.is_action_just_released("ui_down"):
+			cameraDownRelease = true
+			pass
+		if cameraDownRelease == true:
+			if cameraDown > 0:
+				$Camera2D.smoothing_enabled = false
+				cameraDown = cameraDown - 1200
+			else:
+				$Camera2D.smoothing_enabled = true
+				cameraDown = 0
+				cameraDownRelease = false
+			pass
+	else:
+		if cameraDown > 0:
+			$Camera2D.smoothing_enabled = false
+			cameraDown = cameraDown - 1200
+		else:
+			$Camera2D.smoothing_enabled = true
+			cameraDown = 0
+	if Input.is_action_pressed("ui_down"):
+		$Camera2D.offset = Vector2(00, cameraDown)
+	else:
+		$Camera2D.offset = Vector2(00, cameraDown)
+	"""
+	if hitstun > 0:
+		cameraShake = 30
+	if cameraShake > 0:
+		cameraShake -= 1
+		$Camera2D.offset = Vector2(rand_range(-1.0, 1.0) * 10, rand_range(-1.0, 1.0) * 10)"""
+	
+
+
+
+
+
 
 
 #---------------------Particules and animations--------------------------------------------
