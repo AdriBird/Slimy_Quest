@@ -466,7 +466,7 @@ func motion_loop(delta):
 var nb_blob = 0
 var mana_growth = 0.1
 
-onready var mana_tween = get_node("tween_mana")
+onready var mana_tween = $GUI/tween_mana
 onready var size_tween = get_node("size_tween")
 var ref = 0
 func blob_touched():
@@ -477,7 +477,7 @@ func blob_touched():
 	# mana bar
 	var mana_bar = $GUI/mana_bar
 	mana_bar.value = 50
-	mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
 	mana_tween.start()
 
 
