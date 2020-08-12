@@ -2,11 +2,11 @@
 
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/Slime_idle.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Player/Slime_down.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/Slime_roost.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/Player/Slime_mid_jump.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Player/Slime_roost.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/Slime_down.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=8]
 [ext_resource path="res://Code/Camera2D.gd" type="Script" id=9]
 [ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=10]
@@ -32,17 +32,17 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "jump_end_air",
+"name": "jump_start_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "jump_start_air",
+"name": "jump_start_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "jump_start_ground",
+"name": "jump_end_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
@@ -52,7 +52,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_end_ground",
+"name": "jump_end_air",
 "speed": 5.0
 } ]
 
@@ -933,6 +933,8 @@ z_index = 1
 collision_mask = 29
 script = ExtResource( 1 )
 
+[node name="tween_mana" type="Tween" parent="."]
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 1, 0.847059 )
 position = Vector2( -10.7438, 14.2928 )
@@ -1028,19 +1030,17 @@ custom_fonts/font = SubResource( 15 )
 text = "0"
 
 [node name="mana_bar" type="TextureProgress" parent="GUI"]
-margin_left = 25.33
-margin_top = 83.39
-margin_right = 325.33
-margin_bottom = 383.39
+margin_left = 23.7433
+margin_top = 81.8033
+margin_right = 323.743
+margin_bottom = 381.803
 rect_scale = Vector2( 0.55, 0.55 )
-value = 50.0
+value = 38.0
 texture_over = ExtResource( 15 )
 texture_progress = ExtResource( 16 )
 fill_mode = 3
 tint_progress = Color( 0, 0.694118, 1, 1 )
 script = ExtResource( 17 )
-
-[node name="tween_mana" type="Tween" parent="GUI/mana_bar"]
 
 [node name="tir" type="Position2D" parent="."]
 position = Vector2( 55.9278, -8.27948 )

@@ -448,7 +448,6 @@ func motion_loop(delta):
 		vel.x = max(speed, -max_speed)
 	
 	
-	
 	# X == 0
 	if dirx == 0:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.5)
@@ -467,23 +466,20 @@ func motion_loop(delta):
 var nb_blob = 0
 var mana_growth = 0.1
 
-onready var mana_tween = get_node("GUI/mana_bar/tween_mana")
+onready var mana_tween = get_node("tween_mana")
 onready var size_tween = get_node("size_tween")
-
+var ref = 0
 func blob_touched():
-	print("blob touched")
+	# self
 	size_tween.interpolate_property(self, "scale", get_scale(), get_scale() + Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 	size_tween.start()
 	position.y -= 15
-	var mana_bar = get_node("GUI/mana_bar")
-	mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 2, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	# mana bar
+	var mana_bar = $GUI/mana_bar
+	mana_bar.value = 50
+	mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 	mana_tween.start()
-	if mana_tween.is_processing():
-		print("tween process")
-	else:
-		print("wtf t'es con")
-	
-	
+
 
 func _on_slime_area_body_entered(body):
 	pass
