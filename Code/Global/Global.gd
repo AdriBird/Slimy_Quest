@@ -1,8 +1,11 @@
 extends Node
 
 # warning-ignore:unused_class_variable
+#---------------Global-variables------------------------------------------------------------
 var dialog
-var score = 0
+var mana = 0
+var mana_power = 0
+var mana_verif = false
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_full_screen"):

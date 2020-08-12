@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Scenes/levels_scenes/level_tuto/Tuto.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=2]
@@ -26,8 +26,6 @@
 [ext_resource path="res://Scenes/Autres_scènes/enemy.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Scenes/Shaders/Shader_eau.tres" type="Material" id=25]
 [ext_resource path="res://icon.png" type="Texture" id=26]
-[ext_resource path="res://Ennemis/Mob1.tscn" type="PackedScene" id=27]
-
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
@@ -496,7 +494,7 @@ shape = SubResource( 15 )
 tile_set = ExtResource( 23 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114148, 0, 0, 1376423, 0, 0, 1900651, 0, 0 )
+tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114148, 0, 0, 1376423, 0, 0, 1900548, 0, 0, 1900578, 0, 0, 1900581, 0, 0, 1900598, 0, 0, 1900603, 0, 0, 1900609, 0, 0, 1900651, 0, 0 )
 
 [node name="enemy" parent="." instance=ExtResource( 24 )]
 position = Vector2( 2665.86, 846.982 )
@@ -518,9 +516,6 @@ margin_right = 3132.0
 margin_bottom = 1278.0
 texture = ExtResource( 26 )
 stretch_mode = 2
-
-[node name="Mob1" parent="." instance=ExtResource( 27 )]
-position = Vector2( 366.391, 880.641 )
 [connection signal="body_entered" from="red_button/button_door" to="red_button/button_door" method="_on_button_door_body_entered"]
 [connection signal="sesame" from="red_button/button_door" to="door" method="_on_button_door_sesame"]
 [connection signal="body_entered" from="red_button_end/button_door" to="red_button_end/button_door" method="_on_button_door_body_entered"]

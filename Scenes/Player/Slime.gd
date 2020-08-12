@@ -306,7 +306,7 @@ func _process(delta):
 
 
 func update_score():
-	$GUI/score.text = str(Global.score)
+	$GUI/score.text = str(Global.mana)
 
 var is_moving
 func _physics_process(delta):
@@ -354,8 +354,8 @@ func _physics_process(delta):
 	$CollisionShape2D.rotation = my_rotation
 	$AnimatedSprite.rotation= my_rotation
 	state_loop()
-	update_size()
 	update_score()
+	update_size()
 	input_update()
 	# tué par le vide, à rendre plus propre
 	if self.position.y >= 2000:
@@ -466,13 +466,26 @@ func motion_loop(delta):
 
 #-----------------------Blob------------------------------------------------------------------
 var nb_blob = 0
+var mana_growth = 0.05
+onready var mana_tween = get_node("GUI/mana_bar/tween_mana")
+
+func _on_slime_area_body_entered(body):
+	if body.is_in_group("blob"):
+		print("mana verif")
+		mana_tween.interpolate_property($GUI/mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 2, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+		mana_tween.start()
+		Global.mana_verif = true
 
 func update_size():
-	var pos = position
-	var x = 0.05
-	if scale != Vector2(1+x*nb_blob,1+x*nb_blob):
-		scale = Vector2(1+x*nb_blob,1+x*nb_blob)
-		position.y += -20
+	if Global.mana_verif:
+		scale += Vector2(mana_growth, mana_growth)
+		position.y -= 10
+		Global.mana_verif = false
+
+#	var pos = position
+#	if scale != Vector2(1+x*nb_blob,1+x*nb_blob):
+#		scale = Vector2(1+x*nb_blob,1+x*nb_blob)
+#		position.y += -20
 
 
 
@@ -522,6 +535,7 @@ func wall_update():
 		on_wall = true
 	else:
 		on_wall = false
+
 
 
 
@@ -618,3 +632,5 @@ func _on_idle_timer_timeout():
 	if state == IDLE and vel.x == 0 and no_inputs and is_on_floor():
 		#$AnimatedSprite/AnimationPlayer.play("idle")
 		timer_idle_verif = true
+
+

@@ -1,12 +1,12 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/Slime_idle.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Player/Slime_down.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/Slime_down.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Player/Slime_mid_jump.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/Player/Slime_roost.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Player/Slime_roost.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=8]
 [ext_resource path="res://Code/Camera2D.gd" type="Script" id=9]
 [ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=10]
@@ -14,6 +14,9 @@
 [ext_resource path="res://Sprites/GUI/life_gui2.png" type="Texture" id=12]
 [ext_resource path="res://Code/life_bar.gd" type="Script" id=13]
 [ext_resource path="res://Fonts/AlteHaasGroteskBold.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://Sprites/GUI/mana_bar_over.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/GUI/mana_bar_progress.png" type="Texture" id=16]
+[ext_resource path="res://Code/mana_bar.gd" type="Script" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -29,12 +32,12 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "jump_start_air",
+"name": "jump_end_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "jump_end_air",
+"name": "jump_start_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -44,12 +47,12 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "jump_end_ground",
+"name": "jump_start_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_start_ground",
+"name": "jump_end_ground",
 "speed": 5.0
 } ]
 
@@ -1014,20 +1017,35 @@ text = "PAUSE"
 
 [node name="score" type="Label" parent="GUI"]
 margin_left = 30.0
-margin_top = 101.235
+margin_top = 307.805
 margin_right = 75.0
-margin_bottom = 198.235
+margin_bottom = 404.805
 custom_fonts/font = SubResource( 15 )
 text = "0"
+
+[node name="mana_bar" type="TextureProgress" parent="GUI"]
+margin_left = 25.33
+margin_top = 83.39
+margin_right = 325.33
+margin_bottom = 383.39
+rect_scale = Vector2( 0.55, 0.55 )
+value = 50.0
+texture_over = ExtResource( 15 )
+texture_progress = ExtResource( 16 )
+fill_mode = 3
+tint_progress = Color( 0, 0.694118, 1, 1 )
+script = ExtResource( 17 )
+
+[node name="tween_mana" type="Tween" parent="GUI/mana_bar"]
 
 [node name="tir" type="Position2D" parent="."]
 position = Vector2( 55.9278, -8.27948 )
 scale = Vector2( 2, 2 )
 
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
+[node name="slime_area" type="Area2D" parent="."]
+position = Vector2( 17, 0 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="slime_area"]
 position = Vector2( -14.148, 14.617 )
 rotation = 1.5708
 shape = SubResource( 16 )
@@ -1066,7 +1084,8 @@ occluder = SubResource( 18 )
 [node name="timer_bounce" type="Timer" parent="timers"]
 [connection signal="hurt" from="." to="GUI/life_bar" method="_on_Slime_hurt"]
 [connection signal="pressed" from="GUI/pause" to="." method="_on_pause_pressed"]
-[connection signal="area_shape_entered" from="Area2D" to="." method="_on_Area2D_area_shape_entered"]
+[connection signal="area_shape_entered" from="slime_area" to="." method="_on_Area2D_area_shape_entered"]
+[connection signal="body_entered" from="slime_area" to="." method="_on_slime_area_body_entered"]
 [connection signal="body_entered" from="Wall_radar_D" to="." method="_on_Wall_radar_D_body_entered"]
 [connection signal="body_exited" from="Wall_radar_D" to="." method="_on_Wall_radar_D_body_exited"]
 [connection signal="body_entered" from="Wall_radar_G" to="." method="_on_Wall_radar_G_body_entered"]

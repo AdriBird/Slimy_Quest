@@ -4,7 +4,7 @@ var dialog_scene = preload("res://Scenes/Instancing_effects/dialog.tscn")
 
 func _ready():
 	$tile_blob.hide()
-	Global.score = 0
+	Global.mana = 0
 	spawn_blob()
 	
 	
