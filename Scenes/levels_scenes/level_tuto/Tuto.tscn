@@ -379,6 +379,7 @@ position = Vector2( 2050.68, 708.725 )
 shape = SubResource( 9 )
 
 [node name="arrow_pressed" type="Sprite" parent="."]
+visible = false
 position = Vector2( 270.342, 634.888 )
 scale = Vector2( 7, 7 )
 texture = ExtResource( 13 )
@@ -386,6 +387,7 @@ texture = ExtResource( 13 )
 [node name="arrow_follow1" type="Sprite" parent="."]
 position = Vector2( 933.106, 891.836 )
 scale = Vector2( 7, 7 )
+z_index = -4
 texture = ExtResource( 14 )
 
 [node name="end_flag" parent="." instance=ExtResource( 15 )]
@@ -494,7 +496,7 @@ shape = SubResource( 15 )
 tile_set = ExtResource( 23 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114148, 0, 0, 1376423, 0, 0, 1900548, 0, 0, 1900578, 0, 0, 1900581, 0, 0, 1900598, 0, 0, 1900603, 0, 0, 1900609, 0, 0, 1900651, 0, 0 )
+tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1376423, 0, 0, 1900572, 0, 0, 1900609, 0, 0, 1900651, 0, 0 )
 
 [node name="enemy" parent="." instance=ExtResource( 24 )]
 position = Vector2( 2665.86, 846.982 )

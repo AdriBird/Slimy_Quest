@@ -3,9 +3,9 @@
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/Slime_idle.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/Player/Slime_down.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/Player/Slime_mid_jump.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Player/Slime_mid_jump.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Player/Slime_roost.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=8]
 [ext_resource path="res://Code/Camera2D.gd" type="Script" id=9]
@@ -37,17 +37,17 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "jump_start_ground",
+"name": "jump_start_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "jump_middle",
+"name": "jump_start_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "jump_start_air",
+"name": "jump_middle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
@@ -968,10 +968,12 @@ frame = 13
 region_rect = Rect2( 4, 2, 28, 27 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 5.44, 9.334 )
 shape = SubResource( 14 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PoolVector2Array( -3.23163, -38.6612, 22.5931, -35.499, 49.9989, -22.8501, 64.2289, -8.09314, 71.0093, 3.72504, 73.979, 17.468, 74.982, 29.9747, 71.0302, 42.894, 61.9189, 50.1188, 52.03, 54.3918, 37.2936, 57.4044, 19.4332, 57.9323, -27.9359, 57.9323, -48.8289, 55.6211, -57.4398, 53.4044, -65.0276, 48.9711, -70.4841, 43.6852, -73.5908, 37.4954, -76.226, 21.1573, -74.1052, 8.27173, -69.9286, -0.478943, -63.2662, -10.4229, -54.354, -20.215, -33.5361, -32.0732 )
 disabled = true
 
@@ -985,6 +987,8 @@ drag_margin_bottom = 0.1
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource( 9 )
+
+[node name="size_tween" type="Tween" parent="."]
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
@@ -1043,6 +1047,7 @@ position = Vector2( 55.9278, -8.27948 )
 scale = Vector2( 2, 2 )
 
 [node name="slime_area" type="Area2D" parent="."]
+visible = false
 position = Vector2( 17, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="slime_area"]
