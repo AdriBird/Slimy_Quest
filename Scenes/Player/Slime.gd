@@ -371,12 +371,14 @@ func _physics_process(delta):
 func shoot():
 	var shoot = Input.is_action_pressed("shoot")
 	if shoot and time or can_shoot and time == true:
-		var b = bullet.instance()
-		b.start($tir.global_position, direction_tir)
-		get_parent().add_child(b)
-		time = false
-		time_shoot.set_wait_time(1)
-		time_shoot.start()
+		if Global.mana > 0:
+			var b = bullet.instance()
+			b.start($tir.global_position, direction_tir)
+			get_parent().add_child(b)
+			mana_lose()
+			time = false
+			time_shoot.set_wait_time(1)
+			time_shoot.start()
 
 
 func motion_loop(delta):
@@ -468,18 +470,25 @@ var mana_growth = 0.1
 
 onready var mana_tween = $GUI/tween_mana
 onready var size_tween = get_node("size_tween")
+onready var mana_bar = $GUI/mana_bar
 var ref = 0
-func blob_touched():
-	# self
-	size_tween.interpolate_property(self, "scale", get_scale(), get_scale() + Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
-	size_tween.start()
-	position.y -= 15
-	# mana bar
-	var mana_bar = $GUI/mana_bar
-	mana_bar.value = 50
-	mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
-	mana_tween.start()
+func blob_touched():      #agrandissement du slime + ajout de mana (blob)
+	if Global.mana < 100:
+		# self
+		size_tween.interpolate_property(self, "scale", get_scale(), get_scale() + Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+		size_tween.start()
+		position.y -= 15
+		# mana bar
+		mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
+		mana_tween.start()
 
+func mana_lose():        #rétrécissement du slime + retrait de mana (bullet)
+	#self
+	size_tween.interpolate_property(self, "scale", get_scale(), get_scale() - Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	size_tween.start()
+	#mana_bar
+	mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana - Global.mana_power, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
+	mana_tween.start()
 
 func _on_slime_area_body_entered(body):
 	pass

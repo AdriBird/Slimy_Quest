@@ -7,6 +7,7 @@ var _type
 signal blob_touch
 
 func init(type, pos):
+	print("je me suis init nananère")
 	_type = type
 	$Sprite.texture = load(texture[type])
 	position = pos

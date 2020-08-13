@@ -2,11 +2,11 @@
 
 [ext_resource path="res://Scenes/Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/Slime_idle.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/Slime_down.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/Player/Slime_mid_jump.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Player/Slime_roost.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/Player/Slime_down.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=8]
 [ext_resource path="res://Code/Camera2D.gd" type="Script" id=9]
 [ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=10]
@@ -32,7 +32,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "jump_start_air",
+"name": "jump_end_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
@@ -47,12 +47,12 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "jump_end_air",
+"name": "jump_start_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_start_ground",
+"name": "jump_start_air",
 "speed": 5.0
 } ]
 
@@ -971,11 +971,11 @@ region_rect = Rect2( 4, 2, 28, 27 )
 visible = false
 position = Vector2( 5.44, 9.334 )
 shape = SubResource( 14 )
+disabled = true
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
 visible = false
 polygon = PoolVector2Array( -3.23163, -38.6612, 22.5931, -35.499, 49.9989, -22.8501, 64.2289, -8.09314, 71.0093, 3.72504, 73.979, 17.468, 74.982, 29.9747, 71.0302, 42.894, 61.9189, 50.1188, 52.03, 54.3918, 37.2936, 57.4044, 19.4332, 57.9323, -27.9359, 57.9323, -48.8289, 55.6211, -57.4398, 53.4044, -65.0276, 48.9711, -70.4841, 43.6852, -73.5908, 37.4954, -76.226, 21.1573, -74.1052, 8.27173, -69.9286, -0.478943, -63.2662, -10.4229, -54.354, -20.215, -33.5361, -32.0732 )
-disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -150 )
@@ -1035,7 +1035,6 @@ margin_top = 81.8033
 margin_right = 323.743
 margin_bottom = 381.803
 rect_scale = Vector2( 0.55, 0.55 )
-value = 38.0
 texture_over = ExtResource( 15 )
 texture_progress = ExtResource( 16 )
 fill_mode = 3
@@ -1061,7 +1060,7 @@ position = Vector2( -2.85388, -4.51868 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar_D"]
 visible = false
-position = Vector2( 80, 26 )
+position = Vector2( 79.0036, 21.9849 )
 shape = SubResource( 17 )
 
 [node name="Wall_radar_G" type="Area2D" parent="."]
@@ -1070,7 +1069,7 @@ position = Vector2( 72.4827, 18.9261 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar_G"]
 visible = false
-position = Vector2( -146.82, 4.23 )
+position = Vector2( -150.618, 5.83417 )
 shape = SubResource( 17 )
 
 [node name="bottom_pos" type="Position2D" parent="."]

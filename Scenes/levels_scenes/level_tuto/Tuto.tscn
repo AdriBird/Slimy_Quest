@@ -496,7 +496,7 @@ shape = SubResource( 15 )
 tile_set = ExtResource( 23 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1376423, 0, 0, 1900572, 0, 0, 1900609, 0, 0, 1900651, 0, 0 )
+tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114148, 0, 0, 1376423, 0, 0, 1900609, 0, 0, 1900651, 0, 0 )
 
 [node name="enemy" parent="." instance=ExtResource( 24 )]
 position = Vector2( 2665.86, 846.982 )
