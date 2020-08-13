@@ -7,7 +7,6 @@
 [ext_resource path="res://icon.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/Player/Slime_slide_1.png" type="Texture" id=6]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32.1667, 32.1496 )
 

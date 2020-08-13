@@ -9,12 +9,24 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Entity",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Code/Classes/Enemy.gd"
+}, {
 "base": "KinematicBody2D",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://Code/Classes/entity.gd"
+}, {
+"base": "Enemy",
 "class": "Mob",
 "language": "GDScript",
-"path": "res://Code/Classes/Mob_Class.gd"
+"path": "res://Code/Classes/Mob.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
+"Entity": "",
 "Mob": "res://Sprites/Icons/Mob_object_icon.png"
 }
 

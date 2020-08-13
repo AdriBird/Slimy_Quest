@@ -5,7 +5,6 @@ var texture = {'blue_blob'  : "res://Sprites/Items/water_drop.png"}
 var _type
 
 
-
 func init(type, pos):
 	_type = type
 	$Sprite.texture = load(texture[type])

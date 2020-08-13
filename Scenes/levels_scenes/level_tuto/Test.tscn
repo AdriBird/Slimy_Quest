@@ -23,7 +23,7 @@
 [ext_resource path="res://Tile_set/Tile_set_test.tres" type="TileSet" id=21]
 [ext_resource path="res://Tile_set/tile_object.tres" type="TileSet" id=22]
 [ext_resource path="res://Tile_set/tile_blob.tres" type="TileSet" id=23]
-[ext_resource path="res://Scenes/Autres_scènes/enemy.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Ennemis/Grousk.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Sprites/Free Pixel Art Forest/Preview/Background.png" type="Texture" id=25]
 [ext_resource path="res://icon.png" type="Texture" id=26]
 [ext_resource path="res://Scenes/Shaders/Shader_eau.tres" type="Material" id=27]
@@ -1051,7 +1051,7 @@ format = 1
 tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114148, 0, 0, 1376423, 0, 0, 1900651, 0, 0 )
 
 [node name="enemy" parent="." instance=ExtResource( 24 )]
-position = Vector2( 2665.86, 846.982 )
+position = Vector2( 676.483, 725.849 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.854902, 0.854902, 0.854902, 1 )

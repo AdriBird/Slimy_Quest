@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Code/enemy.gd" type="Script" id=1]
+[ext_resource path="res://Code/Grousk1.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Ennemis/grousk.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/GUI/life_gui3.png" type="Texture" id=4]
@@ -8,10 +8,10 @@
 [ext_resource path="res://Code/enemy_life_bar.gd" type="Script" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 44.142, 40.1268 )
+extents = Vector2( 48.0207, 47.0929 )
 
 [sub_resource type="Animation" id=2]
-resource_name = "hit"
+resource_name = "hurt"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -58,32 +58,34 @@ tracks/0/keys = {
 "values": [ 2, 3 ]
 }
 
-[node name="enemy" type="KinematicBody2D" groups=[
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 73.1421
+height = 1.63412
+
+[node name="Grousk" type="KinematicBody2D" groups=[
 "enemy",
 ]]
 collision_layer = 8
-collision_mask = 7
+collision_mask = 15
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
+health = 50
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 hframes = 5
-frame = 4
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+position = Vector2( -0.902496, 4.51247 )
 shape = SubResource( 1 )
 
 [node name="enemy_anim" type="AnimationPlayer" parent="."]
-anims/hit = SubResource( 2 )
+anims/hurt = SubResource( 2 )
 anims/idle = SubResource( 3 )
 anims/walk = SubResource( 4 )
 
-[node name="enemy_life_bar" type="TextureProgress" parent="."]
+[node name="life_bar" type="TextureProgress" parent="."]
 margin_left = -64.2844
 margin_top = -71.4149
 margin_right = 63.7156
@@ -97,8 +99,14 @@ script = ExtResource( 6 )
 [node name="Timer_hit_lag" type="Timer" parent="."]
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2( 45, 0 )
+position = Vector2( 0.159119, 21.3178 )
 enabled = true
 cast_to = Vector2( 0, 60 )
-[connection signal="hurt" from="." to="enemy_life_bar" method="_on_enemy_hurt"]
+
+[node name="hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+visible = false
+shape = SubResource( 5 )
 [connection signal="timeout" from="Timer_hit_lag" to="." method="_on_Timer_hit_lag_timeout"]
+[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

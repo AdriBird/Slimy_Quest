@@ -1,18 +1,16 @@
-extends KinematicBody2D
+extends Entity
 
 
 
 
 #-----------------------Signaux----------------------------------------------------------
 
-signal hurt
+
 
 #-----------------------Variables----------------------------------------------------------
 
 
-var vel = Vector2()
-const GRAVITY = 2700
-const UP = Vector2(0, -1)
+
 var no_inputs
 
 #-----------------------Motions variables-------------------------------------------------------
@@ -24,29 +22,40 @@ var max_accel = 30
 # incrémentation actuelle
 var accel = 0
 # vitesse actuelle
-var speed = 0
+
 # vitesse min pour bounce
 var max_slide_speed = 599
-var max_speed = 700
+
 # montée en bounce
 var bounce_power = 600
 # montée en jump
-var jump_speed = 1600
-# poussé sur le mur
+
 var wall_bounce_val = 800
 
 var on_wall = false
 
+
+
+
 onready var timer_bounce = get_node("timers/timer_bounce")
 #var bounce_timer_verif = false
-#var time_timer_bounce = true
-
 
 
 var my_rotation = 0
+func _ready():
+	# damages to other entities
+	power = 10
+	has_health_bar = true
+	max_speed = 700
+	my_rotation = 0
+	bottom_pos = get_node("bottom_pos").position
+	state = IDLE
+	jump_state = NONE
+	$tir.position.x = 110
+	pass 
 
 #-----------------------States------------------------------------------------------------------
-enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, BOUNCE_AIR, PAUSE, DAMAGE, WALL, FALL}
+enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, BOUNCE_AIR, PAUSE, WALL, FALL, HURT}
 var state
 var cycle = "none"
 #-----------------------INPUTS------------------------------------------------------------------
@@ -57,7 +66,7 @@ var up = Input.is_action_pressed("up")
 var down = Input.is_action_pressed("down")
 var space = Input.is_action_pressed("jump")
 var just_space = Input.is_action_just_pressed("jump")
-var dirx 
+
 func input_update():
 	dirx = int(right) - int(left)
 	right = Input.is_action_pressed("right")
@@ -121,19 +130,6 @@ func state_loop():
 	#check le déplacement sur le sol
 	if cycle == "none" and int(right) + int(left) == 1 and is_on_floor() and state != BOUNCE:
 		change_state(SLIDE)
-		"""if not is_on_floor():
-			#jump_state = PRE_JUMPING
-			vel.y = 500
-		pass
-		if state == JUMP and is_on_floor() and cycle == "none":
-		$AnimatedSprite/anim_move.play("jump_end_ground")
-		#$AnimatedSprite.rotation_degrees = 0
-		if no_inputs:
-			yield($AnimatedSprite/anim_move, "animation_finished")
-			change_state(SLIDE)
-		else:
-			change_state(SLIDE)"""
-	#check le wall jump
 	if on_wall and not is_on_floor():
 		if cycle == "jump":
 			jump_state = NONE
@@ -143,6 +139,9 @@ func state_loop():
 	# roost de FALL
 	if state == FALL and is_on_floor():
 		change_state(SLIDE)
+	# phase de take damage:
+	if state == HURT:
+		pass
 
 
 
@@ -182,94 +181,102 @@ func change_state(new_state):
 
 # fonction delta
 func cycles():
-	if cycle == "jump":
-		match jump_state:
-			# appuye, le temps change selon la durré de l'animation
-			PRE_JUMPING:
-				change_state(JUMP)
-				my_rotation = 0
-				$AnimatedSprite/anim_move.play("jump_start_ground")
-				# si l'on cancel le saut
-				if Input.is_action_just_released("jump"):
-					jump_state = NONE    
-					$AnimatedSprite/anim_move.play("slide")
-				# Quand l'anim se termine:
-				yield($AnimatedSprite/anim_move, "animation_finished")
-				# si le saut_ui est toujours appuyé
-				if Input.is_action_pressed("jump") and is_on_floor():
-					jump_state =  JUMPING
-					vel.y = -jump_speed
-				else:
-					jump_state = NONE
-					jump_type = "none"
-					if cycle == "jump":
-						cycle = "none"
-					# Sortie
-					if is_on_floor():
-						change_state(SLIDE)
-					elif on_wall:
-						change_state(WALL)
-					else:
-						change_state(FALL)
-			# Saut en montée
-			JUMPING:
-				if abs(vel.x) > 100 :
-					jump_type = "horizontal"
-				else: 
-					jump_type = "vertical"
-				if first_anim == 0:
-					first_anim = 1
-					yield(get_tree().create_timer(0.1), "timeout")
-					$AnimatedSprite/anim_move.play("jump_start_air")
-				if Input.is_action_just_released("jump"):
-					if vel.y < -100:
-						vel.y /= 2
-				if vel.y > -1000 :
-					jump_state = MID_JUMP
-				#$AnimatedSprite/anim_move.play("jump_middle")
-				#$AnimatedSprite.rotation_degrees = 0
-				#yield($AnimatedSprite/anim_move, "animation_finished")
-				#$AnimatedSprite/anim_move.play("jump_end_air")
-			MID_JUMP:
-				$AnimatedSprite/anim_move.play("jump_middle")
-				if vel.y > 1000 :
-					jump_state = DOWN
-				if is_on_floor():
-					jump_state = ROOST
-			DOWN:
-				$AnimatedSprite/anim_move.play("jump_end_air")
-				if is_on_floor():
-					jump_state = ROOST
-			ROOST:
-				# A RENDRE FACULTATIF
-				my_rotation = 0
-				$AnimatedSprite/anim_move.play("jump_end_ground")
-				
-				#$AnimatedSprite.rotation_degrees = 0
-				if no_inputs:
+	match cycle:
+		"jump":
+			match jump_state:
+				# appuye, le temps change selon la durré de l'animation
+				PRE_JUMPING:
+					change_state(JUMP)
+					my_rotation = 0
+					$AnimatedSprite/anim_move.play("jump_start_ground")
+					# si l'on cancel le saut
+					if Input.is_action_just_released("jump"):
+						jump_state = NONE    
+						$AnimatedSprite/anim_move.play("slide")
+					# Quand l'anim se termine:
 					yield($AnimatedSprite/anim_move, "animation_finished")
+					# si le saut_ui est toujours appuyé
+					if Input.is_action_pressed("jump") and is_on_floor():
+						jump_state =  JUMPING
+						vel.y = -jump_speed
+					else:
+						$AnimatedSprite/anim_move.play("slide")
+						jump_state = NONE
+						jump_type = "none"
+						if cycle == "jump":
+							cycle = "none"
+						# Sortie
+						if is_on_floor():
+							change_state(SLIDE)
+						elif on_wall:
+							change_state(WALL)
+						else:
+							change_state(FALL)
+				# Saut en montée
+				JUMPING:
+					if abs(vel.x) > 100 :
+						jump_type = "horizontal"
+					else: 
+						jump_type = "vertical"
+					if first_anim == 0:
+						first_anim = 1
+						yield(get_tree().create_timer(0.1), "timeout")
+						$AnimatedSprite/anim_move.play("jump_start_air")
+					if Input.is_action_just_released("jump"):
+						if vel.y < -100:
+							vel.y /= 2
+					if vel.y > -1000 :
+						jump_state = MID_JUMP
+					#$AnimatedSprite/anim_move.play("jump_middle")
+					#$AnimatedSprite.rotation_degrees = 0
+					#yield($AnimatedSprite/anim_move, "animation_finished")
+					#$AnimatedSprite/anim_move.play("jump_end_air")
+				MID_JUMP:
+					$AnimatedSprite/anim_move.play("jump_middle")
+					if vel.y > 1000 :
+						jump_state = DOWN
+					if is_on_floor():
+						jump_state = ROOST
+				DOWN:
+					$AnimatedSprite/anim_move.play("jump_end_air")
+					if is_on_floor():
+						jump_state = ROOST
+				ROOST:
+					# A RENDRE FACULTATIF
+					my_rotation = 0
+					$AnimatedSprite/anim_move.play("jump_end_ground")
+					
+					#$AnimatedSprite.rotation_degrees = 0
+					if no_inputs:
+						yield($AnimatedSprite/anim_move, "animation_finished")
+						change_state(SLIDE)
+					else:
+						change_state(SLIDE)
+						cycle = "break"
+		"wall_jump":
+			if left and "D" in wall_detected and speed > 0:
+				speed = -200
+			elif right and "G" in wall_detected and speed < 0:
+				speed = 200
+			#EXIT DOORS:
+			if not on_wall:
+				if is_on_floor():
 					change_state(SLIDE)
+					cycle = "none"
 				else:
-					change_state(SLIDE)
-				first_anim = 0
-				jump_type = "none"
-				jump_state = NONE
-				cycle = "none"
-	if cycle == "wall_jump":
-		 
-		if left and "D" in wall_detected and speed > 0:
-			speed = -200
-		elif right and "G" in wall_detected and speed < 0:
-			speed = 200
-		#EXIT DOORS:
-		if not on_wall:
-			if is_on_floor():
-				change_state(SLIDE)
-				cycle = "none"
-			else:
-				change_state(FALL)
-				cycle = "none"
-		
+					change_state(FALL)
+					cycle = "none"
+		"break":
+			cycle = "none"
+			jump_type = "none"
+			jump_state = NONE
+			first_anim = 0
+
+func change_cycle(new_cycle):
+	cycle = new_cycle
+	jump_type = "none"
+	jump_state = NONE
+	first_anim = 0
 
 
 # JUMP CYCLE VAR
@@ -290,13 +297,7 @@ var jump_type = "none"
 
 
 #-----------------------Physic Process----------------------------------------------------------
-func _ready():
-	my_rotation = 0
-	bottom_pos = get_node("bottom_pos").position
-	state = IDLE
-	jump_state = NONE
-	$tir.position.x = 110
-	pass 
+
 
 
 func _process(delta):
@@ -359,7 +360,7 @@ func _physics_process(delta):
 	input_update()
 	# tué par le vide, à rendre plus propre
 	if self.position.y >= 2000:
-		hurt()
+		take_damage(health)
 	# Menu pause
 	if Input.is_action_pressed("pause"):
 		var pause = preload("res://Scenes/Instancing_effects/menu_pause.tscn").instance()
@@ -469,12 +470,21 @@ var nb_blob = 0
 var mana_growth = 0.05
 onready var mana_tween = get_node("GUI/mana_bar/tween_mana")
 
-func _on_slime_area_body_entered(body):
+func _on_hurtbox_body_entered(body):
+	# mana
 	if body.is_in_group("blob"):
 		print("mana verif")
 		mana_tween.interpolate_property($GUI/mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 2, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 		mana_tween.start()
 		Global.mana_verif = true
+	
+	# ennemi
+	if body is Enemy:
+		state = HURT
+		change_cycle("none")
+		change_state(HURT)
+		take_damage(body.power)
+		knock_back(body)
 
 func update_size():
 	if Global.mana_verif:
@@ -490,11 +500,7 @@ func update_size():
 
 
 
-#hurt
-func hurt():
-	self.vel.y = 0
-	#self.position = get_parent().get_node("Spawn").position
-	emit_signal("hurt")
+
 
 # pause
 func _on_pause_pressed():
@@ -511,6 +517,10 @@ func _on_timer_shoot_timeout():
 
 #--------------------Detections---------------------------------------------------------
 
+
+
+func death():
+	get_tree().reload_current_scene()
 
 
 
@@ -545,7 +555,7 @@ func wall_update():
 # WATER
 func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("water"):
-		hurt()
+		take_damage(10)
 	pass 
 
 #--------------------Camera---------------------------------------------------
@@ -555,15 +565,15 @@ var timerOffset
 var cameraShake
 func cam():
 	if is_moving == false:
-		if Input.is_action_just_pressed("ui_down"):
+		if Input.is_action_just_pressed("down"):
 			timerOffset = 100
-		if Input.is_action_pressed("ui_down"):
+		if Input.is_action_pressed("down"):
 			if timerOffset != 0:
 				timerOffset -= 1
 			elif cameraDown < 500:
 				cameraDown = cameraDown *70 + 2
 			
-		if Input.is_action_just_released("ui_down"):
+		if Input.is_action_just_released("down"):
 			cameraDownRelease = true
 			pass
 		if cameraDownRelease == true:
@@ -582,7 +592,7 @@ func cam():
 		else:
 			$Camera2D.smoothing_enabled = true
 			cameraDown = 0
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("down"):
 		$Camera2D.offset = Vector2(00, cameraDown)
 	else:
 		$Camera2D.offset = Vector2(00, cameraDown)
@@ -593,7 +603,6 @@ func cam():
 		cameraShake -= 1
 		$Camera2D.offset = Vector2(rand_range(-1.0, 1.0) * 10, rand_range(-1.0, 1.0) * 10)"""
 	
-
 
 
 
@@ -632,5 +641,4 @@ func _on_idle_timer_timeout():
 	if state == IDLE and vel.x == 0 and no_inputs and is_on_floor():
 		#$AnimatedSprite/AnimationPlayer.play("idle")
 		timer_idle_verif = true
-
-
+		pass
