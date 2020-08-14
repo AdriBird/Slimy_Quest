@@ -12,6 +12,11 @@ func _ready():
 	#$enemy_anim.play("walk")
 
 
+
+
+
+
+
 func neutral():
 	if is_on_wall():
 		dirx *= -1

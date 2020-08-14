@@ -28,7 +28,6 @@
 [ext_resource path="res://icon.png" type="Texture" id=26]
 [ext_resource path="res://Scenes/Shaders/Shader_eau.tres" type="Material" id=27]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
 
@@ -1051,7 +1050,7 @@ format = 1
 tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 1114148, 0, 0, 1376423, 0, 0, 1900651, 0, 0 )
 
 [node name="enemy" parent="." instance=ExtResource( 24 )]
-position = Vector2( 676.483, 725.849 )
+position = Vector2( 933.269, 393.537 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.854902, 0.854902, 0.854902, 1 )

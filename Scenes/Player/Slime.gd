@@ -44,7 +44,7 @@ onready var timer_bounce = get_node("timers/timer_bounce")
 var my_rotation = 0
 func _ready():
 	# damages to other entities
-	power = 10
+	power = 0
 	has_health_bar = true
 	max_speed = 700
 	my_rotation = 0
@@ -52,7 +52,6 @@ func _ready():
 	state = IDLE
 	jump_state = NONE
 	$tir.position.x = 110
-	pass 
 
 #-----------------------States------------------------------------------------------------------
 enum  {IDLE, JUMP, SHOOT, SLIDE, BOUNCE, BOUNCE_AIR, PAUSE, WALL, FALL, HURT}
@@ -131,17 +130,17 @@ func state_loop():
 	if cycle == "none" and int(right) + int(left) == 1 and is_on_floor() and state != BOUNCE:
 		change_state(SLIDE)
 	if on_wall and not is_on_floor():
-		if cycle == "jump":
-			jump_state = NONE
-			jump_type = "none"
-		cycle = "wall_jump"
+		change_cycle("wall_jump")
 		change_state(WALL)
 	# roost de FALL
 	if state == FALL and is_on_floor():
 		change_state(SLIDE)
 	# phase de take damage:
 	if state == HURT:
-		pass
+		if is_on_floor():
+			vel.x = lerp(vel.x, 0, 0.05)
+		else:
+			vel.x = lerp(vel.x, 0, 0.5)
 
 
 
@@ -178,6 +177,11 @@ func change_state(new_state):
 		WALL:
 			$AnimatedSprite.play("slide")
 			max_speed = 700
+		HURT:
+			vel.x = 0
+			yield(get_tree().create_timer(1), "timeout")
+			change_state(SLIDE)
+
 
 # fonction delta
 func cycles():
@@ -252,7 +256,7 @@ func cycles():
 						change_state(SLIDE)
 					else:
 						change_state(SLIDE)
-						cycle = "break"
+					change_cycle("none")
 		"wall_jump":
 			if left and "D" in wall_detected and speed > 0:
 				speed = -200
@@ -266,11 +270,6 @@ func cycles():
 				else:
 					change_state(FALL)
 					cycle = "none"
-		"break":
-			cycle = "none"
-			jump_type = "none"
-			jump_state = NONE
-			first_anim = 0
 
 func change_cycle(new_cycle):
 	cycle = new_cycle
@@ -320,16 +319,17 @@ func _physics_process(delta):
 	else :
 		is_moving = true
 	if not Global.dialog:
-		motion_loop(delta)
-		shoot()
 		cycles()
-	else:
+		if state != HURT:
+			motion_loop(delta)
+			shoot()
+			state_loop()
+	elif state != HURT:
 		vel.x = 0
 	particles_loop()
-	state_loop()
 	wall_update()
 	if on_wall and vel.y >= 0:
-		vel.y /=  2
+		vel.y /= 2
 	vel.y += (GRAVITY * delta)
 	vel = move_and_slide(vel, UP)
 	#--- ROTATION RADIANT
@@ -352,9 +352,8 @@ func _physics_process(delta):
 			$AnimatedSprite.flip_h = false
 	else:
 		my_rotation = 0
-	$CollisionShape2D.rotation = my_rotation
+	$CollisionPolygon2D2.rotation = my_rotation
 	$AnimatedSprite.rotation= my_rotation
-	state_loop()
 	update_score()
 	update_size()
 	input_update()
@@ -433,7 +432,7 @@ func motion_loop(delta):
 			$AnimatedSprite.flip_h = true
 	if speed != 0:
 		if dirx == 0 or dirx != speed / abs(speed) :
-			if is_on_floor():
+			if is_on_floor() and state != HURT :
 				accel = lerp(accel, 0, 0.5)
 				speed = lerp(speed, 0, 0.5)
 			if state in [FALL, JUMP]:
@@ -444,15 +443,16 @@ func motion_loop(delta):
 		max_speed = 600
 	else:
 		max_speed = 800
-	if speed > 0:
-		vel.x = min(speed, max_speed)
-	if speed < 0:
-		vel.x = max(speed, -max_speed)
+	if not no_inputs:
+		if speed > 0:
+			vel.x = min(speed, max_speed)
+		if speed < 0:
+			vel.x = max(speed, -max_speed)
 	
 	
 	
 	# X == 0
-	if dirx == 0:                           #afk ou les 2 touches
+	if no_inputs:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.5)
 	
 	# WALL JUMP
@@ -480,7 +480,6 @@ func _on_hurtbox_body_entered(body):
 	
 	# ennemi
 	if body is Enemy:
-		state = HURT
 		change_cycle("none")
 		change_state(HURT)
 		take_damage(body.power)

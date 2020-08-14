@@ -22,13 +22,13 @@ export (int) var power = 10
 
 
 var has_health_bar = false
+
 func take_damage(damage):
 	if damage == 0:
 		return
-	$CollisionShape2D.disabled = true
+	
 	# take damage timer and animation
 	health -= damage
-	$CollisionShape2D.disabled = false
 	if has_health_bar :
 		# applicable to player and bosses, which have health_bar
 		if self.is_in_group("enemy"):
@@ -38,14 +38,21 @@ func take_damage(damage):
 		emit_signal("update_health_bar", health)
 	if health <= 0:
 		death()
+	$hurtbox/CollisionShape2D.set_deferred("disabled", true)
+	for i in range(4):
+		self.hide()
+		yield(get_tree().create_timer(0.2), "timeout")
+		self.show()
+		yield(get_tree().create_timer(0.2), "timeout")
+	$hurtbox/CollisionShape2D.set_deferred("disabled", false)
 
 
 
 func knock_back(body):
 	if body.power == 0:
 		return
-	vel.y += -600
-	vel.x += (self.position.x - body.position.x) / abs((self.position.x - body.position.x)) * 1000
+	vel.y = -600
+	vel.x += (self.position.x - body.position.x) / abs((self.position.x - body.position.x)) * 200
 
 func death():
 	queue_free()
