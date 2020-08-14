@@ -32,10 +32,9 @@ func spawn_blob():
 			c.init(type, pos + $tile_blob.cell_size / 2)
 			add_child(c)
 
-func blob_bullet():
+func blob_bullet(pos):
 	print("j'ai recu le signal au moins")
 	var type = 'blue_blob'
-	var pos = get_position()
 	var c = item.instance()
 	c.init(type, pos)
 	add_child(c)

@@ -41,7 +41,7 @@ func _process(delta):
 			queue_free()
 		
 		self.connect("bullet_despawned", tuto, "blob_bullet")
-		emit_signal("bullet_despawned")
+		emit_signal("bullet_despawned", position)
 		queue_free()
 
 
