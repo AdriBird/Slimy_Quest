@@ -2,9 +2,12 @@ extends KinematicBody2D
 var speed = 1000
 var vel = Vector2()
 const gravity = 1000
+var tuto 
 
 func _ready():
 	vel.y = -500
+	tuto = get_parent()
+	print(tuto.name)
 func start(pos, dir):
 	$Timer.set_wait_time(2)
 	$Timer.start()
@@ -21,10 +24,11 @@ func start(pos, dir):
 		$Particles2D2.rotation_degrees = 90
 		$Particles2D2.position.x = 84
 #	$bullet_anim.play("shoot")
-	
+
+
+signal bullet_despawned
 func _process(delta):
 	vel.y += (gravity * delta * 1.5)
-	print(vel.y)
 	var collision = move_and_collide(vel * delta)
 	if collision :
 		if collision.collider.has_method("hit"):
@@ -35,6 +39,9 @@ func _process(delta):
 #			yield ($bullet_anim, "animation_finished")
 			$CollisionShape2D.disabled = false
 			queue_free()
+		
+		self.connect("bullet_despawned", tuto, "blob_bullet")
+		emit_signal("bullet_despawned")
 		queue_free()
 
 

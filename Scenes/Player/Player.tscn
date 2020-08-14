@@ -955,11 +955,13 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource( 9 )
 
+[node name="size_tween" type="Tween" parent="."]
+
 [node name="GUI" type="CanvasLayer" parent="."]
 
-[node name="life_bar" type="TextureProgress" parent="GUI" groups=[
-"GUI",
-]]
+[node name="tween_mana" type="Tween" parent="GUI"]
+
+[node name="life_bar" type="TextureProgress" parent="GUI"]
 margin_left = 30.0
 margin_top = 30.0
 margin_right = 524.0
@@ -999,22 +1001,17 @@ margin_bottom = 404.805
 custom_fonts/font = SubResource( 14 )
 text = "0"
 
-[node name="mana_bar" type="TextureProgress" parent="GUI" groups=[
-"GUI",
-]]
-margin_left = 25.33
-margin_top = 83.39
-margin_right = 325.33
-margin_bottom = 383.39
+[node name="mana_bar" type="TextureProgress" parent="GUI"]
+margin_left = 23.7433
+margin_top = 81.8033
+margin_right = 323.743
+margin_bottom = 381.803
 rect_scale = Vector2( 0.55, 0.55 )
-value = 50.0
 texture_over = ExtResource( 15 )
 texture_progress = ExtResource( 16 )
 fill_mode = 3
-tint_progress = Color( 0, 0.694118, 1, 1 )
+tint_progress = Color( 0, 0.623529, 1, 1 )
 script = ExtResource( 17 )
-
-[node name="tween_mana" type="Tween" parent="GUI/mana_bar"]
 
 [node name="tir" type="Position2D" parent="."]
 position = Vector2( 55.9278, -8.27948 )

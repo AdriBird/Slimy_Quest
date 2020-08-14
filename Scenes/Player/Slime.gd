@@ -355,7 +355,6 @@ func _physics_process(delta):
 	$CollisionPolygon2D2.rotation = my_rotation
 	$AnimatedSprite.rotation= my_rotation
 	update_score()
-	update_size()
 	input_update()
 	# tué par le vide, à rendre plus propre
 	if self.position.y >= 2000:
@@ -372,12 +371,14 @@ func _physics_process(delta):
 func shoot():
 	var shoot = Input.is_action_pressed("shoot")
 	if shoot and time or can_shoot and time == true:
-		var b = bullet.instance()
-		b.start($tir.global_position, direction_tir)
-		get_parent().add_child(b)
-		time = false
-		time_shoot.set_wait_time(1)
-		time_shoot.start()
+		if Global.mana > 0:
+			var b = bullet.instance()
+			b.start($tir.global_position, direction_tir)
+			get_parent().add_child(b)
+			mana_lose()
+			time = false
+			time_shoot.set_wait_time(1)
+			time_shoot.start()
 
 
 func motion_loop(delta):
@@ -450,7 +451,6 @@ func motion_loop(delta):
 			vel.x = max(speed, -max_speed)
 	
 	
-	
 	# X == 0
 	if no_inputs:                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.5)
@@ -467,17 +467,23 @@ func motion_loop(delta):
 
 #-----------------------Blob------------------------------------------------------------------
 var nb_blob = 0
-var mana_growth = 0.05
-onready var mana_tween = get_node("GUI/mana_bar/tween_mana")
+var mana_growth = 0.1
+
+onready var mana_tween = $GUI/tween_mana
+onready var size_tween = get_node("size_tween")
+onready var mana_bar = $GUI/mana_bar
+var ref = 0
+func blob_touched():      #agrandissement du slime + ajout de mana (blob)
+	if Global.mana < 100:
+		# self
+		size_tween.interpolate_property(self, "scale", get_scale(), get_scale() + Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+		size_tween.start()
+		position.y -= 15
+		# mana bar
+		mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
+		mana_tween.start()
 
 func _on_hurtbox_body_entered(body):
-	# mana
-	if body.is_in_group("blob"):
-		print("mana verif")
-		mana_tween.interpolate_property($GUI/mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 2, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
-		mana_tween.start()
-		Global.mana_verif = true
-	
 	# ennemi
 	if body is Enemy:
 		change_cycle("none")
@@ -485,16 +491,14 @@ func _on_hurtbox_body_entered(body):
 		take_damage(body.power)
 		knock_back(body)
 
-func update_size():
-	if Global.mana_verif:
-		scale += Vector2(mana_growth, mana_growth)
-		position.y -= 10
-		Global.mana_verif = false
+func mana_lose():        #rétrécissement du slime + retrait de mana (bullet)
+	#self
+	size_tween.interpolate_property(self, "scale", get_scale(), get_scale() - Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	size_tween.start()
+	#mana_bar
+	mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana - Global.mana_power, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
+	mana_tween.start()
 
-#	var pos = position
-#	if scale != Vector2(1+x*nb_blob,1+x*nb_blob):
-#		scale = Vector2(1+x*nb_blob,1+x*nb_blob)
-#		position.y += -20
 
 
 
