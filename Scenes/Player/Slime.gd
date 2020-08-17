@@ -44,6 +44,7 @@ onready var timer_bounce = get_node("timers/timer_bounce")
 var my_rotation = 0
 func _ready():
 	# damages to other entities
+	$Camera2D.smoothing_enabled=true
 	power = 0
 	has_health_bar = true
 	max_speed = 700
@@ -574,39 +575,6 @@ var downpress=0
 var camset=false
 var one_shot
 func cam():
-	if is_moving == false:#smooth
-		if Input.is_action_just_pressed("down"):
-			timerOffset = 100
-		if Input.is_action_pressed("down"):
-			if camset==false:
-				if timerOffset != 0:
-					timerOffset -= 1
-				elif cameraDown < 500:
-					cameraDown = cameraDown *70 + 2
-			
-		if Input.is_action_just_released("down"):
-			cameraDownRelease = true
-			pass
-		if cameraDownRelease == true:
-			if cameraDown > 0:
-				$Camera2D.smoothing_enabled = false
-				cameraDown = cameraDown - 1200
-			else:
-				$Camera2D.smoothing_enabled = true
-				cameraDown = 0
-				cameraDownRelease = false
-			pass
-	else:
-		if cameraDown > 0:
-			$Camera2D.smoothing_enabled = false
-			cameraDown = cameraDown - 1200
-		else:
-			$Camera2D.smoothing_enabled = true
-			cameraDown = 0
-	if Input.is_action_pressed("down"):
-		$Camera2D.offset = Vector2(00, cameraDown)
-	else:
-		$Camera2D.offset = Vector2(00, cameraDown)
 	if  state == HURT :
 		if one_shot == 0:#hitstun
 			one_shot = 1
@@ -634,7 +602,7 @@ func cam():
 			if camset==false:
 				camset=true
 				$Camera2D.smoothing_enabled=true
-				$Camera2D.position.y+=500
+				$Camera2D.position.y=500
 	if Input.is_action_just_released("down"):
 		if camset==true:
 			$Camera2D.smoothing_enabled=true

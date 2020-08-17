@@ -35,9 +35,9 @@ animations = [ {
 "name": "jump_end_air",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_start_air",
+"name": "jump_start_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -45,14 +45,14 @@ animations = [ {
 "name": "jump_end_ground",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "jump_start_air",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "jump_middle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "jump_start_ground",
 "speed": 5.0
 } ]
 
@@ -947,7 +947,7 @@ polygon = PoolVector2Array( -3.23163, -38.6612, 22.5931, -35.499, 49.9989, -22.8
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -150 )
 current = true
-smoothing_speed = 1.0
+smoothing_speed = 2.0
 drag_margin_left = 0.1
 drag_margin_right = 0.1
 drag_margin_bottom = 0.1
