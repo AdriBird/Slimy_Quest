@@ -564,17 +564,25 @@ func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 #--------------------Camera---------------------------------------------------
 var cameraDownRelease
 var cameraDown = 0
-var timerOffset
+var timerOffset = 0
 var cameraShake
+var waitframe=1
+var hitcampatern=0
+var hitting=false
+var uppress=0
+var downpress=0
+var camset=false
+var one_shot
 func cam():
-	if is_moving == false:
+	if is_moving == false:#smooth
 		if Input.is_action_just_pressed("down"):
 			timerOffset = 100
 		if Input.is_action_pressed("down"):
-			if timerOffset != 0:
-				timerOffset -= 1
-			elif cameraDown < 500:
-				cameraDown = cameraDown *70 + 2
+			if camset==false:
+				if timerOffset != 0:
+					timerOffset -= 1
+				elif cameraDown < 500:
+					cameraDown = cameraDown *70 + 2
 			
 		if Input.is_action_just_released("down"):
 			cameraDownRelease = true
@@ -599,13 +607,40 @@ func cam():
 		$Camera2D.offset = Vector2(00, cameraDown)
 	else:
 		$Camera2D.offset = Vector2(00, cameraDown)
-	"""
-	if hitstun > 0:
-		cameraShake = 30
-	if cameraShake > 0:
-		cameraShake -= 1
-		$Camera2D.offset = Vector2(rand_range(-1.0, 1.0) * 10, rand_range(-1.0, 1.0) * 10)"""
-	
+	if  state == HURT :
+		if one_shot == 0:#hitstun
+			one_shot = 1
+		$Camera2D.offset = Vector2(rand_range(-1.0, 1.0) * 6, rand_range(-1.0, 1.0) * 6)
+		yield(get_tree().create_timer(0.5), "timeout")
+		$Camera2D.offset = Vector2(0,0)
+	else:
+		one_shot = 0
+	if Input.is_action_pressed("up"):#upcam
+		uppress+=1
+		if uppress>50:
+			if camset==false:
+				camset=true
+				$Camera2D.smoothing_enabled=true
+				$Camera2D.position.y-=500
+	if Input.is_action_just_released("up"):
+		if camset==true:
+			$Camera2D.smoothing_enabled=true
+			$Camera2D.position.y+=500
+			uppress=0
+			camset=false
+	if Input.is_action_pressed("down"):#downcam
+		downpress+=1
+		if downpress>50:
+			if camset==false:
+				camset=true
+				$Camera2D.smoothing_enabled=true
+				$Camera2D.position.y+=500
+	if Input.is_action_just_released("down"):
+		if camset==true:
+			$Camera2D.smoothing_enabled=true
+			$Camera2D.position.y-= 500
+			downpress=0
+			camset=false
 
 
 
