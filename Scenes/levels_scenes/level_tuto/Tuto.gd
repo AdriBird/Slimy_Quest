@@ -33,7 +33,6 @@ func spawn_blob():
 			add_child(c)
 
 func blob_bullet(pos):
-	print("j'ai recu le signal au moins")
 	var type = 'blue_blob'
 	var c = item.instance()
 	c.init(type, pos)

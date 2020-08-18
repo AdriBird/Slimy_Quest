@@ -7,7 +7,6 @@ var tuto
 func _ready():
 	vel.y = -500
 	tuto = get_parent()
-	print(tuto.name)
 func start(pos, dir):
 	$Timer.set_wait_time(2)
 	$Timer.start()

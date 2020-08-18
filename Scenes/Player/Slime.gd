@@ -114,7 +114,7 @@ func state_loop():
 	if state in [SLIDE, BOUNCE] and vel.x == 0 and no_inputs and is_on_floor() and cycle == 'none':
 		change_state(IDLE)
 	#Condition de Saut
-	if state in [IDLE, SLIDE] and is_on_floor() and Input.is_action_just_pressed("jump") and cycle == "none":
+	if state in [IDLE, SLIDE] and is_on_floor() and Input.is_action_pressed("jump") and cycle == "none":
 		change_state(JUMP)
 	if state in [IDLE, SLIDE] and not is_on_floor() and cycle == 'none' and vel.y > 0:
 		change_state(FALL)
@@ -250,14 +250,15 @@ func cycles():
 					# A RENDRE FACULTATIF
 					my_rotation = 0
 					$AnimatedSprite/anim_move.play("jump_end_ground")
-					
+					"""
 					#$AnimatedSprite.rotation_degrees = 0
 					if no_inputs:
 						yield($AnimatedSprite/anim_move, "animation_finished")
 						change_state(SLIDE)
 					else:
-						change_state(SLIDE)
+						change_state(SLIDE)"""
 					change_cycle("none")
+					change_state(SLIDE)
 		"wall_jump":
 			if left and "D" in wall_detected and speed > 0:
 				speed = -200
@@ -300,6 +301,7 @@ var jump_type = "none"
 
 
 
+# warning-ignore:unused_argument
 func _process(delta):
 	pass
 
@@ -334,9 +336,9 @@ func _physics_process(delta):
 	vel.y += (GRAVITY * delta)
 	vel = move_and_slide(vel, UP)
 	#--- ROTATION RADIANT
-	if vel.y != 0 and vel.x != 0 and jump_state != NONE  and jump_type == "horizontal" and cycle == "jump" and jump_state != ROOST:
+	if vel.y != 0 and jump_state != NONE  and jump_type == "horizontal" and cycle == "jump" and jump_state != ROOST:
 # warning-ignore:unused_variable
-		var angle = atan(abs(float(vel.y))/abs(float(vel.x)))
+		var angle = atan(abs(float(vel.y))/abs(float(vel.x)+0.001))
 		if vel.x < 0:
 			if vel.y < 0:
 				my_rotation = atan(abs(float(vel.y))/abs(float(vel.x)))
@@ -353,6 +355,7 @@ func _physics_process(delta):
 			$AnimatedSprite.flip_h = false
 	else:
 		my_rotation = 0
+	$CollisionShape2D.rotation = my_rotation
 	$CollisionPolygon2D2.rotation = my_rotation
 	$AnimatedSprite.rotation= my_rotation
 	update_score()
@@ -432,6 +435,8 @@ func motion_loop(delta):
 			accel =  -30
 		if jump_type != "horizontal":
 			$AnimatedSprite.flip_h = true
+	
+	# common script left right
 	if speed != 0:
 		if dirx == 0 or dirx != speed / abs(speed) :
 			if is_on_floor() and state != HURT :
@@ -453,7 +458,7 @@ func motion_loop(delta):
 	
 	
 	# X == 0
-	if no_inputs:                           #afk ou les 2 touches
+	if no_inputs and is_on_floor():                           #afk ou les 2 touches
 		vel.x = lerp(vel.x, 0 ,0.5)
 	
 	# WALL JUMP
@@ -473,31 +478,16 @@ var mana_growth = 0.1
 onready var mana_tween = $GUI/tween_mana
 onready var size_tween = get_node("size_tween")
 onready var mana_bar = $GUI/mana_bar
-var trans_mana = 0
-var trans_size = get_scale()
 var ref = 0
 func blob_touched():      #agrandissement du slime + ajout de mana (blob)
 	if Global.mana < 100:
-		#scale
-		trans_size += Vector2(mana_growth, mana_growth)
-		size_tween.interpolate_property(self, "scale", get_scale(), trans_size, 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+		# self
+		size_tween.interpolate_property(self, "scale", get_scale(), get_scale() + Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 		size_tween.start()
 		position.y -= 15
 		# mana bar
-		trans_mana += Global.mana_power
-
-		mana_tween.interpolate_property(mana_bar, "value", Global.mana, trans_mana, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
+		mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana + Global.mana_power, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
 		mana_tween.start()
-
-func mana_lose():        #rétrécissement du slime + retrait de mana (bullet)
-	#scale
-	trans_size -= Vector2(mana_growth, mana_growth)
-	size_tween.interpolate_property(self, "scale", get_scale(), get_scale() - Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
-	size_tween.start()
-	#mana_bar
-	trans_mana -= Global.mana_power
-	mana_tween.interpolate_property(mana_bar, "value", Global.mana, trans_mana, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
-	mana_tween.start()
 
 func _on_hurtbox_body_entered(body):
 	# ennemi
@@ -507,6 +497,13 @@ func _on_hurtbox_body_entered(body):
 		take_damage(body.power)
 		knock_back(body)
 
+func mana_lose():        #rétrécissement du slime + retrait de mana (bullet)
+	#self
+	size_tween.interpolate_property(self, "scale", get_scale(), get_scale() - Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	size_tween.start()
+	#mana_bar
+	mana_tween.interpolate_property(mana_bar, "value", Global.mana, Global.mana - Global.mana_power, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
+	mana_tween.start()
 
 
 
@@ -564,24 +561,14 @@ func wall_update():
 
 
 
-# WATER
-func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
-	if area.is_in_group("water"):
-		take_damage(10)
-	pass 
+
 
 #--------------------Camera---------------------------------------------------
 var cameraDownRelease
 var cameraDown = 0
-var timerOffset = 0
+var timerOffset
 var cameraShake
-var waitframe=1
-var hitcampatern=0
-var hitting=false
-var uppress=0
-var downpress=0
-var camset=false
-var one_shot
+
 func cam():
 	if  state == HURT :
 		if one_shot == 0:#hitstun
@@ -656,3 +643,8 @@ func _on_idle_timer_timeout():
 		#$AnimatedSprite/AnimationPlayer.play("idle")
 		timer_idle_verif = true
 		pass
+
+func _on_hurtbox_area_entered(area):
+	if area.is_in_group("water"):
+		take_damage(20)
+	pass 
