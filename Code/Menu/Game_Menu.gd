@@ -2,7 +2,7 @@ extends Node
 
 
 # Signaux / Scènes à instancier
-var dialog_scene = preload("res://Scenes/Instancing_effects/dialog.tscn")
+var dialog_scene = preload("res://GI/dialog.tscn")
 var button_list = []
 signal Info_signal
 signal Settings_signal
@@ -37,7 +37,7 @@ func _process(delta):
 # Signaux 
 func _on_Play_button_pressed():
 # warning-ignore:return_value_discarded
-	get_tree().change_scene("res://Scenes/levels_scenes/level_tuto/Test.tscn")
+	get_tree().change_scene("res://test/Test.tscn")
 	pass
 
 func _on_Info_button_pressed():

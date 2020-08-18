@@ -1,11 +1,12 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Code/background_forest.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/fond.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/back_arbres.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/arbre3_plan.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/arbre2_plan.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/Free Pixel Art Forest/PSD/Background_vrai.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/samples/Free Pixel Art Forest/PSD/fond.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/samples/Free Pixel Art Forest/PSD/back_arbres.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/samples/Free Pixel Art Forest/PSD/arbre3_plan.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/samples/Free Pixel Art Forest/PSD/arbre2_plan.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/samples/Free Pixel Art Forest/PSD/Background_vrai.png" type="Texture" id=6]
+
 
 [node name="background_forest" type="ParallaxBackground"]
 script = ExtResource( 1 )

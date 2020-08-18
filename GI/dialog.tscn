@@ -28,10 +28,13 @@ tracks/0/keys = {
 }
 
 [node name="DialogBox" type="Control"]
-margin_left = 172.0
-margin_top = 435.0
-margin_right = 866.0
-margin_bottom = 581.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -474.0
+margin_top = -196.0
+margin_right = 474.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -62,6 +65,7 @@ visible = false
 modulate = Color( 1, 1, 1, 0.581969 )
 position = Vector2( 634.883, 110.779 )
 scale = Vector2( 0.08, 0.08 )
+z_index = 4
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="end_indicator"]

@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Props/water/water.gd" type="Script" id=2]
+
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise1 : hint_black;
+uniform sampler2D noise2 : hint_black;
+
+uniform float deformation_speed = 0.05;
+uniform vec2 deformation_size = vec2(0.05,0.05);
+uniform vec2 tile_factor = vec2(1.0, 1.0);
+uniform vec2 scale = vec2(1.0,1.0);
+uniform vec4 color: hint_color = vec4(0.0,0.0,1.0,0.5);
+uniform vec2 size = vec2(1.0,1.0);
+uniform float water_level = 20.0;
+uniform float surface_width = 1.0;
+void fragment() {
+	vec2 u_pos = UV *scale *tile_factor+ TIME * deformation_speed;
+	vec2 offset = vec2(texture(noise1, u_pos).x, texture(noise2, u_pos).y) - 0.5;
+	vec2 deformation = offset*deformation_size;
+	vec2 real_pos = (UV+deformation *10.0) * scale * size;
+	vec2 tex_to_screen_uv_ratio = SCREEN_PIXEL_SIZE / TEXTURE_PIXEL_SIZE;
+	
+	// compute UV of the flipped screen
+	vec2 flipped_screen_uv = vec2( SCREEN_UV.x, 
+		SCREEN_UV.y + 1.0 * UV.y * tex_to_screen_uv_ratio.y );
+		
+	vec2 suv = vec2( SCREEN_UV.x, SCREEN_UV.y + 2.0 * UV.y * tex_to_screen_uv_ratio.y );
+	if (real_pos.y < water_level) {
+		COLOR = vec4(0,0,0,0);
+	}
+	else if (real_pos.y < water_level + surface_width){
+		//COLOR = vec4(color.rgb, color.a);
+		COLOR = vec4(1.0,1.0,1.0,1.0)
+	}
+	else{
+		COLOR = mix(textureLod(SCREEN_TEXTURE, flipped_screen_uv + deformation , 0.0), vec4(color.rgb, 1.0), color.a);
+	}
+	//COLOR = mix(textureLod(SCREEN_TEXTURE, UV + offset*deformation_size, 0.0), vec4(color.rgb, 1.0), color.a);
+	//COLOR = vec4(offset, 0.0, 1.0);
+}
+"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+seamless = true
+noise = SubResource( 2 )
+
+[sub_resource type="OpenSimplexNoise" id=4]
+seed = 1
+
+[sub_resource type="NoiseTexture" id=5]
+seamless = true
+noise = SubResource( 4 )
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 1 )
+shader_param/deformation_speed = 0.1
+shader_param/deformation_size = Vector2( 0.02, 0.02 )
+shader_param/tile_factor = Vector2( 0.1, 0.1 )
+shader_param/scale = Vector2( 1, 1 )
+shader_param/color = Color( 0.0313726, 0.74902, 0.94902, 0.219608 )
+shader_param/size = Vector2( 64, 64 )
+shader_param/water_level = 3.0
+shader_param/surface_width = 2.0
+shader_param/noise1 = SubResource( 3 )
+shader_param/noise2 = SubResource( 5 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 35.0675, 25.9351 )
+
+[node name="water" type="TextureRect" groups=[
+"water",
+]]
+material = SubResource( 6 )
+margin_right = 258.0
+margin_bottom = 131.0
+rect_min_size = Vector2( 258, 131 )
+rect_scale = Vector2( 0.97394, 0.734165 )
+texture = ExtResource( 1 )
+stretch_mode = 2
+script = ExtResource( 2 )
+
+[node name="death_zone" type="Area2D" parent="." groups=[
+"water",
+]]
+
+[node name="collision" type="CollisionShape2D" parent="death_zone"]
+shape = SubResource( 7 )
