@@ -141,42 +141,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0 ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Wall_radar_D/CollisionShape2D2:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 94.26, 26.43 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../Wall_radar_D/CollisionShape2D2:rotation_degrees")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("../Wall_radar_D/CollisionShape2D2:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ) ]
-}
 
 [sub_resource type="Animation" id=6]
 resource_name = "jump_start_air"
@@ -363,7 +327,7 @@ modulate = Color( 1, 1, 1, 0.847059 )
 position = Vector2( -10.7438, 14.2928 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 1 )
-animation = "jump_middle"
+animation = "slide"
 
 [node name="anim_move" type="AnimationPlayer" parent="AnimatedSprite"]
 anims/idle = SubResource( 2 )
@@ -465,14 +429,14 @@ scale = Vector2( 2, 2 )
 position = Vector2( -2.85388, -4.51868 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar_D"]
-position = Vector2( 94.26, 26.43 )
+position = Vector2( 80, 26 )
 shape = SubResource( 10 )
 
 [node name="Wall_radar_G" type="Area2D" parent="."]
 position = Vector2( 72.4827, 18.9261 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar_G"]
-position = Vector2( -153.22, 3.47 )
+position = Vector2( -146.82, 4.23 )
 shape = SubResource( 10 )
 
 [node name="bottom_pos" type="Position2D" parent="."]
@@ -491,10 +455,9 @@ occluder = SubResource( 11 )
 [node name="timer_bounce" type="Timer" parent="timers"]
 
 [node name="hurtbox" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
-position = Vector2( -1.71478, 12.8607 )
+position = Vector2( -10.6959, 10.4657 )
 rotation = 1.5708
 shape = SubResource( 12 )
 [connection signal="update_health_bar" from="." to="GUI/life_bar" method="_on_Slime_update_health_bar"]
@@ -506,4 +469,5 @@ shape = SubResource( 12 )
 [connection signal="timeout" from="timers/timer_shoot" to="." method="_on_timer_shoot_timeout"]
 [connection signal="timeout" from="timers/idle_timer" to="." method="_on_idle_timer_timeout"]
 [connection signal="timeout" from="timers/timer_bounce" to="." method="_on_timer_bounce_timeout"]
+[connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

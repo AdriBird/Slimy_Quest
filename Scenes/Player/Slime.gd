@@ -658,3 +658,5 @@ func _on_hurtbox_area_entered(area):
 	if area.is_in_group("water"):
 		take_damage(20)
 	pass 
+
+

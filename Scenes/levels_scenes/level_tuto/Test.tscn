@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://Scenes/levels_scenes/level_tuto/Tuto.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=2]
@@ -25,8 +25,9 @@
 [ext_resource path="res://Tile_set/tile_blob.tres" type="TileSet" id=23]
 [ext_resource path="res://Ennemis/Grousk.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Sprites/Free Pixel Art Forest/Preview/Background.png" type="Texture" id=25]
-[ext_resource path="res://icon.png" type="Texture" id=26]
-[ext_resource path="res://Scenes/Shaders/Shader_eau.tres" type="Material" id=27]
+[ext_resource path="res://Props/water.tscn" type="PackedScene" id=26]
+[ext_resource path="res://icon.png" type="Texture" id=27]
+[ext_resource path="res://Scenes/Shaders/Shader_eau.tres" type="Material" id=28]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
@@ -1010,6 +1011,13 @@ position = Vector2( 11162.6, -599.568 )
 scale = Vector2( 10.6687, 2.78569 )
 texture = ExtResource( 25 )
 
+[node name="water" parent="." instance=ExtResource( 26 )]
+margin_left = 2229.0
+margin_top = 983.0
+margin_right = 3148.0
+margin_bottom = 1671.0
+rect_scale = Vector2( 1, 1 )
+
 [node name="TextureRect2" type="TextureRect" parent="." groups=[
 "water",
 ]]
@@ -1018,18 +1026,18 @@ margin_left = 7479.0
 margin_top = 518.0
 margin_right = 8006.0
 margin_bottom = 1248.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect3" type="TextureRect" parent="." groups=[
 "water",
 ]]
-material = ExtResource( 27 )
+material = ExtResource( 28 )
 margin_left = 8121.0
 margin_top = 518.0
 margin_right = 8647.0
 margin_bottom = 1161.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect4" type="TextureRect" parent="." groups=[
@@ -1040,7 +1048,7 @@ margin_left = 8763.0
 margin_top = 519.0
 margin_right = 9282.0
 margin_bottom = 1222.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect6" type="TextureRect" parent="." groups=[
@@ -1051,7 +1059,7 @@ margin_left = 9987.0
 margin_top = 519.0
 margin_right = 10499.0
 margin_bottom = 826.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect5" type="TextureRect" parent="." groups=[
@@ -1062,7 +1070,7 @@ margin_left = 9414.0
 margin_top = 522.0
 margin_right = 9859.0
 margin_bottom = 1260.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect8" type="TextureRect" parent="." groups=[
@@ -1073,7 +1081,7 @@ margin_left = 11258.0
 margin_top = 526.0
 margin_right = 11784.0
 margin_bottom = 838.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect7" type="TextureRect" parent="." groups=[
@@ -1084,7 +1092,7 @@ margin_left = 10621.0
 margin_top = 532.0
 margin_right = 11142.0
 margin_bottom = 844.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect10" type="TextureRect" parent="." groups=[
@@ -1095,7 +1103,7 @@ margin_left = 12479.0
 margin_top = 514.0
 margin_right = 12950.0
 margin_bottom = 839.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect9" type="TextureRect" parent="." groups=[
@@ -1106,7 +1114,7 @@ margin_left = 11904.0
 margin_top = 526.0
 margin_right = 12375.0
 margin_bottom = 838.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 
 [node name="TextureRect11" type="TextureRect" parent="." groups=[
@@ -1117,7 +1125,7 @@ margin_left = 13040.0
 margin_top = 518.0
 margin_right = 13510.0
 margin_bottom = 839.0
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 stretch_mode = 2
 [connection signal="body_entered" from="red_button/button_door" to="red_button/button_door" method="_on_button_door_body_entered"]
 [connection signal="sesame" from="red_button/button_door" to="door" method="_on_button_door_sesame"]
