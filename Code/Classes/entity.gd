@@ -4,7 +4,7 @@ class_name Entity
 
 signal update_health_bar
 
-const GRAVITY = 2700
+const GRAVITY = 3000
 
 export (int) var health = 100
 
@@ -14,8 +14,8 @@ var vel = Vector2()
 const UP = Vector2(0, -1)
 
 
-var jump_speed = 1600
-
+var jump_speed = 2000
+var weight = 1
 var speed = 0
 var max_speed = 250
 export (int) var power = 10
@@ -26,7 +26,6 @@ var has_health_bar = false
 func take_damage(damage):
 	if damage == 0:
 		return
-	
 	# take damage timer and animation
 	health -= damage
 	if has_health_bar :

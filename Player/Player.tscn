@@ -1,12 +1,12 @@
 [gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Player/Slime.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Player/Slime_idle.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Player/Slime_mid_jump.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Player/Slime_appuye.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/Player/Slime_jumping.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/Player/Slime_down.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Player/Slime_roost.png" type="Texture" id=7]
+[ext_resource path="res://Player/sprites/Slime_original_size/Slime_idle.png" type="Texture" id=2]
+[ext_resource path="res://Player/sprites/Slime_original_size/Slime_down.png" type="Texture" id=3]
+[ext_resource path="res://Player/sprites/Slime_original_size/Slime_appuye.png" type="Texture" id=4]
+[ext_resource path="res://Player/sprites/Slime_original_size/Slime_roost.png" type="Texture" id=5]
+[ext_resource path="res://Player/sprites/Slime_original_size/Slime_jumping.png" type="Texture" id=6]
+[ext_resource path="res://Player/sprites/Slime_original_size/Slime_mid_jump.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Player/slime.jiggle.png" type="Texture" id=8]
 [ext_resource path="res://Code/GUI/Camera2D.gd" type="Script" id=9]
 [ext_resource path="res://Sprites/GUI/life_gui1.png" type="Texture" id=10]
@@ -32,7 +32,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "jump_middle",
+"name": "jump_end_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
@@ -42,17 +42,17 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "jump_start_air",
+"name": "jump_end_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "jump_end_air",
+"name": "jump_start_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_end_ground",
+"name": "jump_middle",
 "speed": 5.0
 } ]
 
@@ -314,18 +314,18 @@ radius = 55.1695
 height = 63.9154
 
 [node name="Player" type="KinematicBody2D" groups=[
-"Player_element",
 "Player",
+"Player_element",
 ]]
-position = Vector2( 683.633, 533.581 )
+position = Vector2( 687.502, 536.676 )
 z_index = 1
 collision_mask = 29
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 1, 0.847059 )
-position = Vector2( -10.7438, 14.2928 )
-scale = Vector2( 0.8, 0.8 )
+position = Vector2( 0.99823, 32.9253 )
+scale = Vector2( 0.57, 0.57 )
 frames = SubResource( 1 )
 animation = "slide"
 
@@ -355,10 +355,13 @@ polygon = PoolVector2Array( -3.23163, -38.6612, 22.5931, -35.499, 49.9989, -22.8
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -150 )
 current = true
-smoothing_speed = 2.0
+zoom = Vector2( 2, 2 )
+smoothing_enabled = true
+smoothing_speed = 1.0
 drag_margin_left = 0.1
+drag_margin_top = 0.4
 drag_margin_right = 0.1
-drag_margin_bottom = 0.1
+drag_margin_bottom = 0.3
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource( 9 )
@@ -426,6 +429,7 @@ position = Vector2( 55.9278, -8.27948 )
 scale = Vector2( 2, 2 )
 
 [node name="Wall_radar_D" type="Area2D" parent="."]
+editor/display_folded = true
 position = Vector2( -2.85388, -4.51868 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar_D"]
@@ -433,6 +437,7 @@ position = Vector2( 80, 26 )
 shape = SubResource( 10 )
 
 [node name="Wall_radar_G" type="Area2D" parent="."]
+editor/display_folded = true
 position = Vector2( 72.4827, 18.9261 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar_G"]
@@ -455,12 +460,12 @@ occluder = SubResource( 11 )
 [node name="timer_bounce" type="Timer" parent="timers"]
 
 [node name="hurtbox" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2( -2.07138, 11.7926 )
 rotation = 1.5708
 shape = SubResource( 12 )
-[connection signal="update_health_bar" from="." to="GUI/life_bar" method="_on_Slime_update_health_bar"]
 [connection signal="pressed" from="GUI/pause" to="." method="_on_pause_pressed"]
 [connection signal="body_entered" from="Wall_radar_D" to="." method="_on_Wall_radar_D_body_entered"]
 [connection signal="body_exited" from="Wall_radar_D" to="." method="_on_Wall_radar_D_body_exited"]

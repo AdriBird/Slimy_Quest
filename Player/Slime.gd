@@ -1,8 +1,6 @@
 extends Entity
 
 
-
-
 #-----------------------Signaux----------------------------------------------------------
 
 
@@ -15,16 +13,6 @@ var no_inputs
 
 #-----------------------Motions variables-------------------------------------------------------
 
-#Vitesse constante
-const SPEED = 400
-# Maximum d'incrémentation
-var max_accel = 30
-# incrémentation actuelle
-var accel = 0
-# vitesse actuelle
-
-# vitesse min pour bounce
-var max_slide_speed = 599
 
 # montée en bounce
 var bounce_power = 600
@@ -34,6 +22,7 @@ var wall_bounce_val = 800
 
 var on_wall = false
 
+var lerp_value = 0.1
 
 
 
@@ -44,10 +33,10 @@ onready var timer_bounce = get_node("timers/timer_bounce")
 var my_rotation = 0
 func _ready():
 	# damages to other entities
-	$Camera2D.smoothing_enabled=true
+	$Camera2D.smoothing_enabled=false
 	power = 0
 	has_health_bar = true
-	max_speed = 700
+	max_speed = 400
 	my_rotation = 0
 	bottom_pos = get_node("bottom_pos").position
 	state = IDLE
@@ -138,10 +127,12 @@ func state_loop():
 		change_state(SLIDE)
 	# phase de take damage:
 	if state == HURT:
-		if is_on_floor():
-			vel.x = lerp(vel.x, 0, 0.05)
-		else:
+		"""if is_on_floor():
 			vel.x = lerp(vel.x, 0, 0.5)
+		else:
+			vel.x = lerp(vel.x, 0, 0.5)"""
+
+
 
 
 
@@ -179,7 +170,7 @@ func change_state(new_state):
 			$AnimatedSprite.play("slide")
 			max_speed = 700
 		HURT:
-			vel.x = 0
+			"""vel.x = 0"""
 			yield(get_tree().create_timer(1), "timeout")
 			change_state(SLIDE)
 
@@ -225,7 +216,7 @@ func cycles():
 						jump_type = "vertical"
 					if first_anim == 0:
 						first_anim = 1
-						yield(get_tree().create_timer(0.1), "timeout")
+						yield(get_tree().create_timer(0.02), "timeout")
 						$AnimatedSprite/anim_move.play("jump_start_air")
 					if Input.is_action_just_released("jump"):
 						if vel.y < -100:
@@ -298,44 +289,7 @@ var jump_type = "none"
 
 
 #-----------------------Physic Process----------------------------------------------------------
-
-
-
-# warning-ignore:unused_argument
-func _process(delta):
-	pass
-
-
-
-
-func update_score():
-	$GUI/score.text = str(Global.mana)
-
-var is_moving
-func _physics_process(delta):
-	cam()
-	#animation_loop()
-	# pause
-	# empecher le mouvement en fade in/ dialog
-	if vel == Vector2(0,0):
-		is_moving = false
-	else :
-		is_moving = true
-	if not Global.dialog:
-		cycles()
-		if state != HURT:
-			motion_loop(delta)
-			shoot()
-			state_loop()
-	elif state != HURT:
-		vel.x = 0
-	particles_loop()
-	wall_update()
-	if on_wall and vel.y >= 0:
-		vel.y /= 1.5
-	vel.y += (GRAVITY * delta)
-	vel = move_and_slide(vel, UP)
-	#--- ROTATION RADIANT
+func rotation_update():
 	if vel.y != 0 and jump_state != NONE  and jump_type == "horizontal" and cycle == "jump":
 # warning-ignore:unused_variable
 		var angle = atan(abs(float(vel.y))/abs(float(vel.x)+0.001))
@@ -357,19 +311,56 @@ func _physics_process(delta):
 		my_rotation = 0
 	#$CollisionShape2D.rotation = my_rotation
 	#$CollisionPolygon2D2.rotation = my_rotation
+
+
+# warning-ignore:unused_argument
+func _process(delta):
+	pass
+
+
+
+
+func update_score():
+	$GUI/score.text = str(Global.mana)
+
+var is_moving
+func _physics_process(delta):
+	#print(speed)
+	cam()
+	#animation_loop()
+	# pause
+	# empecher le mouvement en fade in/ dialog
+	if vel == Vector2(0,0):
+		is_moving = false
+	else :
+		is_moving = true
+	if not Global.dialog:
+		cycles()
+		if state != HURT:
+			motion_loop(delta)
+			shoot()
+			state_loop()
+	"""elif state != HURT:
+		vel.x = 0"""
+	particles_loop()
+	wall_update()
+	if on_wall and vel.y >= 0:
+		vel.y /= 1.5
+	vel.y += (GRAVITY * delta)*1.2
+	vel = move_and_slide(vel, UP)
+	#--- ROTATION RADIANT
+	rotation_update()
 	$AnimatedSprite.rotation= my_rotation
 	update_score()
 	input_update()
 	# tué par le vide, à rendre plus propre
-	if self.position.y >= 2000:
-		take_damage(health)
 	# Menu pause
 	if Input.is_action_pressed("pause"):
 		var pause = preload("res://GI/menu_pause.tscn").instance()
 		add_child(pause)
 	# anti_imprécision:
-	if vel.x > -0.05 and vel.x < 0.05:
-		vel.x = 0
+	"""if vel.x > -0.05 and vel.x < 0.05:
+		vel.x = 0"""
 
 
 func shoot():
@@ -385,81 +376,70 @@ func shoot():
 			time_shoot.start()
 
 
+#Incrémentation 
+var accel = 30
+
+# vitesse actuelle
+
+# vitesse min pour bounce
+var max_slide_speed = 599
+
 func motion_loop(delta):
+	
+	if is_on_floor():
+		accel = 30
+	elif jump_type == "vertical":
+		accel = 20
+	
 	# DROITE
 	if dirx == 1 and not "D" in wall_detected:
-		direction_tir = 1
-		$tir.position.x = 110
+		# switch en bounce ou non
 		if state == BOUNCE and vel.x > max_slide_speed and is_on_floor():
 			if space and is_on_floor():
 				change_state(JUMP)
 			elif not space and Input.is_action_pressed("bounce"):
 				vel.y = -bounce_power
-		if is_on_floor():
-			accel = 30
-		elif jump_type == "horizontal":
-			if vel.y < 0:
-				vel.y+= 30
-			accel = 40
-		elif jump_type == "vertical":
-			accel = 20
-		elif state == FALL or WALL:
-			accel =  30
+		#accel/deccel
+		speed += accel
 		if jump_type != "horizontal": 
 			$AnimatedSprite.flip_h = false
 	
 	
-	
-	
-	
-	
-	
 	# GAUCHE
 	if dirx == -1 and not "G" in wall_detected:
-		direction_tir = -1
-		$tir.position.x = -110
+		# switch en bounce ou non
 		if state == BOUNCE and vel.x < -max_slide_speed and is_on_floor():
 			if space and is_on_floor():
 				change_state(JUMP)
 			elif not space and Input.is_action_pressed("bounce"):
 				vel.y = -bounce_power
-		if is_on_floor():
-			accel = -30
-		elif jump_type == "horizontal":
-			if vel.y < 0:
-				vel.y+= 30
-			accel = -40
-		elif jump_type == "vertical":
-			accel = -20
-		elif state == FALL or WALL:
-			accel =  -30
+		#accel/deccel
+		speed -= accel
 		if jump_type != "horizontal":
 			$AnimatedSprite.flip_h = true
 	
 	# common script left right
 	if speed != 0:
 		if dirx == 0 or dirx != speed / abs(speed) :
-			if is_on_floor() and state != HURT :
-				accel = lerp(accel, 0, 0.5)
+			if is_on_floor():
 				speed = lerp(speed, 0, 0.5)
-			if state in [FALL, JUMP]:
-				accel = lerp(accel, 0, 0.05)
+			else:
 				speed = lerp(speed, 0, 0.05)
-	speed += accel
+	
 	if is_on_floor():
 		max_speed = 600
 	else:
 		max_speed = 800
-	if not no_inputs:
-		if speed > 0:
-			vel.x = min(speed, max_speed)
-		if speed < 0:
-			vel.x = max(speed, -max_speed)
+	
+	if speed > 0:
+		vel.x = min(speed, max_speed)
+	if speed < 0:
+		vel.x = max(speed, -max_speed)
 	
 	
 	# X == 0
-	if no_inputs and is_on_floor():                           #afk ou les 2 touches
-		vel.x = lerp(vel.x, 0 ,0.5)
+	"""if no_inputs and is_on_floor():                           #afk ou les 2 touches
+		vel.x = lerp(vel.x, 0 ,0.5)"""
 	
 	# WALL JUMP
 	if just_space and on_wall and dirx != 0:
@@ -468,6 +448,9 @@ func motion_loop(delta):
 			speed = -wall_bounce_val
 		if $AnimatedSprite.flip_h == true:
 			speed = wall_bounce_val
+	
+	# Natural decceleration
+
 
 
 
@@ -487,7 +470,7 @@ func blob_touched():      #agrandissement du slime + ajout de mana (blob)
 		trans_size += Vector2(mana_growth, mana_growth)
 		size_tween.interpolate_property(self, "scale", get_scale(), trans_size, 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 		size_tween.start()
-		position.y -= 15
+		position.y -= 20
 		# mana bar
 		trans_mana += Global.mana_power
 
@@ -593,24 +576,22 @@ func cam():
 		if uppress>50:
 			if camset==false:
 				camset=true
-				$Camera2D.smoothing_enabled=true
 				$Camera2D.position.y-=500
 	if Input.is_action_just_released("up"):
 		if camset==true:
-			$Camera2D.smoothing_enabled=true
 			$Camera2D.position.y+=500
 			uppress=0
 			camset=false
 	if Input.is_action_pressed("down"):#downcam
+		$AnimatedSprite.play("jump_start_ground")
 		downpress+=1
 		if downpress>50:
 			if camset==false:
 				camset=true
-				$Camera2D.smoothing_enabled=true
 				$Camera2D.position.y=500
 	if Input.is_action_just_released("down"):
+		$AnimatedSprite.play("slide")
 		if camset==true:
-			$Camera2D.smoothing_enabled=true
 			$Camera2D.position.y-= 500
 			downpress=0
 			camset=false

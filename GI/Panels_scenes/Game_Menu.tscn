@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Code/Menu/Game_Menu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/Presets/Game_Menu_Fonts.tres" type="DynamicFont" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Sprites/GUI/Popup_Settings.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/GUI/Button_dark.png" type="Texture" id=9]
 [ext_resource path="res://Fonts/AlteHaasGroteskBold.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Sprites/Backgrounds/sky_16bit.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Backgrounds/back_land02.png" type="Texture" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 70
@@ -114,10 +116,10 @@ position = Vector2( 375, 664 )
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -19.6059
-margin_top = -370.986
-margin_right = -19.6069
-margin_bottom = -195.986
+margin_left = 2.03021
+margin_top = -367.895
+margin_right = 2.02917
+margin_bottom = -192.895
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 0.0980392, 0.345098, 0.823529, 1 )
@@ -130,10 +132,10 @@ align = 1
 valign = 1
 
 [node name="Play_button" type="TextureButton" parent="."]
-margin_left = 352.489
-margin_top = 334.532
-margin_right = 1022.49
-margin_bottom = 427.532
+margin_left = 733.481
+margin_top = 482.901
+margin_right = 1403.48
+margin_bottom = 575.901
 __meta__ = {
 "_edit_group_": true
 }
@@ -151,13 +153,13 @@ custom_constants/shadow_offset_x = 0
 custom_constants/line_spacing = 0
 custom_constants/shadow_offset_y = 0
 custom_constants/shadow_as_outline = 0
-text = "NOUVELLE PARTIE"
+text = "NEW GAME"
 
 [node name="Settings_button" type="TextureButton" parent="."]
-margin_left = 490.482
-margin_top = 472.819
-margin_right = 842.482
-margin_bottom = 557.819
+margin_left = 761.7
+margin_top = 690.183
+margin_right = 1113.7
+margin_bottom = 775.183
 __meta__ = {
 "_edit_group_": true
 }
@@ -174,14 +176,13 @@ custom_constants/shadow_offset_x = 0
 custom_constants/line_spacing = 0
 custom_constants/shadow_offset_y = 0
 custom_constants/shadow_as_outline = 0
-text = "OPTIONS"
+text = "SETTINGS"
 
 [node name="Info_button" type="TextureButton" parent="."]
-editor/display_folded = true
-margin_left = 576.778
-margin_top = 614.752
-margin_right = 772.778
-margin_bottom = 695.752
+margin_left = 51.3692
+margin_top = 990.624
+margin_right = 247.369
+margin_bottom = 1071.62
 __meta__ = {
 "_edit_group_": true
 }
@@ -199,7 +200,7 @@ custom_constants/shadow_offset_x = 0
 custom_constants/line_spacing = 0
 custom_constants/shadow_offset_y = 0
 custom_constants/shadow_as_outline = 0
-text = "AIDE"
+text = "HELP"
 
 [node name="Info_Popup_Menu" type="PopupMenu" parent="."]
 editor/display_folded = true
@@ -250,10 +251,10 @@ text = "Close"
 anims/Apparition = SubResource( 6 )
 
 [node name="Test_button" type="Button" parent="."]
-margin_left = 476.992
-margin_top = 245.65
-margin_right = 1404.99
-margin_bottom = 416.65
+margin_left = 1696.11
+margin_top = 975.251
+margin_right = 2163.11
+margin_bottom = 1146.25
 rect_scale = Vector2( 0.4, 0.4 )
 __meta__ = {
 "_edit_group_": true
@@ -265,7 +266,31 @@ margin_top = -7.26486
 margin_right = 894.424
 margin_bottom = 167.735
 custom_fonts/font = ExtResource( 2 )
-text = "Test/Shaders"
+text = "Debug"
+
+[node name="Quit_button" type="TextureButton" parent="."]
+margin_left = 850.008
+margin_top = 897.028
+margin_right = 1046.01
+margin_bottom = 978.028
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Quit_button"]
+margin_left = 19.0
+margin_top = -8.0
+margin_right = 188.0
+margin_bottom = 74.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/line_spacing = 0
+custom_constants/shadow_offset_y = 0
+custom_constants/shadow_as_outline = 0
+text = "QUIT"
 
 [node name="Settings_Popup_Menu" type="PopupMenu" parent="."]
 margin_left = 483.151
@@ -367,10 +392,25 @@ align = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Settings_Popup_Menu"]
 anims/Apparition = SubResource( 8 )
+
+[node name="Background" type="Sprite" parent="."]
+visible = false
+position = Vector2( 957.339, 550.719 )
+scale = Vector2( 2.40196, 1.82289 )
+z_index = -3
+texture = ExtResource( 11 )
+
+[node name="Background2" type="Sprite" parent="."]
+visible = false
+position = Vector2( 991.587, 506.197 )
+scale = Vector2( 3.92885, 3.34502 )
+z_index = -3
+texture = ExtResource( 12 )
 [connection signal="Settings_signal" from="." to="Settings_Popup_Menu" method="_on_Game_Menu_Settings_signal"]
 [connection signal="pressed" from="Play_button" to="." method="_on_Play_button_pressed"]
 [connection signal="pressed" from="Settings_button" to="." method="_on_Settings_button_pressed"]
 [connection signal="pressed" from="Info_button" to="." method="_on_Info_button_pressed"]
 [connection signal="pressed" from="Info_Popup_Menu/Close_Button" to="." method="_on_Close_Button_pressed"]
 [connection signal="pressed" from="Test_button" to="." method="_on_Test_button_pressed"]
+[connection signal="pressed" from="Quit_button" to="." method="_on_Quit_button_pressed"]
 [connection signal="pressed" from="Settings_Popup_Menu/Close_Button" to="." method="_on_Close_Button_pressed"]
