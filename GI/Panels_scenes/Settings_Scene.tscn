@@ -1,0 +1,130 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Code/Settings/Control.gd" type="Script" id=1]
+[ext_resource path="res://GI/Panels_scenes/Button.gd" type="Script" id=2]
+[ext_resource path="res://Fonts/Polices de base/AlteHaasGroteskRegular.ttf" type="DynamicFontData" id=3]
+
+
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+outline_color = Color( 0.0705882, 0.647059, 0.929412, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="Settings_Scene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 523.569
+margin_top = 276.045
+margin_right = -731.431
+margin_bottom = -393.955
+rect_scale = Vector2( 3, 3 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+margin_right = 62.0
+margin_bottom = 92.0
+alignment = 1
+
+[node name="jump" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_right = 62.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/jump"]
+margin_top = 3.0
+margin_right = 33.0
+margin_bottom = 17.0
+text = "JUMP"
+
+[node name="Button" type="Button" parent="Panel/ScrollContainer/VBoxContainer/jump"]
+margin_left = 37.0
+margin_right = 49.0
+margin_bottom = 20.0
+toggle_mode = true
+script = ExtResource( 2 )
+
+[node name="right" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 62.0
+margin_bottom = 44.0
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/right"]
+margin_top = 3.0
+margin_right = 40.0
+margin_bottom = 17.0
+text = "RIGHT"
+
+[node name="Button" type="Button" parent="Panel/ScrollContainer/VBoxContainer/right"]
+margin_left = 44.0
+margin_right = 56.0
+margin_bottom = 20.0
+toggle_mode = true
+script = ExtResource( 2 )
+
+[node name="left" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 62.0
+margin_bottom = 68.0
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/left"]
+margin_top = 3.0
+margin_right = 28.0
+margin_bottom = 17.0
+text = "LEFT"
+
+[node name="Button" type="Button" parent="Panel/ScrollContainer/VBoxContainer/left"]
+margin_left = 32.0
+margin_right = 44.0
+margin_bottom = 20.0
+toggle_mode = true
+script = ExtResource( 2 )
+
+[node name="shoot" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 62.0
+margin_bottom = 92.0
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/shoot"]
+margin_top = 3.0
+margin_right = 46.0
+margin_bottom = 17.0
+text = "SHOOT"
+
+[node name="Button" type="Button" parent="Panel/ScrollContainer/VBoxContainer/shoot"]
+margin_left = 50.0
+margin_right = 62.0
+margin_bottom = 20.0
+toggle_mode = true
+script = ExtResource( 2 )
+
+[node name="Button_retour" type="Button" parent="Panel"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -164.739
+margin_top = -169.55
+margin_right = 184.261
+margin_bottom = -45.5497
+custom_fonts/font = SubResource( 1 )
+text = "Retour"
+[connection signal="b_change_key" from="Panel/ScrollContainer/VBoxContainer/jump/Button" to="." method="_on_Button_b_change_key"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/jump/Button" to="Panel/ScrollContainer/VBoxContainer/jump/Button" method="_on_Button_pressed"]
+[connection signal="b_change_key" from="Panel/ScrollContainer/VBoxContainer/right/Button" to="." method="_on_Button_b_change_key"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/right/Button" to="Panel/ScrollContainer/VBoxContainer/right/Button" method="_on_Button_pressed"]
+[connection signal="b_change_key" from="Panel/ScrollContainer/VBoxContainer/left/Button" to="." method="_on_Button_b_change_key"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/left/Button" to="Panel/ScrollContainer/VBoxContainer/left/Button" method="_on_Button_pressed"]
+[connection signal="b_change_key" from="Panel/ScrollContainer/VBoxContainer/shoot/Button" to="." method="_on_Button_b_change_key"]
+[connection signal="pressed" from="Panel/ScrollContainer/VBoxContainer/shoot/Button" to="Panel/ScrollContainer/VBoxContainer/shoot/Button" method="_on_Button_pressed"]
+[connection signal="pressed" from="Panel/Button_retour" to="." method="_on_Button_retour_pressed"]

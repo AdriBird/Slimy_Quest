@@ -1,9 +1,10 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Code/Compter_scene.gd" type="Script" id=1]
+[ext_resource path="res://Code/Autres/Compter_scene.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/GUI/Fond_Menu.png" type="Texture" id=2]
 [ext_resource path="res://Fonts/Polices de base/AlteHaasGroteskRegular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Fonts/AlteHaasGroteskBold.ttf" type="DynamicFontData" id=4]
+
 
 
 

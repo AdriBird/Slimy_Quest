@@ -2,7 +2,7 @@ extends Node
 
 
 # Signaux / Scènes à instancier
-var dialog_scene = preload("res://Scenes/Instancing_effects/dialog.tscn")
+var dialog_scene = preload("res://GI/dialog.tscn")
 var button_list = []
 signal Info_signal
 signal Settings_signal
@@ -13,8 +13,10 @@ func _process(delta):
 		get_node("Info_button").hide()
 		get_node("Settings_button").hide()
 		get_node("Play_button").hide()
+		get_node("Quit_button").hide()
 		get_node("Play_button").set_disabled(true)
 	else: 
+		get_node("Quit_button").show()
 		get_node("Info_button").show()
 		get_node("Settings_button").show()
 		get_node("Play_button").show()
@@ -24,20 +26,24 @@ func _process(delta):
 	else:
 		$Play_button/Label.add_color_override("font_color", Color(1,1,1))
 	if $Settings_button.is_hovered():
-		$Settings_button/Label.add_color_override("font_color", Color(0,0.5,1))
+		$Settings_button/Label.add_color_override("font_color", Color(0.3,1,0.4))
 	else:
 		$Settings_button/Label.add_color_override("font_color", Color(1,1,1))
 	if $Info_button.is_hovered():
 		$Info_button/Label.add_color_override("font_color", Color(0,0.5,1))
 	else:
 		$Info_button/Label.add_color_override("font_color", Color(1,1,1))
+	if $Quit_button.is_hovered():
+		$Quit_button/Label.add_color_override("font_color", Color(1,0.3,0))
+	else:
+		$Quit_button/Label.add_color_override("font_color", Color(1,1,1))
 
 
 
 # Signaux 
 func _on_Play_button_pressed():
 # warning-ignore:return_value_discarded
-	get_tree().change_scene("res://Scenes/levels_scenes/level_tuto/Tuto.tscn")
+	get_tree().change_scene("res://test/Test.tscn")
 	pass
 
 func _on_Info_button_pressed():
@@ -77,6 +83,7 @@ func _on_Settings_button_pressed():
 func no_buttons():
 	get_node("Info_button").hide()
 	get_node("Settings_button").hide()
+	get_node("Quit_button").hide()
 	get_node("Play_button").hide()
 	get_node("Play_button").set_disabled(true)
 
@@ -87,4 +94,7 @@ func _on_my_signal():
 
 func _on_Test_button_pressed():
 	get_tree().change_scene("res://Scenes/levels_scenes/level_tuto/Shader_Test.tscn")
-	pass # Replace with function body.
+
+
+func _on_Quit_button_pressed():
+	get_tree().quit()

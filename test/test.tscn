@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://test/test.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Player/Slime_idle.png" type="Texture" id=2]
+[ext_resource path="res://Code/GUI/Camera2D.gd" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 36.4224
+height = 8.57751
+
+[node name="test" type="KinematicBody2D"]
+position = Vector2( 830.059, 990.483 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.811279, 1.26166 )
+scale = Vector2( 0.57, 0.57 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.846344, 2.47002 )
+scale = Vector2( 2, 2 )
+shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -150 )
+current = true
+zoom = Vector2( 2, 2 )
+smoothing_speed = 1.0
+drag_margin_left = 0.1
+drag_margin_top = 0.4
+drag_margin_right = 0.1
+drag_margin_bottom = 0.3
+editor_draw_limits = true
+editor_draw_drag_margin = true
+script = ExtResource( 3 )

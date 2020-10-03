@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Slime_down.png-4af5ab76eace884fe3631929a857472d.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Player/sprites/Slime_original_size/Slime_down.png"
+dest_files=[ "res://.import/Slime_down.png-4af5ab76eace884fe3631929a857472d.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

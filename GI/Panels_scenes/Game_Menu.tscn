@@ -1,0 +1,416 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Code/Menu/Game_Menu.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/Presets/Game_Menu_Fonts.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Fonts/Polices de base/AlteHaasGroteskRegular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Code/Menu/Info_Popup_Menu.gd" type="Script" id=4]
+[ext_resource path="res://Sprites/GUI/Popup_Info.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/GUI/Button.png" type="Texture" id=6]
+[ext_resource path="res://Code/Menu/Settings_Popup_Menu.gd" type="Script" id=7]
+[ext_resource path="res://Sprites/GUI/Popup_Settings.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/GUI/Button_dark.png" type="Texture" id=9]
+[ext_resource path="res://Fonts/AlteHaasGroteskBold.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Sprites/Backgrounds/sky_16bit.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Backgrounds/back_land02.png" type="Texture" id=12]
+
+[sub_resource type="DynamicFont" id=1]
+size = 70
+outline_color = Color( 0.0705882, 0.647059, 0.929412, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 70
+outline_color = Color( 0.0705882, 0.647059, 0.929412, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 70
+outline_color = Color( 0.0705882, 0.647059, 0.929412, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 31
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 188
+font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=6]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="DynamicFont" id=7]
+size = 130
+font_data = ExtResource( 10 )
+
+[sub_resource type="Animation" id=8]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[node name="Game_Menu" type="Node"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 1096.7 ]
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+editor/display_folded = true
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 1.33, 0.45 )
+
+[node name="Sprite" type="Sprite" parent="CenterContainer"]
+position = Vector2( 375, 664 )
+
+[node name="Label" type="Label" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 2.03021
+margin_top = -367.895
+margin_right = 2.02917
+margin_bottom = -192.895
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0.0980392, 0.345098, 0.823529, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 15
+custom_constants/line_spacing = 0
+custom_constants/shadow_offset_y = 8
+text = "Slimy Quest !"
+align = 1
+valign = 1
+
+[node name="Play_button" type="TextureButton" parent="."]
+margin_left = 733.481
+margin_top = 482.901
+margin_right = 1403.48
+margin_bottom = 575.901
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Play_button"]
+margin_left = 23.2167
+margin_top = 9.0
+margin_right = 909.217
+margin_bottom = 127.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/line_spacing = 0
+custom_constants/shadow_offset_y = 0
+custom_constants/shadow_as_outline = 0
+text = "NEW GAME"
+
+[node name="Settings_button" type="TextureButton" parent="."]
+margin_left = 761.7
+margin_top = 690.183
+margin_right = 1113.7
+margin_bottom = 775.183
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Settings_button"]
+margin_left = 23.4907
+margin_right = 460.491
+margin_bottom = 118.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/line_spacing = 0
+custom_constants/shadow_offset_y = 0
+custom_constants/shadow_as_outline = 0
+text = "SETTINGS"
+
+[node name="Info_button" type="TextureButton" parent="."]
+margin_left = 51.3692
+margin_top = 990.624
+margin_right = 247.369
+margin_bottom = 1071.62
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Info_button"]
+margin_left = 19.0
+margin_top = -8.0
+margin_right = 188.0
+margin_bottom = 74.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/line_spacing = 0
+custom_constants/shadow_offset_y = 0
+custom_constants/shadow_as_outline = 0
+text = "HELP"
+
+[node name="Info_Popup_Menu" type="PopupMenu" parent="."]
+editor/display_folded = true
+margin_left = 483.151
+margin_top = 376.706
+margin_right = 503.151
+margin_bottom = 396.706
+rect_rotation = 360.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Info_Popup_Menu"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Info_Popup_Menu"]
+margin_left = -240.0
+margin_top = -124.0
+margin_right = 238.0
+margin_bottom = 167.0
+rect_scale = Vector2( 1.04, 0.760001 )
+custom_fonts/normal_font = SubResource( 4 )
+text = "Bienvenue dans l'aide !
+Ceci n’est qu’une version trèès anticipée du Jeu Slimy Quest,
+les contrôles sont ZQSD+SPACE et N pour l’attk, et tu peux aussi wall-jump.
+				   Bon jeu !"
+
+[node name="Close_Button" type="TextureButton" parent="Info_Popup_Menu"]
+editor/display_folded = true
+margin_left = -88.9332
+margin_top = 159.778
+margin_right = 811.067
+margin_bottom = 459.778
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Info_Popup_Menu/Close_Button"]
+margin_left = 171.541
+margin_top = 26.1362
+margin_right = 867.541
+margin_bottom = 260.136
+custom_fonts/font = SubResource( 5 )
+text = "Close"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Info_Popup_Menu"]
+anims/Apparition = SubResource( 6 )
+
+[node name="Test_button" type="Button" parent="."]
+margin_left = 1696.11
+margin_top = 975.251
+margin_right = 2163.11
+margin_bottom = 1146.25
+rect_scale = Vector2( 0.4, 0.4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Test_button"]
+margin_left = -0.575745
+margin_top = -7.26486
+margin_right = 894.424
+margin_bottom = 167.735
+custom_fonts/font = ExtResource( 2 )
+text = "Debug"
+
+[node name="Quit_button" type="TextureButton" parent="."]
+margin_left = 850.008
+margin_top = 897.028
+margin_right = 1046.01
+margin_bottom = 978.028
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Quit_button"]
+margin_left = 19.0
+margin_top = -8.0
+margin_right = 188.0
+margin_bottom = 74.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/line_spacing = 0
+custom_constants/shadow_offset_y = 0
+custom_constants/shadow_as_outline = 0
+text = "QUIT"
+
+[node name="Settings_Popup_Menu" type="PopupMenu" parent="."]
+margin_left = 483.151
+margin_top = 373.101
+margin_right = 503.151
+margin_bottom = 393.101
+rect_rotation = 360.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Settings_Popup_Menu"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 8 )
+
+[node name="Close_Button" type="TextureButton" parent="Settings_Popup_Menu"]
+editor/display_folded = true
+margin_left = -88.9332
+margin_top = 159.778
+margin_right = 811.067
+margin_bottom = 459.778
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Settings_Popup_Menu/Close_Button"]
+margin_left = 171.541
+margin_top = 26.1362
+margin_right = 867.541
+margin_bottom = 260.136
+custom_fonts/font = SubResource( 5 )
+text = "Close"
+
+[node name="Mute_Button" type="TextureButton" parent="Settings_Popup_Menu"]
+editor/display_folded = true
+margin_left = -85.25
+margin_top = -115.57
+margin_right = 814.75
+margin_bottom = 184.43
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Settings_Popup_Menu/Mute_Button"]
+margin_left = 64.1494
+margin_top = 69.981
+margin_right = 828.149
+margin_bottom = 225.981
+custom_fonts/font = SubResource( 7 )
+text = "SOUND OFF"
+align = 1
+
+[node name="Level_Button" type="TextureButton" parent="Settings_Popup_Menu"]
+editor/display_folded = true
+margin_left = -86.5696
+margin_top = 33.1538
+margin_right = 813.43
+margin_bottom = 333.154
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Settings_Popup_Menu/Level_Button"]
+margin_left = 64.1494
+margin_top = 69.981
+margin_right = 828.149
+margin_bottom = 225.981
+custom_fonts/font = SubResource( 7 )
+text = "LEVELS"
+align = 1
+
+[node name="Leaderboards_button" type="TextureButton" parent="Settings_Popup_Menu"]
+editor/display_folded = true
+margin_left = -85.4838
+margin_top = -40.3689
+margin_right = 814.516
+margin_bottom = 259.631
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Settings_Popup_Menu/Leaderboards_button"]
+margin_left = 64.1494
+margin_top = 69.981
+margin_right = 828.149
+margin_bottom = 225.981
+custom_fonts/font = SubResource( 7 )
+text = "SCORES"
+align = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Settings_Popup_Menu"]
+anims/Apparition = SubResource( 8 )
+
+[node name="Background" type="Sprite" parent="."]
+visible = false
+position = Vector2( 957.339, 550.719 )
+scale = Vector2( 2.40196, 1.82289 )
+z_index = -3
+texture = ExtResource( 11 )
+
+[node name="Background2" type="Sprite" parent="."]
+visible = false
+position = Vector2( 991.587, 506.197 )
+scale = Vector2( 3.92885, 3.34502 )
+z_index = -3
+texture = ExtResource( 12 )
+[connection signal="Settings_signal" from="." to="Settings_Popup_Menu" method="_on_Game_Menu_Settings_signal"]
+[connection signal="pressed" from="Play_button" to="." method="_on_Play_button_pressed"]
+[connection signal="pressed" from="Settings_button" to="." method="_on_Settings_button_pressed"]
+[connection signal="pressed" from="Info_button" to="." method="_on_Info_button_pressed"]
+[connection signal="pressed" from="Info_Popup_Menu/Close_Button" to="." method="_on_Close_Button_pressed"]
+[connection signal="pressed" from="Test_button" to="." method="_on_Test_button_pressed"]
+[connection signal="pressed" from="Quit_button" to="." method="_on_Quit_button_pressed"]
+[connection signal="pressed" from="Settings_Popup_Menu/Close_Button" to="." method="_on_Close_Button_pressed"]

@@ -9,29 +9,45 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Entity",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Code/Classes/Enemy.gd"
+}, {
 "base": "KinematicBody2D",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://Code/Classes/entity.gd"
+}, {
+"base": "Enemy",
 "class": "Mob",
 "language": "GDScript",
-"path": "res://Code/Classes/Mob_Class.gd"
+"path": "res://Code/Classes/Mob.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
+"Entity": "",
 "Mob": "res://Sprites/Icons/Mob_object_icon.png"
 }
 
 [application]
 
 config/name="Slimy_quest_VPC"
-run/main_scene="res://Scenes/Panels_scenes/Game_Menu.tscn"
+run/main_scene="res://GI/Panels_scenes/Game_Menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Global="*res://Code/Global/Global.gd"
 
+[debug]
+
+shapes/collision/contact_color=Color( 1, 0.2, 0.101961, 0.8 )
+
 [display]
 
-window/size/width=1366
-window/size/height=768
+window/size/width=1920
+window/size/height=1080
 window/size/test_width=1000
 window/size/test_height=600
 window/stretch/mode="viewport"
