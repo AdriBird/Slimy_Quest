@@ -30,3 +30,5 @@ func _on_update_health_bar(health):
 		tint_progress = caution_color
 	else:
 		tint_progress = healthy_color
+
+

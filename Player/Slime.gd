@@ -76,7 +76,7 @@ onready var time_shoot = get_node("timers/timer_shoot")
 var can_shoot = false
 onready var bullet = preload("res://Player/Slime_Bullet.tscn")
 
-var direction_tir = 1
+
 
 
 var time = true #shoot
@@ -251,6 +251,8 @@ func cycles():
 					change_cycle("none")
 					change_state(SLIDE)
 		"wall_jump":
+			#accel = 30
+			max_speed = 800
 			if left and "D" in wall_detected and speed > 0:
 				speed = -200
 			elif right and "G" in wall_detected and speed < 0:
@@ -368,7 +370,8 @@ func shoot():
 	if shoot and time or can_shoot and time == true:
 		if Global.mana > 0:
 			var b = bullet.instance()
-			b.start($tir.global_position, direction_tir)
+			#$tir.global_position.x = 110*  1+(-2*int($AnimatedSprite.flip_h))
+			b.start($tir.global_position, 1+(-2*int($AnimatedSprite.flip_h)))
 			get_parent().add_child(b)
 			mana_lose()
 			time = false
@@ -385,7 +388,6 @@ var accel = 30
 var max_slide_speed = 599
 
 func motion_loop(delta):
-	
 	if is_on_floor():
 		accel = 30
 	elif jump_type == "vertical":
@@ -419,8 +421,8 @@ func motion_loop(delta):
 			$AnimatedSprite.flip_h = true
 	
 	# common script left right
-	if speed != 0:
-		if dirx == 0 or dirx != speed / abs(speed) :
+	if vel.x != 0:
+		if dirx == 0 or dirx != vel.x / abs(vel.x) :
 			if is_on_floor():
 				speed = lerp(speed, 0, 0.5)
 			else:
@@ -431,7 +433,7 @@ func motion_loop(delta):
 	else:
 		max_speed = 800
 	
-	if speed > 0:
+	if speed >= 0:
 		vel.x = min(speed, max_speed)
 	if speed < 0:
 		vel.x = max(speed, -max_speed)

@@ -3,7 +3,7 @@ var speed = 1000
 var vel = Vector2()
 const gravity = 1000
 var tuto 
-
+var power = 20
 func _ready():
 	vel.y = -500
 	tuto = get_parent()
@@ -18,7 +18,7 @@ func start(pos, dir):
 		$Sprite.flip_h = false
 		$Particles2D2.rotation_degrees = -90 
 		$Particles2D2.position.x = -84
-	else:
+	elif dir == 1:
 		$Sprite.flip_h = true
 		$Particles2D2.rotation_degrees = 90
 		$Particles2D2.position.x = 84

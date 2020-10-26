@@ -7,10 +7,6 @@
 [ext_resource path="res://Sprites/GUI/life_gui2.png" type="Texture" id=5]
 [ext_resource path="res://Code/Enemies/enemy_life_bar.gd" type="Script" id=6]
 
-
-
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48.0207, 47.0929 )
 
@@ -63,7 +59,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="CapsuleShape2D" id=5]
-radius = 73.1421
+radius = 71.0886
 height = 1.63412
 
 [node name="Grousk" type="KinematicBody2D" groups=[
@@ -108,9 +104,10 @@ enabled = true
 cast_to = Vector2( 0, 60 )
 
 [node name="hurtbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
-visible = false
 shape = SubResource( 5 )
 [connection signal="timeout" from="Timer_hit_lag" to="." method="_on_Timer_hit_lag_timeout"]
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

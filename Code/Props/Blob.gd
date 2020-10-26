@@ -5,6 +5,25 @@ var texture = {'blue_blob'  : "res://Sprites/Items/water_drop.png"}
 var _type
 
 signal blob_touch
+onready var st_scale = $Sprite.get_scale()
+func _process(delta):
+	anim()
+
+var anim = false
+
+func anim():
+	if anim == false:
+		anim = true
+		$Tween.interpolate_property($Sprite, "scale", st_scale, Vector2(0.08,st_scale.y), 1, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+		$Tween.start()
+		yield(get_tree().create_timer(1), "timeout")
+		$Tween.interpolate_property($Sprite, "scale", Vector2(0.08,st_scale.y), st_scale, 1, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+		$Tween.start()
+		yield(get_tree().create_timer(1), "timeout")
+		anim = false
+
+
+
 
 func init(type, pos):
 	_type = type

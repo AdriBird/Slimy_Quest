@@ -19,7 +19,7 @@ func _ready():
 
 
 
-func _on_Slime_update_health_bar(health):
+func _on_Player_update_health_bar(health):
 	value = health
 	if health < max_value * danger_zone:
 		tint_progress = danger_color
@@ -28,3 +28,6 @@ func _on_Slime_update_health_bar(health):
 	else:
 		tint_progress = healthy_color
 	pass # Replace with function body.
+
+
+
