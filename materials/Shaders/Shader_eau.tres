@@ -40,6 +40,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="OpenSimplexNoise" id=2]
 

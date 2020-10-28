@@ -104,7 +104,6 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-editor/display_folded = true
 margin_right = 40.0
 margin_bottom = 40.0
 rect_scale = Vector2( 1.33, 0.45 )
@@ -203,7 +202,6 @@ custom_constants/shadow_as_outline = 0
 text = "HELP"
 
 [node name="Info_Popup_Menu" type="PopupMenu" parent="."]
-editor/display_folded = true
 margin_left = 483.151
 margin_top = 376.706
 margin_right = 503.151
@@ -231,7 +229,6 @@ les contrôles sont ZQSD+SPACE et N pour l’attk, et tu peux aussi wall-jump.
 				   Bon jeu !"
 
 [node name="Close_Button" type="TextureButton" parent="Info_Popup_Menu"]
-editor/display_folded = true
 margin_left = -88.9332
 margin_top = 159.778
 margin_right = 811.067
@@ -308,7 +305,6 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 8 )
 
 [node name="Close_Button" type="TextureButton" parent="Settings_Popup_Menu"]
-editor/display_folded = true
 margin_left = -88.9332
 margin_top = 159.778
 margin_right = 811.067
@@ -328,7 +324,6 @@ custom_fonts/font = SubResource( 5 )
 text = "Close"
 
 [node name="Mute_Button" type="TextureButton" parent="Settings_Popup_Menu"]
-editor/display_folded = true
 margin_left = -85.25
 margin_top = -115.57
 margin_right = 814.75
@@ -349,7 +344,6 @@ text = "SOUND OFF"
 align = 1
 
 [node name="Level_Button" type="TextureButton" parent="Settings_Popup_Menu"]
-editor/display_folded = true
 margin_left = -86.5696
 margin_top = 33.1538
 margin_right = 813.43
@@ -370,7 +364,6 @@ text = "LEVELS"
 align = 1
 
 [node name="Leaderboards_button" type="TextureButton" parent="Settings_Popup_Menu"]
-editor/display_folded = true
 margin_left = -85.4838
 margin_top = -40.3689
 margin_right = 814.516

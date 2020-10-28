@@ -219,6 +219,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="OpenSimplexNoise" id=19]
 
@@ -286,6 +287,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=25]
 shader = SubResource( 24 )
@@ -340,6 +342,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=27]
 shader = SubResource( 26 )
@@ -394,6 +397,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=29]
 shader = SubResource( 28 )
@@ -448,6 +452,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=31]
 shader = SubResource( 30 )
@@ -502,6 +507,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=33]
 shader = SubResource( 32 )
@@ -556,6 +562,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=35]
 shader = SubResource( 34 )
@@ -610,6 +617,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=37]
 shader = SubResource( 36 )
@@ -664,6 +672,7 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=39]
 shader = SubResource( 38 )
@@ -765,7 +774,6 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 6 )
 
 [node name="door" type="StaticBody2D" parent="."]
-editor/display_folded = true
 position = Vector2( 1290.95, 837.657 )
 scale = Vector2( 4.2, 4.2 )
 script = ExtResource( 7 )
@@ -788,7 +796,6 @@ anims/close_door = SubResource( 2 )
 anims/open_door = SubResource( 3 )
 
 [node name="door_end" type="StaticBody2D" parent="."]
-editor/display_folded = true
 position = Vector2( 6892.43, 392.559 )
 scale = Vector2( 4, 4 )
 script = ExtResource( 9 )
@@ -813,7 +820,6 @@ anims/open_door = SubResource( 5 )
 [node name="red_button" type="StaticBody2D" parent="." groups=[
 "button",
 ]]
-editor/display_folded = true
 position = Vector2( -1922.43, -42.3381 )
 z_index = 1
 __meta__ = {
@@ -821,7 +827,6 @@ __meta__ = {
 }
 
 [node name="button_door" type="Area2D" parent="red_button"]
-editor/display_folded = true
 position = Vector2( 2471.58, 303.687 )
 scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 10 )
@@ -848,7 +853,6 @@ shape = SubResource( 9 )
 [node name="red_button_end" type="StaticBody2D" parent="." groups=[
 "button",
 ]]
-editor/display_folded = true
 position = Vector2( 2926.64, -677.627 )
 __meta__ = {
 "_edit_group_": true
@@ -893,11 +897,9 @@ position = Vector2( 7172.32, 440.406 )
 script = ExtResource( 16 )
 
 [node name="end_info" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="fin_tuto" type="Popup" parent="end_info"]
 pause_mode = 2
-editor/display_folded = true
 margin_left = 122.141
 margin_top = -77.726
 margin_right = 162.141
@@ -928,7 +930,6 @@ align = 1
 valign = 1
 
 [node name="Button" type="Button" parent="end_info/fin_tuto"]
-editor/display_folded = true
 margin_left = 257.783
 margin_top = 795.566
 margin_right = 457.583
@@ -994,7 +995,7 @@ format = 1
 tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 852002, 0, 0, 852003, 0, 0, 852004, 0, 0, 852005, 0, 0, 852006, 0, 0, 917538, 0, 0, 917539, 0, 0, 917540, 0, 0, 917541, 0, 0, 917542, 0, 0, 983074, 0, 0, 983075, 0, 0, 983076, 0, 0, 983077, 0, 0, 983078, 0, 0, 1048610, 0, 0, 1048611, 0, 0, 1048612, 0, 0, 1048613, 0, 0, 1048614, 0, 0, 1114146, 0, 0, 1114147, 0, 0, 1114148, 0, 0, 1114149, 0, 0, 1114150, 0, 0, 1376423, 0, 0, 1900651, 0, 0 )
 
 [node name="enemy" parent="." instance=ExtResource( 24 )]
-position = Vector2( 933.269, 393.537 )
+position = Vector2( 281.867, 903.446 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.854902, 0.854902, 0.854902, 1 )

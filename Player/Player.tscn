@@ -30,9 +30,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_start_ground",
+"name": "jump_middle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "jump_end_ground",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
@@ -45,14 +50,9 @@ animations = [ {
 "name": "jump_start_air",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "jump_end_ground",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "jump_middle",
+"name": "jump_start_ground",
 "speed": 5.0
 } ]
 
@@ -328,8 +328,8 @@ radius = 55.1695
 height = 63.9154
 
 [node name="Player" type="KinematicBody2D" groups=[
-"Player_element",
 "Player",
+"Player_element",
 ]]
 position = Vector2( 687.502, 536.676 )
 z_index = 1
@@ -384,7 +384,6 @@ script = ExtResource( 9 )
 [node name="size_tween" type="Tween" parent="."]
 
 [node name="GUI" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="tween_mana" type="Tween" parent="GUI"]
 
@@ -446,7 +445,6 @@ position = Vector2( 55.9278, -8.27948 )
 scale = Vector2( 2, 2 )
 
 [node name="Wall_radar_D" type="Area2D" parent="."]
-editor/display_folded = true
 position = Vector2( -2.85388, -4.51868 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar_D"]
@@ -454,7 +452,6 @@ position = Vector2( 80, 26 )
 shape = SubResource( 10 )
 
 [node name="Wall_radar_G" type="Area2D" parent="."]
-editor/display_folded = true
 position = Vector2( 72.4827, 18.9261 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar_G"]
@@ -469,7 +466,6 @@ visible = false
 occluder = SubResource( 11 )
 
 [node name="timers" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="timer_shoot" type="Timer" parent="timers"]
 
@@ -478,7 +474,6 @@ editor/display_folded = true
 [node name="timer_bounce" type="Timer" parent="timers"]
 
 [node name="hurtbox" type="Area2D" parent="."]
-editor/display_folded = true
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]

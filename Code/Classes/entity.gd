@@ -32,7 +32,7 @@ func take_damage(damage):
 		# applicable to player and bosses, which have health_bar
 		if self.is_in_group("enemy"):
 			self.connect("update_health_bar", $life_bar,"_on_update_health_bar")
-		else:
+		elif self.is_in_group("Player"):
 			self.connect("update_health_bar", $GUI/life_bar,"_on_update_health_bar")
 		emit_signal("update_health_bar", health)
 	if health <= 0:
