@@ -13,10 +13,10 @@ load_path = "res://.import/tile_ground.png-efc1c1cd1c88ebf5ef7fb994eacda415.stex
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 100.629, 83.6083 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 100.629, 99.462 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 16.0642, 7.64722 )
 
 [node name="Tileset_Swamp" type="Node2D"]
@@ -145,7 +145,7 @@ position = Vector2( 1, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="dirt/StaticBody2D"]
 position = Vector2( -0.663585, -1.09864 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="PlatG" type="Sprite" parent="."]
 position = Vector2( -2.20313, 208.382 )
@@ -162,7 +162,7 @@ position = Vector2( 1, 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="PlatG/StaticBody2D2"]
 position = Vector2( -1, -1.5 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 one_way_collision = true
 
 [node name="PlatC" type="Sprite" parent="."]
@@ -180,7 +180,7 @@ position = Vector2( 1, 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="PlatC/StaticBody2D"]
 position = Vector2( -1, -1.5 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 one_way_collision = true
 
 [node name="PlatD" type="Sprite" parent="."]
@@ -198,7 +198,7 @@ position = Vector2( 1, 1 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="PlatD/StaticBody2D"]
 position = Vector2( -1, -1.5 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 one_way_collision = true
 
 [node name="Nioc1" type="Sprite" parent="."]

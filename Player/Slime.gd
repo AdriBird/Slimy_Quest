@@ -33,7 +33,7 @@ var my_rotation = 0
 func _ready():
 	# damages to other entities
 	$Camera2D.smoothing_enabled=false
-	jump_speed = 2300
+	jump_speed = 1800
 	power = 0
 	has_health_bar = true
 	MAX_SPEED = 600
@@ -91,6 +91,7 @@ var timer_idle_verif = true
 
 
 func state_loop():
+	print(state)
 	#Check si on se déplace
 	if state == IDLE and vel.x != 0 and on_wall == false and cycle == 'none':
 		change_state(SLIDE)
@@ -396,7 +397,7 @@ var accel = ACCEL
 # vitesse actuelle
 
 # vitesse min pour bounce
-var max_slide_speed = 599
+var max_slide_speed = 530
 
 func motion_loop(delta):
 	if is_on_floor():
