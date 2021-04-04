@@ -4,7 +4,7 @@ export (int) var pos = 50
 var player
 func _ready():
 	player = get_parent()
-	self.zoom = Vector2(2,2)
+	#self.zoom = Vector2(2,2)
 """
 func _input(event):
 	if event.is_action("dezoom"):

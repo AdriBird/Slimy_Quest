@@ -162,7 +162,6 @@ visible = false
 shape = SubResource( 1 )
 
 [node name="marble3" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 0, 240 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -178,7 +177,6 @@ visible = false
 shape = SubResource( 1 )
 
 [node name="stairs" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 80, 240 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -194,7 +192,6 @@ visible = false
 shape = SubResource( 1 )
 
 [node name="chimney" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 160, 240 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -210,7 +207,6 @@ visible = false
 shape = SubResource( 1 )
 
 [node name="stairs2" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 240, 240 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -226,7 +222,6 @@ visible = false
 shape = SubResource( 1 )
 
 [node name="platform_mouv" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 80, 320 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -243,7 +238,6 @@ shape = SubResource( 1 )
 one_way_collision = true
 
 [node name="platform_static" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 0, 320 )
 texture = ExtResource( 1 )
 region_enabled = true

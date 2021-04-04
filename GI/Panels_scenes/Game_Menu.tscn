@@ -266,7 +266,8 @@ margin_right = 2163.11
 margin_bottom = 1146.25
 rect_scale = Vector2( 0.4, 0.4 )
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Test_button"]
@@ -283,7 +284,8 @@ margin_top = 897.028
 margin_right = 1046.01
 margin_bottom = 978.028
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Quit_button"]

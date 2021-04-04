@@ -1,12 +1,22 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Sprites/Tile_swamp/PSD/Tileset.png" type="Texture" id=1]
-
+[ext_resource path="res://Sprites/elements/tile_dirt.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.9392, 15.9635 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="StreamTexture" id=2]
+flags = 4
+load_path = "res://.import/tile_ground.png-efc1c1cd1c88ebf5ef7fb994eacda415.stex"
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 100.629, 83.6083 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 100.629, 99.462 )
+
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 16.0642, 7.64722 )
 
 [node name="Tileset_Swamp" type="Node2D"]
@@ -21,14 +31,12 @@ __meta__ = {
 }
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Diago1"]
-editor/display_folded = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Diago1/StaticBody2D"]
 position = Vector2( -1, -1 )
 shape = SubResource( 1 )
 
 [node name="Normal" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 121.839, -0.799358 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
@@ -46,7 +54,6 @@ position = Vector2( -1, -1 )
 shape = SubResource( 1 )
 
 [node name="Diag2" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 260.635, 1.18381 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
@@ -64,7 +71,6 @@ position = Vector2( -1, -1 )
 shape = SubResource( 1 )
 
 [node name="Gauche" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 4.81076, 120.53 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
@@ -82,7 +88,6 @@ position = Vector2( -1, -1 )
 shape = SubResource( 1 )
 
 [node name="Int" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 122.765, 118.169 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
@@ -100,7 +105,6 @@ position = Vector2( -1, -1 )
 shape = SubResource( 1 )
 
 [node name="Droite" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 237.775, 114.58 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
@@ -117,6 +121,32 @@ position = Vector2( 1, 1 )
 position = Vector2( -1, -1 )
 shape = SubResource( 1 )
 
+[node name="sol" type="Sprite" parent="."]
+position = Vector2( -3.46032, 293.659 )
+scale = Vector2( 0.317175, 0.307111 )
+texture = SubResource( 2 )
+region_rect = Rect2( 112, 64, 32, 32 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="sol"]
+position = Vector2( 1, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sol/StaticBody2D"]
+position = Vector2( -1.221, 16.7451 )
+shape = SubResource( 3 )
+
+[node name="dirt" type="Sprite" parent="."]
+position = Vector2( 126.879, 313 )
+scale = Vector2( 0.317175, 0.307111 )
+texture = ExtResource( 2 )
+region_rect = Rect2( 112, 64, 32, 32 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="dirt"]
+position = Vector2( 1, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="dirt/StaticBody2D"]
+position = Vector2( -0.663585, -1.09864 )
+shape = SubResource( 5 )
+
 [node name="PlatG" type="Sprite" parent="."]
 position = Vector2( -2.20313, 208.382 )
 scale = Vector2( 2, 2 )
@@ -132,7 +162,7 @@ position = Vector2( 1, 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="PlatG/StaticBody2D2"]
 position = Vector2( -1, -1.5 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 one_way_collision = true
 
 [node name="PlatC" type="Sprite" parent="."]
@@ -150,7 +180,7 @@ position = Vector2( 1, 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="PlatC/StaticBody2D"]
 position = Vector2( -1, -1.5 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 one_way_collision = true
 
 [node name="PlatD" type="Sprite" parent="."]
@@ -168,11 +198,10 @@ position = Vector2( 1, 1 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="PlatD/StaticBody2D"]
 position = Vector2( -1, -1.5 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 one_way_collision = true
 
 [node name="Nioc1" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( 241.966, 313.735 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
@@ -183,7 +212,6 @@ __meta__ = {
 }
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Nioc1"]
-editor/display_folded = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nioc1/StaticBody2D"]
 position = Vector2( -1, -1 )

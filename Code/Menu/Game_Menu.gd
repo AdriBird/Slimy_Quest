@@ -51,7 +51,7 @@ func _process(delta):
 # Signaux 
 func _on_Play_button_pressed():
 # warning-ignore:return_value_discarded
-	get_tree().change_scene("res://test/Test.tscn")
+	get_tree().change_scene("res://Scenes/Zone1/level1/level1.tscn")
 
 
 func _on_Info_button_pressed():
@@ -102,7 +102,7 @@ func _on_my_signal():
 
 
 func _on_Test_button_pressed():
-	get_tree().change_scene("res://Scenes/levels_scenes/level_tuto/Shader_Test.tscn")
+	get_tree().change_scene("res://test/Test_scene.tscn")
 
 
 func _on_Quit_button_pressed():
