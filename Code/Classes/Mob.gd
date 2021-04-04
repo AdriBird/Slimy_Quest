@@ -3,8 +3,6 @@ extends Enemy
 class_name Mob, "res://Sprites/Icons/Mob_object_icon.png"
 
 
-enum {NEUTRAL, SPOT, ATTACK, DAMAGE}
-var state
 
 func attack():
 	.attack()

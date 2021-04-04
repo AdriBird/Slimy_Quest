@@ -16,6 +16,7 @@ func _ready():
 	value = health
 	tint_progress = healthy_color
 	self.hide()
+	print(self.max_value)
 	pass 
 
 

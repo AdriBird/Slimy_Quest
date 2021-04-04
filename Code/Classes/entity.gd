@@ -21,6 +21,9 @@ var max_speed = 250
 export (int) var power = 10
 
 
+enum {NEUTRAL, SPOT, ATTACK, DAMAGE, DEATH}
+var state
+
 var has_health_bar = false
 
 func take_damage(damage):
@@ -29,10 +32,11 @@ func take_damage(damage):
 	# take damage timer and animation
 	health -= damage
 	if has_health_bar :
+		print(self.name)
 		# applicable to player and bosses, which have health_bar
 		if self.is_in_group("enemy"):
 			self.connect("update_health_bar", $life_bar,"_on_update_health_bar")
-		elif self.is_in_group("Player"):
+		else:
 			self.connect("update_health_bar", $GUI/life_bar,"_on_update_health_bar")
 		emit_signal("update_health_bar", health)
 	if health <= 0:
@@ -54,7 +58,11 @@ func knock_back(body):
 	vel.x += (self.position.x - body.position.x) / abs((self.position.x - body.position.x)) * 200
 
 func death():
+	state = DEATH
+	$anim.play("death")
+	yield($anim, "animation_finished")
 	queue_free()
+
 
 
 

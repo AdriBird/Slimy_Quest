@@ -63,5 +63,5 @@ func _change_key(new_key):
 	_set_keys()
 
 func _on_Button_retour_pressed():
-	get_tree().change_scene("res://Scenes/Panels_scenes/Game_Menu.tscn")
+	get_tree().change_scene("res://GI/Panels_scenes/Game_Menu.tscn")
 	pass # Replace with function body.

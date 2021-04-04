@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Code/Enemies/Grousk_ia.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Ennemis/grousk.png" type="Texture" id=2]
@@ -11,7 +11,34 @@
 extents = Vector2( 48.0207, 47.0929 )
 
 [sub_resource type="Animation" id=2]
-resource_name = "hurt"
+resource_name = "death"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Particles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -25,8 +52,7 @@ tracks/0/keys = {
 "values": [ 4 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "idle"
+[sub_resource type="Animation" id=4]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -36,15 +62,15 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "walk"
+[sub_resource type="Animation" id=5]
 length = 0.4
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -58,9 +84,29 @@ tracks/0/keys = {
 "values": [ 2, 3 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=5]
-radius = 71.0886
-height = 1.63412
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 90.7445
+height = 0.0
+
+[sub_resource type="Curve" id=7]
+max_value = 6.0
+_data = [ Vector2( 0, 6 ), 0.0, 0.0943596, 0, 0, Vector2( 0.987342, 0 ), -21.5455, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
+
+[sub_resource type="ParticlesMaterial" id=9]
+emission_shape = 2
+emission_box_extents = Vector3( 30, 50, 1 )
+flag_disable_z = true
+gravity = Vector3( 300, 0, -0.005 )
+initial_velocity = 300.0
+angular_velocity = 340.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 600.0
+scale_curve = SubResource( 8 )
+color = Color( 0, 0.854902, 0.435294, 1 )
 
 [node name="Grousk" type="KinematicBody2D" groups=[
 "enemy",
@@ -68,21 +114,26 @@ height = 1.63412
 collision_layer = 8
 collision_mask = 15
 script = ExtResource( 1 )
+health = 50
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 hframes = 5
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( -0.902496, 4.51247 )
 shape = SubResource( 1 )
 
-[node name="enemy_anim" type="AnimationPlayer" parent="."]
-anims/hurt = SubResource( 2 )
-anims/idle = SubResource( 3 )
-anims/walk = SubResource( 4 )
+[node name="anim" type="AnimationPlayer" parent="."]
+anims/death = SubResource( 2 )
+anims/hurt = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/walk = SubResource( 5 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="life_bar" type="TextureProgress" parent="."]
 margin_left = -64.2844
@@ -94,6 +145,9 @@ texture_under = ExtResource( 3 )
 texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 5 )
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Timer_hit_lag" type="Timer" parent="."]
 
@@ -103,12 +157,11 @@ enabled = true
 cast_to = Vector2( 0, 60 )
 
 [node name="hurtbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 32
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="timer_distance" type="Timer" parent="."]
 
@@ -119,5 +172,19 @@ enabled = true
 cast_to = Vector2( 0, 400 )
 collision_mask = 2
 collide_with_areas = true
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 0, 30 )
+rotation = -1.5708
+z_index = -5
+emitting = false
+amount = 100
+lifetime = 0.8
+one_shot = true
+speed_scale = 1.5
+process_material = SubResource( 9 )
+__meta__ = {
+"_editor_description_": ""
+}
 [connection signal="timeout" from="Timer_hit_lag" to="." method="_on_Timer_hit_lag_timeout"]
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

@@ -2,18 +2,20 @@ extends Mob
 
 onready var timer_distance = get_node("timer_distance")
 onready var start_pos = self.position.x
-onready var Player = get_parent().get_node("Player")
+onready var Player = get_parent().get_node("Slime")
 
 var dist = 700
 
 func _ready():
+	state = NEUTRAL
+	jump_speed = 1000
 	has_health_bar = true
-	health = 50
+	# set the health in export/ inspector
 	state = NEUTRAL
 	speed = 20
 	dirx = 1
 	$RayCast2D.enabled = true
-	#$enemy_anim.play("walk")
+	#$anim.play("walk")
 
 
 
@@ -53,7 +55,8 @@ func _physics_process(delta):
 		dirx *= -1
 		$RayCast2D.position.x *= -1
 		
-	$enemy_anim.play("walk")
+	if state != DEATH:
+		$anim.play("walk")
 	if dirx == 1 :
 		#$RayCast2D.scale.x *= -1
 		vel.x = min(vel.x + speed, max_speed)

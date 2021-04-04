@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://test/test_scene.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://Props/water/water.tscn" type="PackedScene" id=26]
 [ext_resource path="res://icon.png" type="Texture" id=27]
 [ext_resource path="res://materials/Shaders/Shader_eau.tres" type="Material" id=28]
+[ext_resource path="res://Enemy/Grousk_ia.tscn" type="PackedScene" id=29]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.03513, 32.0916 )
@@ -219,7 +220,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="OpenSimplexNoise" id=19]
 
@@ -287,7 +287,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=25]
 shader = SubResource( 24 )
@@ -342,7 +341,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=27]
 shader = SubResource( 26 )
@@ -397,7 +395,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=29]
 shader = SubResource( 28 )
@@ -452,7 +449,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=31]
 shader = SubResource( 30 )
@@ -507,7 +503,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=33]
 shader = SubResource( 32 )
@@ -562,7 +557,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=35]
 shader = SubResource( 34 )
@@ -617,7 +611,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=37]
 shader = SubResource( 36 )
@@ -672,7 +665,6 @@ void fragment() {
 	//COLOR = vec4(offset, 0.0, 1.0);
 }
 "
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=39]
 shader = SubResource( 38 )
@@ -691,7 +683,7 @@ shader_param/noise2 = SubResource( 22 )
 script = ExtResource( 1 )
 
 [node name="Slime" parent="." instance=ExtResource( 2 )]
-position = Vector2( 692.821, 530.093 )
+position = Vector2( 95.589, 54.9272 )
 z_index = 0
 
 [node name="background_forest" parent="." instance=ExtResource( 3 )]
@@ -995,7 +987,7 @@ format = 1
 tile_data = PoolIntArray( 196781, 0, 0, 196831, 0, 0, 327879, 0, 0, 852002, 0, 0, 852003, 0, 0, 852004, 0, 0, 852005, 0, 0, 852006, 0, 0, 917538, 0, 0, 917539, 0, 0, 917540, 0, 0, 917541, 0, 0, 917542, 0, 0, 983074, 0, 0, 983075, 0, 0, 983076, 0, 0, 983077, 0, 0, 983078, 0, 0, 1048610, 0, 0, 1048611, 0, 0, 1048612, 0, 0, 1048613, 0, 0, 1048614, 0, 0, 1114146, 0, 0, 1114147, 0, 0, 1114148, 0, 0, 1114149, 0, 0, 1114150, 0, 0, 1376423, 0, 0, 1900651, 0, 0 )
 
 [node name="enemy" parent="." instance=ExtResource( 24 )]
-position = Vector2( 281.867, 903.446 )
+position = Vector2( 933.269, 393.537 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.854902, 0.854902, 0.854902, 1 )
@@ -1128,6 +1120,9 @@ margin_right = 13510.0
 margin_bottom = 839.0
 texture = ExtResource( 27 )
 stretch_mode = 2
+
+[node name="Grousk" parent="." instance=ExtResource( 29 )]
+position = Vector2( 975.807, -8.48535 )
 [connection signal="body_entered" from="red_button/button_door" to="red_button/button_door" method="_on_button_door_body_entered"]
 [connection signal="sesame" from="red_button/button_door" to="door" method="_on_button_door_sesame"]
 [connection signal="body_entered" from="red_button_end/button_door" to="red_button_end/button_door" method="_on_button_door_body_entered"]

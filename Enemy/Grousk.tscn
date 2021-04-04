@@ -74,14 +74,13 @@ health = 50
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 hframes = 5
-frame = 3
+frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( -0.902496, 4.51247 )
 shape = SubResource( 1 )
 
-[node name="enemy_anim" type="AnimationPlayer" parent="."]
+[node name="anim" type="AnimationPlayer" parent="."]
 anims/hurt = SubResource( 2 )
 anims/idle = SubResource( 3 )
 anims/walk = SubResource( 4 )
@@ -105,7 +104,6 @@ enabled = true
 cast_to = Vector2( 0, 60 )
 
 [node name="hurtbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 32
 collision_mask = 4
 

@@ -4,15 +4,21 @@ var vel = Vector2()
 const gravity = 1000
 var tuto 
 var power = 20
+var state 
+
 func _ready():
+	state = "shooted"
 	vel.y = -500
 	tuto = get_parent()
-func start(pos, dir):
+
+
+func start(gpos,pos, dir):
 	$Timer.set_wait_time(2)
 	$Timer.start()
 	$Particles2D.emitting = true
 	$Particles2D2.emitting = true
-	position = pos
+	position.y = gpos.y - pos.y
+	position.x = gpos.x + pos.x * dir
 	vel = Vector2(speed * dir, 0)
 	if dir == -1:
 		$Sprite.flip_h = false
@@ -26,24 +32,40 @@ func start(pos, dir):
 
 
 signal bullet_despawned
+signal bullet_hit
 func _process(delta):
-	vel.y += (gravity * delta * 1.5)
 	var collision = move_and_collide(vel * delta)
-	if collision :
-		if collision.collider.has_method("hit"):
+	if collision:
+		state = "collision"
+		print(collision.collider.name)
+		$anim.play("splash")
+		$CollisionShape2D.disabled = true
+		vel = Vector2(0, 0)
+		if collision.collider.is_in_group("enemy"):
 			$CollisionShape2D.disabled = true
-			collision.collider.hit(20)
+			collision.collider.take_damage(20)
 			vel = Vector2(0, 0)
 #			$bullet_anim.play("splash")
 #			yield ($bullet_anim, "animation_finished")
-			$CollisionShape2D.disabled = false
-			queue_free()
-		
-		self.connect("bullet_despawned", tuto, "blob_bullet")
+			yield($anim, "animation_finished")
+			auto_destruction()
+		yield($anim, "animation_finished")
+		self.connect("bullet_despawned", get_tree(), "blob_bullet")
 		emit_signal("bullet_despawned", position)
-		queue_free()
+		"""self.connect("bullet_hit", collision.collider, "on_bullet_hit")
+		emit_signal("bullet_hit", self)"""
+		auto_destruction()
+	if state == "shooted":
+		vel.y += (gravity * delta * 1.5)
 
-
+func auto_destruction():
+	vel = Vector2(0,0)
+	$Particles2D.hide()
+	$Particles2D2.hide()
+	$Sprite2.hide()
+	$anim.play("particules")
+	yield($anim, "animation_finished")
+	queue_free()
 
 func _on_Timer_timeout():
 	queue_free()

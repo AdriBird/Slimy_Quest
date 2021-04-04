@@ -7,6 +7,14 @@ var button_list = []
 signal Info_signal
 signal Settings_signal
 
+func _ready():
+	Global.dialog = false
+	get_node("Quit_button").show()
+	get_node("Info_button").show()
+	get_node("Settings_button").show()
+	get_node("Play_button").show()
+	get_node("Play_button").set_disabled(false)
+
 # HOVER COLORS
 func _process(delta):
 	if Global.dialog:
@@ -44,7 +52,7 @@ func _process(delta):
 func _on_Play_button_pressed():
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://test/Test.tscn")
-	pass
+
 
 func _on_Info_button_pressed():
 	var info_dialog = dialog_scene.instance()
@@ -71,6 +79,7 @@ func _on_Close_Button_pressed():
 
 
 func _on_Settings_button_pressed():
+	get_tree().change_scene("res://GI/Panels_scenes/Settings_Scene.tscn")
 	var info_dialog = dialog_scene.instance()
 	var dialog = [
 		'Pas d\'option pour l\'instant',

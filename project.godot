@@ -43,6 +43,7 @@ Global="*res://Code/Global/Global.gd"
 [debug]
 
 shapes/collision/contact_color=Color( 1, 0.2, 0.101961, 0.8 )
+shapes/navigation/geometry_color=Color( 0.0196078, 0.894118, 0.647059, 0.4 )
 
 [display]
 
@@ -132,4 +133,5 @@ bounce={
 [rendering]
 
 quality/2d/use_pixel_snap=true
+quality/subsurface_scattering/quality=2
 environment/default_environment="res://default_env.tres"

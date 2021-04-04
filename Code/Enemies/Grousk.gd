@@ -9,7 +9,7 @@ func _ready():
 	speed = 20
 	dirx = 1
 	$RayCast2D.enabled = true
-	#$enemy_anim.play("walk")
+	#$anim.play("walk")
 
 
 
@@ -21,7 +21,7 @@ func neutral():
 	if is_on_wall():
 		dirx *= -1
 		$RayCast2D.position.x *= -1
-	$enemy_anim.play("walk")
+	$anim.play("walk")
 	if dirx == 1 :
 		#$RayCast2D.scale.x *= -1
 		vel.x = min(vel.x + speed, max_speed)

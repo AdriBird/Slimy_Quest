@@ -4,8 +4,6 @@
 [ext_resource path="res://GI/Panels_scenes/Button.gd" type="Script" id=2]
 [ext_resource path="res://Fonts/Polices de base/AlteHaasGroteskRegular.ttf" type="DynamicFontData" id=3]
 
-
-
 [sub_resource type="DynamicFont" id=1]
 size = 100
 outline_color = Color( 0.0705882, 0.647059, 0.929412, 1 )
@@ -16,6 +14,9 @@ font_data = ExtResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
