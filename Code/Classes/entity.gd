@@ -59,6 +59,7 @@ func knock_back(body):
 
 func death():
 	state = DEATH
+	self.power = 0
 	$anim.play("death")
 	yield($anim, "animation_finished")
 	queue_free()

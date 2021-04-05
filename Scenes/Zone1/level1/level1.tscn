@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Backgrounds/grass1.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Sprites/Backgrounds/grass.5.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/elements/flower.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/elements/flower2.png" type="Texture" id=10]
+[ext_resource path="res://Enemy/fourmi.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 14.8406
@@ -17,15 +18,16 @@ height = 103.944
 
 [node name="level1" type="Node2D"]
 
+[node name="Fourmi" parent="." instance=ExtResource( 11 )]
+position = Vector2( 4000, 6000 )
+z_index = 2
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 2306.76, 6341.37 )
 
 [node name="flower1" type="StaticBody2D" parent="."]
 position = Vector2( 4610.66, 6207.2 )
 rotation = -1.0472
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Sprite" type="Sprite" parent="flower1"]
 position = Vector2( 169.463, -311.762 )
@@ -33,10 +35,10 @@ rotation = 1.0472
 texture = ExtResource( 9 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="flower1"]
-position = Vector2( 203.167, 388.99 )
+position = Vector2( -7.72852, -2.57202 )
 rotation = 1.04371
 scale = Vector2( 0.874144, 0.97571 )
-polygon = PoolVector2Array( 5.48926, -37.3477, 20.4614, -33.0581, 30.6812, -23.8335, 47.9399, 0.969727, 67.5415, 32.1431, 69.8501, 47, 38.3271, 38.416, 22.5962, 26.3457, 0.554688, 14.2559, -23.1011, 11.354, -46.7217, -0.741211, -64.019, -15.6445, -89.9531, -41.1821, -82.7739, -61.6655, -39.4175, -53.0444, -17.3506, -47.3188 )
+polygon = PoolVector2Array( 5.48926, -37.3477, 20.4614, -33.0581, 30.6812, -23.8335, 47.9399, 0.969727, 61.2754, 16.9106, 69.8501, 47, 38.3271, 38.416, 22.5962, 26.3457, 0.554688, 14.2559, -23.1011, 11.354, -46.7217, -0.741211, -64.019, -15.6445, -89.9531, -41.1821, -82.7739, -61.6655, -39.4175, -53.0444, -17.3506, -47.3188 )
 one_way_collision = true
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="flower1"]
@@ -68,8 +70,9 @@ polygon = PoolVector2Array( -45.1504, -96.5703, -37.3018, -88.9453, -46.4487, -7
 one_way_collision = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="flower1"]
-position = Vector2( 4.46875, -5.24072 )
+position = Vector2( 1.95239, -7.2207 )
 shape = SubResource( 1 )
+disabled = true
 one_way_collision = true
 
 [node name="flower2" type="StaticBody2D" parent="."]

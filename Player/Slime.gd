@@ -91,7 +91,7 @@ var timer_idle_verif = true
 
 
 func state_loop():
-	print(state)
+	#print(state)
 	#Check si on se déplace
 	if state == IDLE and vel.x != 0 and on_wall == false and cycle == 'none':
 		change_state(SLIDE)
@@ -357,9 +357,10 @@ func _physics_process(delta):
 	if on_wall and vel.y >= 0:
 		vel.y /= 1.5
 	if cycle== "jump" and jump_state == JUMPING:
-		vel.y += (GRAVITY * delta)*1.3
-	else:
 		vel.y += (GRAVITY * delta)*1.6
+	else:
+		pass
+		vel.y += (GRAVITY * delta)
 	vel = move_and_slide(vel, UP)
 	#--- ROTATION RADIANT
 	rotation_update()
@@ -436,7 +437,7 @@ func motion_loop(delta):
 	if vel.x != 0:
 		if dirx == 0 or dirx != vel.x / abs(vel.x) :
 			if is_on_floor():
-				speed = lerp(speed, 0, 0.5)
+				speed = lerp(speed, 0, 1)
 			else:
 				speed = lerp(speed, 0, 0.05)
 	

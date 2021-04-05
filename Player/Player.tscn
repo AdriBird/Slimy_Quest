@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Player/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Player/sprites/Slime_original_size/Slime_idle.png" type="Texture" id=2]
@@ -31,11 +31,6 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "jump_middle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "jump_end_air",
@@ -54,6 +49,11 @@ animations = [ {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "jump_start_air",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "jump_middle",
 "speed": 5.0
 } ]
 
@@ -328,6 +328,9 @@ polygon = PoolVector2Array( -5.94403, -49.3588, 24.4559, -46.8254, 54.4338, -28.
 radius = 23.3988
 height = 32.3652
 
+[sub_resource type="CapsuleShape2D" id=13]
+radius = 22.977
+
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
 "Player_element",
@@ -366,7 +369,6 @@ frame = 13
 region_rect = Rect2( 4, 2, 28, 27 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
-visible = false
 position = Vector2( -3, 15 )
 scale = Vector2( 0.5, 0.5 )
 polygon = PoolVector2Array( -3.23163, -38.6612, 22.5931, -35.499, 49.9989, -22.8501, 64.2289, -8.09314, 71.0093, 3.72504, 73.2339, 24.664, 67.1396, 42.5884, 55.3095, 51.5507, 39.9615, 55.9959, 20.2821, 59.5076, -27.7581, 59.5076, -48.8289, 55.6211, -57.4398, 53.4044, -65.0276, 48.9711, -70.4841, 43.6852, -73.5908, 37.4954, -76.226, 21.1573, -74.1052, 8.27173, -69.9286, -0.478943, -63.2662, -10.4229, -54.354, -20.215, -33.5361, -32.0732 )
@@ -457,14 +459,13 @@ scale = Vector2( 2, 2 )
 position = Vector2( -2.85388, -4.51868 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall_radar_D"]
-position = Vector2( 40.0485, 27.0607 )
+position = Vector2( 40, 27.061 )
 shape = SubResource( 10 )
 
 [node name="Wall_radar_G" type="Area2D" parent="."]
-position = Vector2( 72.4827, 18.9261 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_radar_G"]
-position = Vector2( -117.921, 3.87642 )
+position = Vector2( -44.0628, 22.7539 )
 shape = SubResource( 10 )
 
 [node name="bottom_pos" type="Position2D" parent="."]
@@ -498,6 +499,13 @@ texture = ExtResource( 18 )
 texture_scale = 0.5
 color = Color( 0, 0.905882, 1, 1 )
 energy = 0.4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -2.51624, 24.5001 )
+rotation = 1.5708
+shape = SubResource( 13 )
+disabled = true
 [connection signal="update_health_bar" from="." to="GUI/life_bar" method="_on_Player_update_health_bar"]
 [connection signal="pressed" from="GUI/pause" to="." method="_on_pause_pressed"]
 [connection signal="body_entered" from="Wall_radar_D" to="." method="_on_Wall_radar_D_body_entered"]

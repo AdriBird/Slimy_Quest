@@ -6,13 +6,13 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.9392, 15.9635 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 100.629, 99.462 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 100.629, 83.6083 )
+extents = Vector2( 100.629, 93.7339 )
 
-[sub_resource type="StreamTexture" id=4]
+[sub_resource type="StreamTexture" id=2]
 flags = 4
 load_path = "res://.import/tile_ground.png-efc1c1cd1c88ebf5ef7fb994eacda415.stex"
 
@@ -147,15 +147,15 @@ extents = Vector2( 16.0642, 7.64722 )
 } ]
 5/z_index = 0
 6/name = "sol"
-6/texture = SubResource( 4 )
+6/texture = SubResource( 2 )
 6/tex_offset = Vector2( 0, 0 )
 6/modulate = Color( 1, 1, 1, 1 )
 6/region = Rect2( 0, 0, 200, 200 )
 6/tile_mode = 0
 6/occluder_offset = Vector2( 100, 100 )
 6/navigation_offset = Vector2( 100, 100 )
-6/shape_offset = Vector2( 99.779, 117.745 )
-6/shape_transform = Transform2D( 1, 0, 0, 1, 99.779, 117.745 )
+6/shape_offset = Vector2( 100.614, 107.396 )
+6/shape_transform = Transform2D( 1, 0, 0, 1, 100.614, 107.396 )
 6/shape = SubResource( 3 )
 6/shape_one_way = false
 6/shape_one_way_margin = 1.0
@@ -164,7 +164,7 @@ extents = Vector2( 16.0642, 7.64722 )
 "one_way": false,
 "one_way_margin": 1.0,
 "shape": SubResource( 3 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 99.779, 117.745 )
+"shape_transform": Transform2D( 1, 0, 0, 1, 100.614, 107.396 )
 } ]
 6/z_index = 0
 7/name = "PlatG"
@@ -261,14 +261,14 @@ extents = Vector2( 16.0642, 7.64722 )
 11/navigation_offset = Vector2( 100, 100 )
 11/shape_offset = Vector2( 100.336, 99.9014 )
 11/shape_transform = Transform2D( 1, 0, 0, 1, 100.336, 99.9014 )
-11/shape = SubResource( 2 )
+11/shape = SubResource( 4 )
 11/shape_one_way = false
 11/shape_one_way_margin = 1.0
 11/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 2 ),
+"shape": SubResource( 4 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 100.336, 99.9014 )
 } ]
 11/z_index = 0

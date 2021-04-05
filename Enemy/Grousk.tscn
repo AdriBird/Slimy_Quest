@@ -62,7 +62,7 @@ tracks/0/keys = {
 radius = 71.0886
 height = 1.63412
 
-[node name="Grousk" type="KinematicBody2D" groups=[
+[node name="Fourmi" type="KinematicBody2D" groups=[
 "enemy",
 ]]
 collision_layer = 8

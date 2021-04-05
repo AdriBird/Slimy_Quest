@@ -2,7 +2,7 @@ extends Mob
 
 onready var timer_distance = get_node("timer_distance")
 onready var start_pos = self.position.x
-onready var Player = get_parent().get_node("Slime")
+onready var Player = get_parent().get_node("Player")
 
 var dist = 700
 

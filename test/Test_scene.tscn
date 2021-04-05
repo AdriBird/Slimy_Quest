@@ -6,7 +6,7 @@
 [ext_resource path="res://Props/water/water.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Enemy/Grousk_ia.tscn" type="PackedScene" id=6]
-[ext_resource path="res://tilesets/tilesets/tile_blob.tres" type="TileSet" id=7]
+[ext_resource path="res://tilesets/tilemap/tile_blob.tscn" type="PackedScene" id=7]
 [ext_resource path="res://test/Test_scene.gd" type="Script" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -48,7 +48,7 @@ margin_right = 486.732
 margin_bottom = 1284.94
 rect_scale = Vector2( 1, 1 )
 
-[node name="Slime" parent="." instance=ExtResource( 5 )]
+[node name="Player" parent="." instance=ExtResource( 5 )]
 
 [node name="Grousk" parent="." instance=ExtResource( 6 )]
 position = Vector2( 2006.98, 841.897 )
@@ -56,8 +56,5 @@ position = Vector2( 2006.98, 841.897 )
 [node name="Grousk2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1727.6, 676.807 )
 
-[node name="tile_blob" type="TileMap" parent="."]
-visible = false
-tile_set = ExtResource( 7 )
-format = 1
-tile_data = PoolIntArray( 917519, 0, 0, 917520, 0, 0, 983056, 0, 0, 983057, 0, 0, 1048593, 0, 0, 1048594, 0, 0, 1048595, 0, 0, 1114131, 0, 0, 1114132, 0, 0, 1114133, 0, 0, 1114134, 0, 0, 1114135, 0, 0, 1179664, 0, 0, 1179665, 0, 0, 1179666, 0, 0, 1179667, 0, 0, 1179668, 0, 0, 1179669, 0, 0, 1179670, 0, 0, 1179671, 0, 0 )
+[node name="tile_blob" parent="." instance=ExtResource( 7 )]
+tile_data = PoolIntArray( 4915268, 0, 0, 4915269, 0, 0, 4915270, 0, 0, 4915271, 0, 0, 4915272, 0, 0, 4915273, 0, 0, 4915274, 0, 0, 4915275, 0, 0, 4915276, 0, 0, 4915277, 0, 0, 4915278, 0, 0, 4915279, 0, 0 )

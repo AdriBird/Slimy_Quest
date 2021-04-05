@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Sprites/Items/blue_cube.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Items/water_drop_icon.png" type="Texture" id=1]
 
 [node name="tile_object" type="Node2D"]
 

@@ -11,7 +11,7 @@ flags = 4
 load_path = "res://.import/tile_ground.png-efc1c1cd1c88ebf5ef7fb994eacda415.stex"
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 100.629, 83.6083 )
+extents = Vector2( 100.629, 93.7339 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 100.629, 99.462 )
@@ -131,7 +131,7 @@ region_rect = Rect2( 112, 64, 32, 32 )
 position = Vector2( 1, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="sol/StaticBody2D"]
-position = Vector2( -1.221, 16.7451 )
+position = Vector2( -0.385911, 6.39592 )
 shape = SubResource( 3 )
 
 [node name="dirt" type="Sprite" parent="."]

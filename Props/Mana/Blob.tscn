@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Code/Props/Blob.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Items/water_drop.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/Déco/spot.png" type="Texture" id=3]
-[ext_resource path="res://Player/sprites/Slime_original_size/Slime_idle.png" type="Texture" id=4]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -42,7 +41,7 @@ color_ramp = SubResource( 4 )
 "blob",
 ]]
 material = SubResource( 1 )
-position = Vector2( 496.926, 514.753 )
+position = Vector2( 510.785, 514.123 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -62,7 +61,6 @@ scale = Vector2( 0.06, 0.06 )
 texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
 position = Vector2( 0, -1.5 )
 polygon = PoolVector2Array( 0.165375, -3.80368, 4.81284, -3.5495, 8.73872, -2.73161, 11.9285, -1.66835, 13.5588, -0.450095, 14.5458, 0.45817, 14.8729, 2.01217, 14.055, 3.32079, 12.4192, 4.793, 7.3483, 6.347, 1.37151, 7.05989, -3.50739, 6.83956, -7.45555, 6.10163, -11.954, 4.13869, -13.508, 1.7668, -12.9354, 0.376381, -11.545, -1.09583, -7.21018, -2.89519, -2.30283, -3.63129 )
 
@@ -80,12 +78,6 @@ texture_scale = 3.0
 color = Color( 0.117647, 0.537255, 0.721569, 1 )
 energy = 0.7
 range_height = 5.0
-
-[node name="Sprite2" type="Sprite" parent="."]
-visible = false
-position = Vector2( 158.682, -4.56636 )
-scale = Vector2( 0.57, 0.57 )
-texture = ExtResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]
 
