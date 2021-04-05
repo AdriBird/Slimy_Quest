@@ -48,7 +48,6 @@ __meta__ = {
 }
 
 [node name="Particles2D" type="Particles2D" parent="."]
-visible = false
 position = Vector2( -0.0111694, 0.110962 )
 amount = 1
 lifetime = 3.0
@@ -80,6 +79,4 @@ energy = 0.7
 range_height = 5.0
 
 [node name="Tween" type="Tween" parent="."]
-
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
 [connection signal="body_entered" from="." to="." method="_on_Blob_body_entered"]

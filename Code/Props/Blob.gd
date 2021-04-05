@@ -1,4 +1,4 @@
-extends Area2D
+extends RigidBody2D
 
 var texture = {'blue_blob'  : "res://Sprites/Items/water_drop.png"}
 
@@ -12,6 +12,8 @@ func _process(delta):
 var anim = false
 
 func anim():
+	$Particles2D.rotation = -PI/2 -self.rotation
+	self.show()
 	if anim == false:
 		anim = true
 		$Tween.interpolate_property($Sprite, "scale", st_scale, Vector2(0.08,st_scale.y), 1, Tween.TRANS_LINEAR, Tween.EASE_OUT)
@@ -30,7 +32,11 @@ func init(type, pos):
 	$Sprite.texture = load(texture[type])
 	position = pos
 
-func _on_Blob_body_entered(body):
+
+
+
+
+func _on_Area2D_body_entered(body):
 	if body.is_in_group("Player"):
 		self.connect("blob_touch", body, "blob_touched")
 		emit_signal("blob_touch")
@@ -42,4 +48,3 @@ func _on_Blob_body_entered(body):
 #		Global.mana_verif = true
 #		Global.mana_tween_verif = true
 #		body.nb_blob += 1
-

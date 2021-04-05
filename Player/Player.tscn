@@ -31,9 +31,19 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "jump_start_ground",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "jump_end_air",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "jump_middle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
@@ -41,19 +51,9 @@ animations = [ {
 "name": "jump_end_ground",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ) ],
-"loop": true,
-"name": "jump_start_ground",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "jump_start_air",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "jump_middle",
 "speed": 5.0
 } ]
 
@@ -340,6 +340,9 @@ z_index = 2
 collision_layer = 2
 collision_mask = 25
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 1, 0.847059 )
@@ -374,7 +377,7 @@ scale = Vector2( 0.5, 0.5 )
 polygon = PoolVector2Array( -3.23163, -38.6612, 22.5931, -35.499, 49.9989, -22.8501, 64.2289, -8.09314, 71.0093, 3.72504, 73.2339, 24.664, 67.1396, 42.5884, 55.3095, 51.5507, 39.9615, 55.9959, 20.2821, 59.5076, -27.7581, 59.5076, -48.8289, 55.6211, -57.4398, 53.4044, -65.0276, 48.9711, -70.4841, 43.6852, -73.5908, 37.4954, -76.226, 21.1573, -74.1052, 8.27173, -69.9286, -0.478943, -63.2662, -10.4229, -54.354, -20.215, -33.5361, -32.0732 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 0, -700 )
+position = Vector2( -2.5199, -390.059 )
 current = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
@@ -383,7 +386,7 @@ smoothing_speed = 3.0
 drag_margin_left = 0.0
 drag_margin_top = 0.5
 drag_margin_right = 0.0
-drag_margin_bottom = 0.7
+drag_margin_bottom = 1.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource( 9 )

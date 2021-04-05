@@ -380,13 +380,14 @@ func _physics_process(delta):
 func shoot():
 #	print(1+(-2*int($AnimatedSprite.flip_h)))
 	var shoot = Input.is_action_pressed("shoot")
-	if shoot and time or can_shoot and time == true:
+	# calc power on base time
+	if (shoot and time or can_shoot and time == true) and Global.mana > 15:
 		if Global.mana > 0:
 			var b = bullet.instance()
 			#$tir.global_position.x = 110*  1+(-2*int($AnimatedSprite.flip_h))
 			b.start(position,$tir.position, 1+(-2*int($AnimatedSprite.flip_h)))
 			get_parent().add_child(b)
-			mana_lose()
+			mana_lose(15)
 			time = false
 			time_shoot.set_wait_time(1)
 			time_shoot.start()
@@ -471,7 +472,7 @@ func motion_loop(delta):
 
 #-----------------------Blob------------------------------------------------------------------
 var nb_blob = 0
-var mana_growth = 0.1
+var mana_growth = 0.01
 
 onready var mana_tween = $GUI/tween_mana
 onready var size_tween = get_node("size_tween")
@@ -485,20 +486,21 @@ func blob_touched():      #agrandissement du slime + ajout de mana (blob)
 		trans_size += Vector2(mana_growth, mana_growth)
 		size_tween.interpolate_property(self, "scale", get_scale(), trans_size, 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 		size_tween.start()
-		position.y -= 20
+		position.y -= 5
 		# mana bar
 		trans_mana += Global.mana_power
 
 		mana_tween.interpolate_property(mana_bar, "value", Global.mana, trans_mana, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
 		mana_tween.start()
 
-func mana_lose():        #rétrécissement du slime + retrait de mana (bullet)
+func mana_lose(quantity):        #rétrécissement du slime + retrait de mana (bullet)
 	#scale
-	trans_size -= Vector2(mana_growth, mana_growth)
-	size_tween.interpolate_property(self, "scale", get_scale(), get_scale() - Vector2(mana_growth, mana_growth), 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
+	trans_size -= Vector2(mana_growth, mana_growth)*quantity
+	self.position.y -= scale.y*50*mana_growth*quantity
+	size_tween.interpolate_property(self, "scale", get_scale(), get_scale() - Vector2(mana_growth, mana_growth)*quantity, 0.7, Tween.TRANS_ELASTIC, Tween.EASE_OUT)
 	size_tween.start()
 	#mana_bar
-	trans_mana -= Global.mana_power
+	trans_mana -= quantity
 	mana_tween.interpolate_property(mana_bar, "value", Global.mana, trans_mana, 0.7, Tween.TRANS_QUART, Tween.EASE_OUT)
 	mana_tween.start()
 

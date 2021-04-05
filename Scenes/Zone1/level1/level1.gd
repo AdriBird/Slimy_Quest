@@ -30,4 +30,3 @@ func blob_bullet(pos):
 	var c = item.instance()
 	c.init(type, pos)
 	add_child(c)
-
