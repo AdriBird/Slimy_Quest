@@ -3,7 +3,6 @@
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Props/water/water.gd" type="Script" id=2]
 
-
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
@@ -85,6 +84,9 @@ rect_scale = Vector2( 0.97394, 0.734165 )
 texture = ExtResource( 1 )
 stretch_mode = 2
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="death_zone" type="Area2D" parent="." groups=[
 "water",

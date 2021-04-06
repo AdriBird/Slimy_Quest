@@ -4,12 +4,12 @@
 [ext_resource path="res://Code/Props/Blob.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/Déco/spot.png" type="Texture" id=3]
 
-[sub_resource type="PhysicsMaterial" id=2]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 10.0
 rough = true
 absorbent = true
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 72.4112
 height = 126.011
 
@@ -42,9 +42,10 @@ height = 3.46297
 [node name="RigidBody2D" type="RigidBody2D" groups=[
 "blob",
 ]]
+scale = Vector2( 0.6, 0.6 )
 z_index = 5
 mass = 6687.24
-physics_material_override = SubResource( 2 )
+physics_material_override = SubResource( 1 )
 gravity_scale = 10.0
 linear_damp = 10.0
 script = ExtResource( 2 )
@@ -58,7 +59,7 @@ visible = false
 position = Vector2( 1.8841e-15, 0.530327 )
 rotation = 1.5708
 scale = Vector2( 0.06, 0.06 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
 

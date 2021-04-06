@@ -31,19 +31,19 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "jump_middle",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "jump_start_ground",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 7 ) ],
+"frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "jump_end_air",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "jump_middle",
+"name": "jump_start_air",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
@@ -51,9 +51,9 @@ animations = [ {
 "name": "jump_end_ground",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ ExtResource( 7 ) ],
 "loop": true,
-"name": "jump_start_air",
+"name": "jump_end_air",
 "speed": 5.0
 } ]
 
@@ -372,6 +372,7 @@ frame = 13
 region_rect = Rect2( 4, 2, 28, 27 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+visible = false
 position = Vector2( -3, 15 )
 scale = Vector2( 0.5, 0.5 )
 polygon = PoolVector2Array( -3.23163, -38.6612, 22.5931, -35.499, 49.9989, -22.8501, 64.2289, -8.09314, 71.0093, 3.72504, 73.2339, 24.664, 67.1396, 42.5884, 55.3095, 51.5507, 39.9615, 55.9959, 20.2821, 59.5076, -27.7581, 59.5076, -48.8289, 55.6211, -57.4398, 53.4044, -65.0276, 48.9711, -70.4841, 43.6852, -73.5908, 37.4954, -76.226, 21.1573, -74.1052, 8.27173, -69.9286, -0.478943, -63.2662, -10.4229, -54.354, -20.215, -33.5361, -32.0732 )
@@ -489,6 +490,7 @@ occluder = SubResource( 11 )
 [node name="timer_bounce" type="Timer" parent="timers"]
 
 [node name="hurtbox" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2( -2.96231, 21.1471 )

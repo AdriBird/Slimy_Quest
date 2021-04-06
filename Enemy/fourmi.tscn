@@ -117,9 +117,10 @@ script = ExtResource( 1 )
 health = 50
 
 [node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
 texture = ExtResource( 2 )
 hframes = 3
-frame = 2
+frame = 1
 region_rect = Rect2( 176, 60, 0, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
