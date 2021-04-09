@@ -1,20 +1,27 @@
 extends Node2D
+var dialog_scene = preload("res://GI/dialog.tscn")
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
+	$tile_blob.hide()
+	Global.mana = 0
 	spawn_blob()
+	
+	
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-onready var item = preload("res://Props/Blob.tscn")
+func _on_end_flag_box_end():
+	var info_dialog = dialog_scene.instance()
+	var dialog = [
+		'Salut à toi et merci d\'avoir essayé le jeu Slimy Quest!',
+		'Ce n\'était que la version en dev',
+		'Nous avons hate que tu participes au projet, si cela t\'intéresse!'
+	]
+	info_dialog.load_dialog(dialog)
+	get_node("Slime/GUI").add_child(info_dialog)
+	pass # Replace with function body.
+
+onready var item = preload("res://Props/Mana/Blob.tscn")
 func spawn_blob():
 	for cell in $tile_blob.get_used_cells():
 		var id = $tile_blob.get_cellv(cell)
@@ -30,4 +37,3 @@ func blob_bullet(pos):
 	var c = item.instance()
 	c.init(type, pos)
 	add_child(c)
-
