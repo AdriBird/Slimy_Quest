@@ -27,7 +27,6 @@ func neutral():
 #	timer_distance.start()
 #	yield(timer_distance)
 	if $Player_Detector.is_colliding() == true:
-		print("oui")
 		state = SPOT
 
 

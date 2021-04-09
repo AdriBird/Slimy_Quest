@@ -54,8 +54,9 @@ func take_damage(damage):
 func knock_back(body):
 	if body.power == 0:
 		return
-	vel.y = -600
-	vel.x += (self.position.x - body.position.x) / abs((self.position.x - body.position.x)) * 200
+	vel = Vector2(0,0)
+	vel.y = -700
+	vel.x += ((self.position.x - body.position.x) / abs((self.position.x - body.position.x)))* 300
 
 func death():
 	state = DEATH

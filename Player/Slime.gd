@@ -91,7 +91,7 @@ var timer_idle_verif = true
 
 
 func state_loop():
-	#print(state)
+	print(state)
 	#Check si on se déplace
 	if state == IDLE and vel.x != 0 and on_wall == false and cycle == 'none':
 		change_state(SLIDE)
@@ -118,7 +118,7 @@ func state_loop():
 	if state == BOUNCE_AIR and is_on_floor() and !Input.is_action_pressed("bounce") and cycle == "none":
 		change_state(SLIDE)
 	#check le déplacement sur le sol
-	if cycle == "none" and int(right) + int(left) == 1 and is_on_floor() and state != BOUNCE:
+	if cycle == "none" and int(right) + int(left) == 1 and is_on_floor() and state != BOUNCE and state != HURT:
 		change_state(SLIDE)
 	if on_wall and not is_on_floor():
 		change_cycle("wall_jump")
@@ -128,10 +128,11 @@ func state_loop():
 		change_state(SLIDE)
 	# phase de take damage:
 	if state == HURT:
-		"""if is_on_floor():
-			vel.x = lerp(vel.x, 0, 0.5)
+		print('hurt')
+		if is_on_floor():
+			vel.x = 0
 		else:
-			vel.x = lerp(vel.x, 0, 0.5)"""
+			vel.x = lerp(vel.x, 0, 0.1)
 
 
 
@@ -172,7 +173,6 @@ func change_state(new_state):
 			max_speed = 700
 		HURT:
 			"""vel.x = 0"""
-			yield(get_tree().create_timer(1), "timeout")
 			change_state(SLIDE)
 
 
@@ -511,6 +511,8 @@ func _on_hurtbox_body_entered(body):
 		change_state(HURT)
 		take_damage(body.power)
 		knock_back(body)
+		print(state)
+		print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
 
 
 

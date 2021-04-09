@@ -117,7 +117,6 @@ script = ExtResource( 1 )
 health = 50
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
 texture = ExtResource( 2 )
 hframes = 3
 frame = 1
